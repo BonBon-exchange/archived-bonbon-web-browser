@@ -164,7 +164,7 @@ export const Browser: React.FC<BrowserProps> = ({
             src={renderedUrl}
             onPageTitleSet={(e) => setTitle(e.title)}
             onLoadCommit={onDidStartLoading}
-            partition="user-partition"
+            partition="persist:user-partition"
           />
         </div>
       </div>

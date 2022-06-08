@@ -13,7 +13,10 @@ export const BrowserTopBar: React.FC<BrowserTopBarProps> = ({
   title,
 }) => {
   return (
-    <div className="BrowserTopBar__container">
+    <div
+      className="BrowserTopBar__container"
+      onDoubleClick={toggleFullsizeBrowser}
+    >
       <div className="BrowserTopBar__title">{title}</div>
       <div className="BrowserTopBar__controls">
         <div className="BrowserTopBar__control-button" onClick={closeBrowser}>

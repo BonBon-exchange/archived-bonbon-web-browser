@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Action } from 'history';
 import { v4 } from 'uuid';
 import { BoardType } from '../../components/Board/Types';
 
