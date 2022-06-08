@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-use-before-define */
-import React, { useState } from 'react';
-import WebView from '@tianhuil/react-electron-webview';
+import React, { useEffect, useState } from 'react';
 import { Rnd } from 'react-rnd';
 import clsx from 'clsx';
 
+import WebView from '@tianhuil/react-electron-webview';
 import { BrowserTopBar } from '../BrowserTopBar';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { setBoards } from '../../store/reducers/Addaps';
+import { setBoards, updateBrowserUrl } from '../../store/reducers/Addaps';
 
 import { BrowserProps } from './Types';
 
@@ -22,10 +22,14 @@ export const Browser: React.FC<BrowserProps> = ({
   height,
   width,
   isFullSize,
+  firstRendering,
 }) => {
   const dispatch = useAppDispatch();
   const { boards, activeBoard } = useAppSelector((state) => state.addaps);
   const [title, setTitle] = useState<string>('');
+  const [firstRenderingState, setFirstRenderingState] =
+    useState<boolean>(firstRendering);
+  const [renderedUrl, setRenderedUrl] = useState<string>('');
 
   const updateBoard = (update: Record<string, unknown>) => {
     const newBoards = [...boards];
@@ -70,7 +74,13 @@ export const Browser: React.FC<BrowserProps> = ({
   };
 
   const onDidStartLoading = (e) => {
-    updateBoard({ url: e.target.src });
+    dispatch(
+      updateBrowserUrl({
+        url: e.target.src,
+        browserId: id,
+        boardId: activeBoard,
+      })
+    );
   };
 
   const onResizeStop = (delta) => {
@@ -104,6 +114,13 @@ export const Browser: React.FC<BrowserProps> = ({
     background: '#f0f0f0',
   } as const;
 
+  useEffect(() => {
+    if (firstRenderingState) {
+      setFirstRenderingState(false);
+      setRenderedUrl(url);
+    }
+  }, [firstRenderingState, url]);
+
   return (
     <Rnd
       style={style}
@@ -133,9 +150,9 @@ export const Browser: React.FC<BrowserProps> = ({
         />
         <div className="Browser__webview-container">
           <WebView
-            src={url}
-            onDidStartLoading={onDidStartLoading}
+            src={renderedUrl}
             onPageTitleSet={(e) => setTitle(e.title)}
+            onLoadCommit={onDidStartLoading}
             partition="user-partition"
           />
         </div>

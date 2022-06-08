@@ -24,6 +24,7 @@ export const Board: React.FC = () => {
       height: 300,
       width: 300,
       isFullSize: false,
+      firstRendering: true,
     };
 
     if (board) {
@@ -50,6 +51,7 @@ export const Board: React.FC = () => {
             width={b.width}
             height={b.height}
             isFullSize={b.isFullSize}
+            firstRendering
           />
         );
       })}
