@@ -1,9 +1,11 @@
+/* eslint-disable react/button-has-type */
+/* eslint-disable import/prefer-default-export */
 /* eslint-disable no-use-before-define */
-import React from 'react'
+import React from 'react';
 
-import { ButtonAddBrowserProps } from './Types'
+import { ButtonAddBrowserProps } from './Types';
 
-import './style.css'
+import './style.css';
 
 export const ButtonAddBrowser: React.FC<ButtonAddBrowserProps> = ({
   onClick,
@@ -12,5 +14,5 @@ export const ButtonAddBrowser: React.FC<ButtonAddBrowserProps> = ({
     <button id="ButtonAddBrowser" onClick={onClick}>
       Add
     </button>
-  )
-}
+  );
+};

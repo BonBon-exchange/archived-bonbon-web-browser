@@ -25,8 +25,8 @@ export const Board: React.FC = () => {
 
     const newBrowsers = [...board.browsers, newBrowser];
     const newBoard = { ...board, browsers: newBrowsers };
-    const boardIndex = boards.findIndex((b) => b.id === activeBoard);
     const newBoards = [...boards];
+    const boardIndex = newBoards.findIndex((b) => b.id === activeBoard);
     newBoards[boardIndex] = newBoard;
     dispatch(setBoards(newBoards));
   };

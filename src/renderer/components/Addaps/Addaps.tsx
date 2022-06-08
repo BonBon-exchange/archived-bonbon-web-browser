@@ -1,18 +1,17 @@
+/* eslint-disable import/prefer-default-export */
 /* eslint-disable no-use-before-define */
-import React from 'react'
+import React from 'react';
 
-import { TopBar } from '../TopBar'
-import { Board } from '../Board'
+import { TopBar } from '../TopBar';
+import { Board } from '../Board';
 
-import { AddapsProps } from './Types'
+import './style.css';
 
-import './style.css'
-
-export const Addaps: React.FC<AddapsProps> = () => {
+export const Addaps: React.FC = () => {
   return (
     <>
       <TopBar />
       <Board />
     </>
-  )
-}
+  );
+};
