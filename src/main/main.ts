@@ -1,3 +1,5 @@
+/* eslint-disable promise/no-callback-in-promise */
+/* eslint-disable consistent-return */
 /* eslint global-require: off, no-console: off, promise/always-return: off */
 
 /**
@@ -9,7 +11,7 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, shell, ipcMain, session } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
@@ -134,5 +136,12 @@ app
       // dock icon is clicked and there are no other windows open.
       if (mainWindow === null) createWindow();
     });
+    session
+      .fromPartition('user-partition')
+      .setPermissionRequestHandler((webContents, permission, callback) => {
+        const url = webContents.getURL();
+        console.log(url, permission);
+        callback(false);
+      });
   })
   .catch(console.log);

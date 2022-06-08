@@ -136,6 +136,7 @@ export const Browser: React.FC<BrowserProps> = ({
             src={url}
             onDidStartLoading={onDidStartLoading}
             onPageTitleSet={(e) => setTitle(e.title)}
+            partition="user-partition"
           />
         </div>
       </div>
