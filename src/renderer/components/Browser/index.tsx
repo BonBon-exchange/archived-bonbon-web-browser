@@ -1,1 +1,1 @@
-export * from './Browser'
+export * from './Browser';

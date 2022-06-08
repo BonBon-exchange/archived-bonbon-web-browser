@@ -23,18 +23,20 @@ export const Board: React.FC = () => {
       width: 300,
     };
 
-    const newBrowsers = [...board.browsers, newBrowser];
-    const newBoard = { ...board, browsers: newBrowsers };
-    const newBoards = [...boards];
-    const boardIndex = newBoards.findIndex((b) => b.id === activeBoard);
-    newBoards[boardIndex] = newBoard;
-    dispatch(setBoards(newBoards));
+    if (board) {
+      const newBrowsers = [...board.browsers, newBrowser];
+      const newBoard = { ...board, browsers: newBrowsers };
+      const newBoards = [...boards];
+      const boardIndex = newBoards.findIndex((b) => b.id === activeBoard);
+      newBoards[boardIndex] = newBoard;
+      dispatch(setBoards(newBoards));
+    }
   };
 
   return (
     <>
       <ButtonAddBrowser onClick={addBrowser} />
-      {board?.browsers.map((b, i) => {
+      {board?.browsers.map((b) => {
         return (
           <Browser
             url={b.url}

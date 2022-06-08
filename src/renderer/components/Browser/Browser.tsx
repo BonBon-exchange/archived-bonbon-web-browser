@@ -35,9 +35,7 @@ export const Browser: React.FC<BrowserProps> = ({
     updateHeight: number
   ) => {
     const newBoards = [...updateBoards];
-    const boardIndex = updateBoards.findIndex(
-      (b) => b.id === updateActiveBoard
-    );
+    const boardIndex = newBoards.findIndex((b) => b.id === updateActiveBoard);
     const newBoard = { ...newBoards[boardIndex] };
     const newBrowserIndex = newBoard.browsers.findIndex((b) => b.id === id);
     const newBrowsers = [...newBoard.browsers];
@@ -102,6 +100,18 @@ export const Browser: React.FC<BrowserProps> = ({
     );
   };
 
+  const closeBrowser = () => {
+    const newBoards = [...boards];
+    const boardIndex = newBoards.findIndex((b) => b.id === activeBoard);
+    const newBoard = { ...newBoards[boardIndex] };
+    const newBrowsers = [...newBoard.browsers];
+    const newBrowserIndex = newBrowsers.findIndex((b) => b.id === id);
+    newBrowsers.splice(newBrowserIndex, 1);
+    newBoard.browsers = newBrowsers;
+    newBoards[boardIndex] = newBoard;
+    dispatch(setBoards(newBoards));
+  };
+
   const style = {
     display: 'flex',
     border: 'solid 1px #ddd',
@@ -123,7 +133,7 @@ export const Browser: React.FC<BrowserProps> = ({
       onResizeStop={onResizeStop}
     >
       <div className="Browser__container">
-        <BrowserTopBar />
+        <BrowserTopBar closeBrowser={closeBrowser} />
         <div className="Browser__webview-container">
           <WebView src={url} onDidStartLoading={onDidStartLoading} />
         </div>

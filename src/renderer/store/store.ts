@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import addapsReducer from './reducers/Addaps';
 
-
 export const store = configureStore({
   reducer: {
     addaps: addapsReducer,

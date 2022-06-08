@@ -1,1 +1,1 @@
-export * from './Addaps'
+export * from './Addaps';

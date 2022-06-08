@@ -1,4 +1,11 @@
 .BrowserTopBar__container {
-    background-color: green;
-    height: 15px;
+  background-color: black;
+  height: 20px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.BrowserTopBar__control-button {
+  color: white;
+  margin-right: 5px;
 }

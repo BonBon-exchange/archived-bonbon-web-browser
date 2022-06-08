@@ -1,1 +1,1 @@
-export * from './BrowserTopBar'
+export * from './BrowserTopBar';

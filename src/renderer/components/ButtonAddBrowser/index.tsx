@@ -1,1 +1,1 @@
-export * from './ButtonAddBrowser'
+export * from './ButtonAddBrowser';
