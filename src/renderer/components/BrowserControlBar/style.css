@@ -1,0 +1,10 @@
+.BrowserControlBar__container {
+    height: 25px;
+}
+
+.BrowserControlBar__controls {
+    display: flex;
+    flex-direction: row;
+    width: 30%;
+    justify-content: space-around;
+}

@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-use-before-define */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Rnd } from 'react-rnd';
 import clsx from 'clsx';
-
 import WebView from '@tianhuil/react-electron-webview';
+
+import { BrowserControlBar } from '../BrowserControlBar';
 import { BrowserTopBar } from '../BrowserTopBar';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { setBoards, updateBrowserUrl } from '../../store/reducers/Addaps';
@@ -30,6 +31,7 @@ export const Browser: React.FC<BrowserProps> = ({
   const [firstRenderingState, setFirstRenderingState] =
     useState<boolean>(firstRendering);
   const [renderedUrl, setRenderedUrl] = useState<string>('');
+  const container = useRef(null);
 
   const updateBoard = (update: Record<string, unknown>) => {
     const newBoards = [...boards];
@@ -108,6 +110,14 @@ export const Browser: React.FC<BrowserProps> = ({
     updateBoard({ isFullSize: fullSize });
   };
 
+  const goBack = () => {
+    container.current.querySelector('webview').goBack();
+  };
+
+  const goForward = () => {
+    container.current.querySelector('webview').goForward();
+  };
+
   const style = {
     display: 'flex',
     border: 'solid 1px #ddd',
@@ -142,18 +152,20 @@ export const Browser: React.FC<BrowserProps> = ({
       className={clsx({ 'Browser__is-full-size': isFullSize })}
       disableDragging={isFullSize}
     >
-      <div className="Browser__container">
+      <div className="Browser__container" ref={container}>
         <BrowserTopBar
           closeBrowser={closeBrowser}
           toggleFullsizeBrowser={toggleFullsizeBrowser}
           title={title}
         />
+        <BrowserControlBar goBack={goBack} goForward={goForward} />
         <div className="Browser__webview-container">
           <WebView
             src={renderedUrl}
             onPageTitleSet={(e) => setTitle(e.title)}
             onLoadCommit={onDidStartLoading}
             partition="user-partition"
+            preload="./webview-preload.js"
           />
         </div>
       </div>
