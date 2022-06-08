@@ -165,7 +165,6 @@ export const Browser: React.FC<BrowserProps> = ({
             onPageTitleSet={(e) => setTitle(e.title)}
             onLoadCommit={onDidStartLoading}
             partition="user-partition"
-            preload="./webview-preload.js"
           />
         </div>
       </div>
