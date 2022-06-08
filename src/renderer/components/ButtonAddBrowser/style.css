@@ -1,0 +1,5 @@
+#ButtonAddBrowser {
+    position: fixed;
+    top: 25px;
+    z-index: 1000;
+}
