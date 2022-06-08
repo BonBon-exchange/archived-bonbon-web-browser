@@ -1,18 +1,22 @@
 #TopBar__container {
-    display: flex;
-    height: 30px;
-    background-color: blue;
-    flex-grow: 1;
+  display: flex;
+  height: 30px;
+  background-color: black;
+  flex-grow: 1;
+  color: white;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
 }
 
 #TopBar__addBoard {
-    width: 50px;
-    text-align: center;
+  width: 50px;
+  text-align: center;
 }
 
 .TopBar__tab {
-    display: flex;
-    border-left: 1px solid black;
-    padding-left: 5px;
-    padding-right: 5px;
+  display: flex;
+  border-left: 1px solid white;
+  padding-left: 5px;
+  padding-right: 5px;
 }

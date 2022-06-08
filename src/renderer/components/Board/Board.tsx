@@ -8,6 +8,8 @@ import { Browser } from '../Browser';
 import { setBoards } from '../../store/reducers/Addaps';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
+import './style.css';
+
 export const Board: React.FC = () => {
   const dispatch = useAppDispatch();
   const { boards, activeBoard } = useAppSelector((state) => state.addaps);
@@ -34,7 +36,7 @@ export const Board: React.FC = () => {
   };
 
   return (
-    <>
+    <div className="Board__container">
       <ButtonAddBrowser onClick={addBrowser} />
       {board?.browsers.map((b) => {
         return (
@@ -49,6 +51,6 @@ export const Board: React.FC = () => {
           />
         );
       })}
-    </>
+    </div>
   );
 };

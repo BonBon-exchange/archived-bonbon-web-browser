@@ -1,0 +1,7 @@
+.Board__container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  top: 30px;
+  position: absolute;
+}

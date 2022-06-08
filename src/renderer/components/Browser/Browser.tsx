@@ -131,6 +131,7 @@ export const Browser: React.FC<BrowserProps> = ({
       onDragStart={onDragStart}
       onDragStop={onDragStop}
       onResizeStop={onResizeStop}
+      bounds=".Board__container"
     >
       <div className="Browser__container">
         <BrowserTopBar closeBrowser={closeBrowser} />

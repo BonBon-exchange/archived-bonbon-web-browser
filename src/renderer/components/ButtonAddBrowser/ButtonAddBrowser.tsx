@@ -12,7 +12,7 @@ export const ButtonAddBrowser: React.FC<ButtonAddBrowserProps> = ({
 }) => {
   return (
     <button id="ButtonAddBrowser" onClick={onClick}>
-      Add
+      Add browser
     </button>
   );
 };
