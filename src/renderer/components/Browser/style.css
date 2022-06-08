@@ -1,23 +1,18 @@
 webview {
     display: flex;
     width: 100%;
+    background-color: white;
 }
 
 .Browser__container {
-    width: 300px;
-    height: 300px;
+    width: auto;
+    height: auto;
     display: flex;
     flex-direction: column;
-    position: absolute;
-    resize: both;
-    overflow: auto;
+    flex-grow: 1;
 }
 
 .Browser__webview-container {
     display: flex;
     flex-grow: 1;
-}
-
-.Browser__bottom-bar {
-    height: 10px;
 }
