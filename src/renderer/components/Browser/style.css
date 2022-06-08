@@ -1,18 +1,26 @@
 webview {
-    display: flex;
-    width: 100%;
-    background-color: white;
+  display: flex;
+  width: 100%;
+  background-color: white;
 }
 
 .Browser__container {
-    width: auto;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .Browser__webview-container {
-    display: flex;
-    flex-grow: 1;
+  display: flex;
+  flex-grow: 1;
+}
+
+.Browser__is-full-size {
+  position: fixed !important;
+  top: 30px !important;
+  width: 100% !important;
+  height: calc(100% - 30px) !important;
+  transform: none !important;
 }

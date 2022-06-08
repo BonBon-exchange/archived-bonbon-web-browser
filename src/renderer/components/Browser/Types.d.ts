@@ -5,4 +5,5 @@ export interface BrowserProps {
   left: number;
   height: number;
   width: number;
+  isFullSize: boolean;
 }

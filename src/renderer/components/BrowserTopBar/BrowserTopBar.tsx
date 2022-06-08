@@ -9,11 +9,18 @@ import { BrowserTopBarProps } from './Types';
 
 export const BrowserTopBar: React.FC<BrowserTopBarProps> = ({
   closeBrowser,
+  toggleFullsizeBrowser,
 }) => {
   return (
     <div className="BrowserTopBar__container">
       <div className="BrowserTopBar__control-button" onClick={closeBrowser}>
         x
+      </div>
+      <div
+        className="BrowserTopBar__control-button"
+        onClick={toggleFullsizeBrowser}
+      >
+        o
       </div>
     </div>
   );

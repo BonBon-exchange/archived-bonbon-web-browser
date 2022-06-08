@@ -23,6 +23,7 @@ export const Board: React.FC = () => {
       left: 120,
       height: 300,
       width: 300,
+      isFullSize: false,
     };
 
     if (board) {
@@ -48,6 +49,7 @@ export const Board: React.FC = () => {
             id={b.id}
             width={b.width}
             height={b.height}
+            isFullSize={b.isFullSize}
           />
         );
       })}
