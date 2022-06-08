@@ -127,6 +127,17 @@ app.on('window-all-closed', () => {
   }
 });
 
+app.on('web-contents-created', (_event, contents) => {
+  contents.on('will-attach-webview', (_wawevent, webPreferences, _params) => {
+    // Strip away preload scripts if unused or verify their location is legitimate
+    delete webPreferences.preload;
+    delete webPreferences.preloadURL;
+
+    // Disable Node.js integration
+    webPreferences.nodeIntegration = false;
+  });
+});
+
 app
   .whenReady()
   .then(() => {
