@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-use-before-define */
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import WebView from '@tianhuil/react-electron-webview';
 import { Rnd } from 'react-rnd';
 import clsx from 'clsx';
@@ -11,7 +11,6 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { setBoards } from '../../store/reducers/Addaps';
 
 import { BrowserProps } from './Types';
-import { BoardType } from '../Board/Types';
 
 import './style.css';
 
@@ -27,28 +26,14 @@ export const Browser: React.FC<BrowserProps> = ({
   const dispatch = useAppDispatch();
   const { boards, activeBoard } = useAppSelector((state) => state.addaps);
 
-  const updateBoard = (
-    updateBoards: BoardType[],
-    updateActiveBoard: string,
-    updateTop: number,
-    updateLeft: number,
-    updateUrl: string,
-    updateWidth: number,
-    updateHeight: number,
-    updateIsFullSize: boolean
-  ) => {
-    const newBoards = [...updateBoards];
-    const boardIndex = newBoards.findIndex((b) => b.id === updateActiveBoard);
+  const updateBoard = (update: Record<string, unknown>) => {
+    const newBoards = [...boards];
+    const boardIndex = newBoards.findIndex((b) => b.id === activeBoard);
     const newBoard = { ...newBoards[boardIndex] };
     const newBrowserIndex = newBoard.browsers.findIndex((b) => b.id === id);
     const newBrowsers = [...newBoard.browsers];
-    const newBrowser = { ...newBrowsers[newBrowserIndex] };
-    newBrowser.top = updateTop;
-    newBrowser.left = updateLeft;
-    newBrowser.url = updateUrl;
-    newBrowser.width = updateWidth;
-    newBrowser.height = updateHeight;
-    newBrowser.isFullSize = updateIsFullSize;
+    const newBrowser = { ...newBrowsers[newBrowserIndex], ...update };
+
     newBrowsers[newBrowserIndex] = newBrowser;
     newBoard.browsers = newBrowsers;
     newBoards[boardIndex] = newBoard;
@@ -72,16 +57,10 @@ export const Browser: React.FC<BrowserProps> = ({
   };
 
   const onDragStop = (e) => {
-    updateBoard(
-      boards,
-      activeBoard,
-      getOffset(e.target).top,
-      getOffset(e.target).left,
-      url,
-      width,
-      height,
-      isFullSize
-    );
+    updateBoard({
+      top: getOffset(e.target).top,
+      left: getOffset(e.target).left,
+    });
     const webviews = document.querySelectorAll('.Browser__webview-container');
     webviews.forEach((webview) => {
       // @ts-ignore
@@ -90,29 +69,11 @@ export const Browser: React.FC<BrowserProps> = ({
   };
 
   const onDidStartLoading = (e) => {
-    updateBoard(
-      boards,
-      activeBoard,
-      top,
-      left,
-      e.target.src,
-      width,
-      height,
-      isFullSize
-    );
+    updateBoard({ url: e.target.src });
   };
 
-  const onResizeStop = (_e, _dir, _refToElement, delta, _position) => {
-    updateBoard(
-      boards,
-      activeBoard,
-      top,
-      left,
-      url,
-      width + delta.width,
-      height + delta.height,
-      isFullSize
-    );
+  const onResizeStop = (delta) => {
+    updateBoard({ width: width + delta.width, height: height + delta.height });
   };
 
   const closeBrowser = () => {
@@ -132,11 +93,8 @@ export const Browser: React.FC<BrowserProps> = ({
     const browserIndex = boards[boardIndex].browsers.findIndex(
       (b) => b.id === id
     );
-
     const fullSize = !boards[boardIndex].browsers[browserIndex].isFullSize;
-    console.log(fullSize);
-
-    updateBoard(boards, activeBoard, top, left, url, width, height, fullSize);
+    updateBoard({ isFullSize: fullSize });
   };
 
   const style = {
@@ -148,18 +106,23 @@ export const Browser: React.FC<BrowserProps> = ({
   return (
     <Rnd
       style={style}
-      default={{
-        x: left,
-        y: top,
-        width,
-        height,
-      }}
+      default={
+        isFullSize
+          ? undefined
+          : {
+              x: left,
+              y: top,
+              width,
+              height,
+            }
+      }
       dragHandleClassName="BrowserTopBar__container"
       onDragStart={onDragStart}
       onDragStop={onDragStop}
-      onResizeStop={onResizeStop}
+      onResizeStop={(_e, _dir, _ref, delta, _pos) => onResizeStop(delta)}
       bounds=".Board__container"
       className={clsx({ 'Browser__is-full-size': isFullSize })}
+      disableDragging={isFullSize}
     >
       <div className="Browser__container">
         <BrowserTopBar
