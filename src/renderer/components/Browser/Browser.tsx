@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-use-before-define */
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import WebView from '@tianhuil/react-electron-webview';
 import { Rnd } from 'react-rnd';
 import clsx from 'clsx';
@@ -25,6 +25,7 @@ export const Browser: React.FC<BrowserProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const { boards, activeBoard } = useAppSelector((state) => state.addaps);
+  const [title, setTitle] = useState<string>('');
 
   const updateBoard = (update: Record<string, unknown>) => {
     const newBoards = [...boards];
@@ -128,9 +129,14 @@ export const Browser: React.FC<BrowserProps> = ({
         <BrowserTopBar
           closeBrowser={closeBrowser}
           toggleFullsizeBrowser={toggleFullsizeBrowser}
+          title={title}
         />
         <div className="Browser__webview-container">
-          <WebView src={url} onDidStartLoading={onDidStartLoading} />
+          <WebView
+            src={url}
+            onDidStartLoading={onDidStartLoading}
+            onPageTitleSet={(e) => setTitle(e.title)}
+          />
         </div>
       </div>
     </Rnd>

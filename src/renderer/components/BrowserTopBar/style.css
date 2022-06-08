@@ -2,6 +2,17 @@
   background-color: black;
   height: 20px;
   display: flex;
+  flex-direction: row;
+}
+
+.BrowserTopBar__title {
+  display: flex;
+  flex-grow: 1;
+  color: white;
+}
+
+.BrowserTopBar__controls {
+  display: flex;
   flex-direction: row-reverse;
 }
 
