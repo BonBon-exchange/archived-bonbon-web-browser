@@ -1,21 +1,8 @@
 .Board__container {
   display: flex;
   height: 300vh;
-  width: 100%;
+  width: calc(100% - 50px);
   top: 30px;
+  left: 50px;
   position: absolute;
-}
-
-.Board__browserFavContainer {
-  position: fixed;
-  top: 70px;
-  display: flex;
-  flex-direction: column;
-  width: 50px;
-  align-items: center;
-  z-index: 10;
-}
-
-.Board__browserFav {
-  margin-bottom: 10px;
 }
