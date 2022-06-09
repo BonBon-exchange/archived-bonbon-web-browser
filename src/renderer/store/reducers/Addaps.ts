@@ -8,6 +8,12 @@ type UpdateBrowserUrlType = {
   boardId: string;
 };
 
+type UpdateBrowserFavType = {
+  favicon: string;
+  browserId: string;
+  boardId: string;
+};
+
 interface AddapsState {
   boards: BoardType[];
   activeBoard: string;
@@ -50,10 +56,25 @@ export const addapsSlice = createSlice({
         state.boards = boards;
       }
     },
+    updateBrowserFav: (state, action: PayloadAction<UpdateBrowserFavType>) => {
+      const boards = [...state.boards];
+      const boardIndex = boards.findIndex(
+        (b) => b.id === action.payload.boardId
+      );
+      if (boardIndex > -1) {
+        const browserIndex = boards[boardIndex].browsers.findIndex(
+          (b) => b.id === action.payload.browserId
+        );
+        const browser = boards[boardIndex].browsers[browserIndex];
+        browser.favicon = action.payload.favicon;
+        boards[boardIndex].browsers[browserIndex] = browser;
+        state.boards = boards;
+      }
+    },
   },
 });
 
-export const { setBoards, setActiveBoard, updateBrowserUrl } =
+export const { setBoards, setActiveBoard, updateBrowserUrl, updateBrowserFav } =
   addapsSlice.actions;
 
 export default addapsSlice.reducer;

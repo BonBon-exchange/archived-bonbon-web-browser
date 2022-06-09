@@ -9,7 +9,11 @@ import WebView from '@tianhuil/react-electron-webview';
 import { BrowserControlBar } from '../BrowserControlBar';
 import { BrowserTopBar } from '../BrowserTopBar';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { setBoards, updateBrowserUrl } from '../../store/reducers/Addaps';
+import {
+  setBoards,
+  updateBrowserUrl,
+  updateBrowserFav,
+} from '../../store/reducers/Addaps';
 
 import { BrowserProps } from './Types';
 
@@ -129,7 +133,9 @@ export const Browser: React.FC<BrowserProps> = ({
       setFirstRenderingState(false);
       setRenderedUrl(url);
     }
+  }, [firstRenderingState, url]);
 
+  useEffect(() => {
     const webview = container.current.querySelector('webview');
 
     webview.addEventListener('dom-ready', () => {
@@ -151,7 +157,21 @@ export const Browser: React.FC<BrowserProps> = ({
         ).style.zIndex = '2';
       }
     });
-  }, [firstRenderingState, url]);
+  }, []);
+
+  useEffect(() => {
+    const webview = container.current.querySelector('webview');
+    webview.addEventListener('page-favicon-updated', (e) => {
+      console.log(e);
+      dispatch(
+        updateBrowserFav({
+          favicon: e.favicons[0],
+          boardId: activeBoard,
+          browserId: id,
+        })
+      );
+    });
+  });
 
   return (
     <Rnd

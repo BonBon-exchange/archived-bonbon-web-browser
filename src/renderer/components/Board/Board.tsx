@@ -25,6 +25,7 @@ export const Board: React.FC = () => {
       width: 300,
       isFullSize: false,
       firstRendering: true,
+      favicon: '',
     };
 
     if (board) {
@@ -40,6 +41,15 @@ export const Board: React.FC = () => {
   return (
     <div className="Board__container">
       <ButtonAddBrowser onClick={addBrowser} />
+      <div className="Board__browserFavContainer">
+        {board?.browsers.map((b) => {
+          return (
+            <div className="Board__browserFav">
+              <img src={b.favicon} width="32" height="32" />
+            </div>
+          );
+        })}
+      </div>
       {board?.browsers.map((b) => {
         return (
           <Browser
@@ -51,6 +61,7 @@ export const Board: React.FC = () => {
             width={b.width}
             height={b.height}
             isFullSize={b.isFullSize}
+            favicon={b.favicon}
             firstRendering
           />
         );

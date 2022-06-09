@@ -7,4 +7,5 @@ export interface BrowserProps {
   width: number;
   isFullSize: boolean;
   firstRendering: boolean;
+  favicon: string;
 }
