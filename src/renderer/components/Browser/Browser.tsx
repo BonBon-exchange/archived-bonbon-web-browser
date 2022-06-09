@@ -130,11 +130,27 @@ export const Browser: React.FC<BrowserProps> = ({
       setRenderedUrl(url);
     }
 
-    container.current
-      .querySelector('webview')
-      .addEventListener('dom-ready', () => {
-        container.current.querySelector('webview').openDevTools();
-      });
+    const webview = container.current.querySelector('webview');
+
+    webview.addEventListener('dom-ready', () => {
+      // webview.openDevTools();
+    });
+
+    webview.addEventListener('ipc-message', (event, ...args) => {
+      if (event.channel === 'clickOnPage') {
+        const webviews = document.querySelectorAll(
+          '.Browser__draggable-container'
+        );
+
+        webviews.forEach((w) => {
+          w.style.zIndex = '1';
+        });
+
+        container.current.closest(
+          '.Browser__draggable-container'
+        ).style.zIndex = '2';
+      }
+    });
   }, [firstRenderingState, url]);
 
   return (
@@ -155,7 +171,10 @@ export const Browser: React.FC<BrowserProps> = ({
       onDragStop={onDragStop}
       onResizeStop={(_e, _dir, _ref, delta, _pos) => onResizeStop(delta)}
       bounds=".Board__container"
-      className={clsx({ 'Browser__is-full-size': isFullSize })}
+      className={clsx({
+        'Browser__is-full-size': isFullSize,
+        'Browser__draggable-container': true,
+      })}
       disableDragging={isFullSize}
     >
       <div className="Browser__container" ref={container}>
