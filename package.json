@@ -1,16 +1,16 @@
 {
-  "description": "Metalyfe Web3 Browser",
+  "description": "Banb Web3 Browser",
   "keywords": [
     "browser",
     "web3"
   ],
-  "homepage": "https://github.com/danielfebrero/metalyfe-web3-browser#readme",
+  "homepage": "https://github.com/danielfebrero/Banb-web3-browser#readme",
   "bugs": {
-    "url": "https://github.com/danielfebrero/metalyfe-web3-browser/issues"
+    "url": "https://github.com/danielfebrero/Banb-web3-browser/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/danielfebrero/metalyfe-web3-browser.git"
+    "url": "git+https://github.com/danielfebrero/Banb-web3-browser.git"
   },
   "license": "MIT",
   "author": {
@@ -180,8 +180,8 @@
     "webpack-merge": "^5.8.0"
   },
   "build": {
-    "productName": "MetaLyfe",
-    "appId": "org.erb.MetaLyfe",
+    "productName": "Banb",
+    "appId": "org.erb.Banb",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
@@ -240,7 +240,7 @@
     "publish": {
       "provider": "github",
       "owner": "danielfebrero",
-      "repo": "metalyfe-web3-browser"
+      "repo": "banb-web3-browser"
     }
   },
   "devEngines": {

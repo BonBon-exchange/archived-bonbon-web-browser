@@ -1,4 +1,4 @@
-A new version of MetaLyfe, developped from scratch.
+A new version of Banb, developped from scratch.
 Built with Electron, React, TypeScript.
 
 ---
