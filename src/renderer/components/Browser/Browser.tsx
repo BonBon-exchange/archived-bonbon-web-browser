@@ -129,6 +129,12 @@ export const Browser: React.FC<BrowserProps> = ({
       setFirstRenderingState(false);
       setRenderedUrl(url);
     }
+
+    container.current
+      .querySelector('webview')
+      .addEventListener('dom-ready', () => {
+        container.current.querySelector('webview').openDevTools();
+      });
   }, [firstRenderingState, url]);
 
   return (
