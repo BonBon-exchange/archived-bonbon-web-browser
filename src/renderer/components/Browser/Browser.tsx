@@ -162,7 +162,6 @@ export const Browser: React.FC<BrowserProps> = ({
   useEffect(() => {
     const webview = container.current.querySelector('webview');
     webview.addEventListener('page-favicon-updated', (e) => {
-      console.log(e);
       dispatch(
         updateBrowserFav({
           favicon: e.favicons[0],
@@ -191,6 +190,7 @@ export const Browser: React.FC<BrowserProps> = ({
       onDragStop={onDragStop}
       onResizeStop={(_e, _dir, _ref, delta, _pos) => onResizeStop(delta)}
       bounds=".Board__container"
+      id={`Browser__${id}`}
       className={clsx({
         'Browser__is-full-size': isFullSize,
         'Browser__draggable-container': true,

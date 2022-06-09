@@ -15,7 +15,12 @@ export const Board: React.FC = () => {
   const { boards, activeBoard } = useAppSelector((state) => state.addaps);
   const board = boards.find((b) => b.id === activeBoard);
 
-  const addBrowser = () => {
+  const scrollToBrowser = (browserId: string): void => {
+    document.querySelector(`#Browser__${browserId}`)?.scrollIntoView();
+    window.scrollBy(0, -100);
+  };
+
+  const addBrowser = (): void => {
     const newBrowser = {
       id: v4(),
       url: 'https://www.google.fr',
@@ -44,7 +49,11 @@ export const Board: React.FC = () => {
       <div className="Board__browserFavContainer">
         {board?.browsers.map((b) => {
           return (
-            <div className="Board__browserFav">
+            <div
+              className="Board__browserFav"
+              key={b.id}
+              onClick={() => scrollToBrowser(b.id)}
+            >
               <img src={b.favicon} width="32" height="32" />
             </div>
           );
