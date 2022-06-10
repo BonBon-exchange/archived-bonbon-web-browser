@@ -33,7 +33,7 @@ export const Addaps: React.FC = () => {
     });
 
     window.addEventListener('click', () => setShowContextMenu(false));
-  });
+  }, []);
 
   return (
     <>
