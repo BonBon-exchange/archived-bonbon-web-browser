@@ -5,7 +5,11 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 
 import { useAppDispatch } from '../../store/hooks';
-import { setIsRenamingBoard, removeBoard } from '../../store/reducers/Addaps';
+import {
+  setIsRenamingBoard,
+  removeBoard,
+  removeBrowser,
+} from '../../store/reducers/Addaps';
 
 import { ContextMenuProps } from './Types';
 
@@ -42,6 +46,14 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
     [dispatch]
   );
 
+  const closeBrowser = useCallback(
+    (renameTarget: EventTarget | null) => {
+      const browserId = renameTarget?.getAttribute('data-browserid');
+      dispatch(removeBrowser({ browserId }));
+    },
+    [dispatch]
+  );
+
   useEffect(() => {
     container.current.style.top = `${y}px`;
     container.current.style.left = `${x}px`;
@@ -60,6 +72,13 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
           'Inspect element': () => inspectElement(x, y),
           Rename: () => renameBoard(target),
           Close: () => closeBoard(target),
+        });
+        break;
+
+      case 'LeftBar__browserFavImg':
+        setMenuItems({
+          'Inspect element': () => inspectElement(x, y),
+          Close: () => closeBrowser(target),
         });
         break;
     }

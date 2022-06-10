@@ -13,8 +13,9 @@ import {
   setBoards,
   updateBrowserUrl,
   updateBrowserFav,
+  removeBrowser,
 } from '../../store/reducers/Addaps';
-import { bringBrowserToTheFront, overlaps } from '../../helpers/d2';
+import { bringBrowserToTheFront } from '../../helpers/d2';
 
 import { BrowserProps } from './Types';
 
@@ -95,15 +96,7 @@ export const Browser: React.FC<BrowserProps> = ({
   };
 
   const closeBrowser = () => {
-    const newBoards = [...boards];
-    const boardIndex = newBoards.findIndex((b) => b.id === activeBoard);
-    const newBoard = { ...newBoards[boardIndex] };
-    const newBrowsers = [...newBoard.browsers];
-    const newBrowserIndex = newBrowsers.findIndex((b) => b.id === id);
-    newBrowsers.splice(newBrowserIndex, 1);
-    newBoard.browsers = newBrowsers;
-    newBoards[boardIndex] = newBoard;
-    dispatch(setBoards(newBoards));
+    dispatch(removeBrowser({ browserId: id }));
   };
 
   const toggleFullsizeBrowser = () => {

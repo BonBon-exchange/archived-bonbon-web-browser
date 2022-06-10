@@ -23,6 +23,10 @@ type RemoveBoardType = {
   boardId: string;
 };
 
+type RemoveBrowserType = {
+  browserId: string;
+};
+
 interface AddapsState {
   boards: BoardType[];
   activeBoard: string;
@@ -105,6 +109,17 @@ export const addapsSlice = createSlice({
         state.boards = boards;
       }
     },
+    removeBrowser: (state, action: PayloadAction<RemoveBrowserType>) => {
+      const boards = [...state.boards];
+      const boardIndex = boards.findIndex((b) => b.id === state.activeBoard);
+      if (boardIndex > -1) {
+        const browserIndex = boards[boardIndex].browsers.findIndex(
+          (b) => b.id === action.payload.browserId
+        );
+        boards[boardIndex].browsers.splice(browserIndex, 1);
+        state.boards = boards;
+      }
+    },
   },
 });
 
@@ -116,6 +131,7 @@ export const {
   setIsRenamingBoard,
   renameBoard,
   removeBoard,
+  removeBrowser,
 } = addapsSlice.actions;
 
 export default addapsSlice.reducer;

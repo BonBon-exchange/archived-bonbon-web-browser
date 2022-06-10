@@ -30,7 +30,14 @@ export const LeftBar: React.FC = () => {
             key={b.id}
             onClick={() => scrollToBrowser(b.id)}
           >
-            <img src={b.favicon} width="32" height="32" />
+            <img
+              src={b.favicon}
+              width="32"
+              height="32"
+              className="LeftBar__browserFavImg"
+              alt={b.url}
+              data-browserid={b.id}
+            />
           </div>
         );
       })}
