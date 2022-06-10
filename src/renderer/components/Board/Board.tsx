@@ -7,7 +7,7 @@ import { ButtonAddBrowser } from '../ButtonAddBrowser';
 import { Browser } from '../Browser';
 import { setBoards } from '../../store/reducers/Addaps';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { bringBrowserToTheFront } from '../../helpers/d2';
+import { scrollToBrowser } from '../../helpers/d2';
 
 import './style.css';
 
@@ -18,6 +18,7 @@ export const Board: React.FC = () => {
 
   const addBrowser = (): void => {
     const browserId = v4();
+    // const { x, y } = getCoordinateWithNoCollision(document, 800, 600);
     const newBrowser = {
       id: browserId,
       url: 'https://www.google.fr',
@@ -37,6 +38,7 @@ export const Board: React.FC = () => {
       const boardIndex = newBoards.findIndex((b) => b.id === activeBoard);
       newBoards[boardIndex] = newBoard;
       dispatch(setBoards(newBoards));
+      setTimeout(() => scrollToBrowser(document, browserId), 300);
     }
   };
 

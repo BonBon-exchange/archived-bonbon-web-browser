@@ -3,23 +3,13 @@
 /* eslint-disable import/prefer-default-export */
 import React from 'react';
 import { useAppSelector } from '../../store/hooks';
-import { bringBrowserToTheFront } from '../../helpers/d2';
+import { scrollToBrowser } from '../../helpers/d2';
 
 import './style.css';
 
 export const LeftBar: React.FC = () => {
   const { boards, activeBoard } = useAppSelector((state) => state.addaps);
   const board = boards.find((b) => b.id === activeBoard);
-
-  const scrollToBrowser = (browserId: string): void => {
-    document.querySelector(`#Browser__${browserId}`)?.scrollIntoView();
-    window.scrollBy(0, -100);
-
-    bringBrowserToTheFront(
-      document,
-      document.querySelector(`#Browser__${browserId}`)
-    );
-  };
 
   return (
     <div className="LeftBar__browserFavContainer">
@@ -28,7 +18,7 @@ export const LeftBar: React.FC = () => {
           <div
             className="LeftBar__browserFav"
             key={b.id}
-            onClick={() => scrollToBrowser(b.id)}
+            onClick={() => scrollToBrowser(document, b.id)}
           >
             <img
               src={b.favicon}

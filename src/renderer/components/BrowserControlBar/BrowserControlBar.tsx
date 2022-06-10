@@ -16,12 +16,12 @@ export const BrowserControlBar: React.FC<BrowserControlBarProps> = ({
 }) => {
   const [urlInputValue, setUrlInputValue] = useState<string>(url);
 
-  const urlInputOnKeyPress = (e) => {
+  const urlInputOnKeyPress = (e: KeyboardEvent) => {
     if (e.code === 'Enter' || e.code === 'NumpadEnter') {
       document
         .querySelector(`#Browser__${browserId}`)
         ?.querySelector('webview')
-        ?.loadURL(e.target.value);
+        ?.loadURL(e.target?.value);
     }
   };
 

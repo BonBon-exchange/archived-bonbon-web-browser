@@ -33,6 +33,20 @@ export const Addaps: React.FC = () => {
     });
 
     window.addEventListener('click', () => setShowContextMenu(false));
+
+    window.addEventListener('scroll', (e) => {
+      const containerHeight =
+        document.querySelector('.Board__container')?.clientHeight;
+      const heightDistance =
+        document.documentElement.getBoundingClientRect().bottom * -1 +
+        window.innerHeight -
+        30;
+      if (Number(containerHeight) - heightDistance < 100) {
+        document.querySelector('.Board__container').style.height = `${
+          Number(containerHeight) + 100
+        }px`;
+      }
+    });
   }, []);
 
   return (
