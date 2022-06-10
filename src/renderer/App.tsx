@@ -5,6 +5,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { Addaps } from './components/Addaps';
 import { store, persistor } from './store/store';
 
+import './App.css';
+
 export function App() {
   return (
     <Provider store={store}>

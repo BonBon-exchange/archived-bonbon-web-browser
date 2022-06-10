@@ -19,11 +19,11 @@ const persistConfig = {
   storage,
 };
 
-const persisteAddaps = persistReducer(persistConfig, addapsReducer);
+const persistedAddaps = persistReducer(persistConfig, addapsReducer);
 
 export const store = configureStore({
   reducer: {
-    addaps: persisteAddaps,
+    addaps: persistedAddaps,
   },
   devTools: process.env.NODE_ENV !== 'production',
   middleware: (getDefaultMiddleware) =>
