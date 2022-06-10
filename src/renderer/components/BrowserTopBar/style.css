@@ -1,14 +1,17 @@
 .BrowserTopBar__container {
   background-color: black;
-  height: 20px;
+  height: 25px;
   display: flex;
   flex-direction: row;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .BrowserTopBar__title {
   display: flex;
   flex-grow: 1;
   color: white;
+  align-items: center;
 }
 
 .BrowserTopBar__controls {

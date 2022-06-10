@@ -11,7 +11,9 @@
 
 #TopBar__addBoard {
   width: 50px;
-  text-align: center;
+  justify-content: center;
+  display: flex;
+  align-items: center;
 }
 
 .TopBar__tab {
@@ -19,4 +21,5 @@
   border-left: 1px solid white;
   padding-left: 5px;
   padding-right: 5px;
+  align-items: center;
 }
