@@ -1,7 +1,9 @@
-A new version of Banb, developped from scratch.
-Built with Electron, React, TypeScript.
+Band, new version of Metalyfe and Addaps, developped from scratch.
+Built with Electron, React, TypeScript, Redux.
 
 ---
+
+## Try Band today
 
 Work in progress, it's just the beginning.
 
