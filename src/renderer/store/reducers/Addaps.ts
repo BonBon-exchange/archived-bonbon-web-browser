@@ -19,6 +19,10 @@ type RenameBoardType = {
   label: string;
 };
 
+type RemoveBoardType = {
+  boardId: string;
+};
+
 interface AddapsState {
   boards: BoardType[];
   activeBoard: string;
@@ -28,7 +32,7 @@ interface AddapsState {
 const id = v4();
 const newBoard = {
   id,
-  label: 'New board',
+  label: 'Board 1',
   browsers: [],
 };
 
@@ -91,6 +95,16 @@ export const addapsSlice = createSlice({
         state.boards = boards;
       }
     },
+    removeBoard: (state, action: PayloadAction<RemoveBoardType>) => {
+      const boards = [...state.boards];
+      const boardIndex = boards.findIndex(
+        (b) => b.id === action.payload.boardId
+      );
+      if (boardIndex > -1) {
+        boards.splice(boardIndex, 1);
+        state.boards = boards;
+      }
+    },
   },
 });
 
@@ -101,6 +115,7 @@ export const {
   updateBrowserFav,
   setIsRenamingBoard,
   renameBoard,
+  removeBoard,
 } = addapsSlice.actions;
 
 export default addapsSlice.reducer;

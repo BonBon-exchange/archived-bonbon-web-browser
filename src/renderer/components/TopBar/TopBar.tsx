@@ -24,7 +24,7 @@ export const TopBar: React.FC = () => {
     const id = v4();
     const newBoard = {
       id,
-      label: 'New board',
+      label: `Board ${boards.length + 1}`,
       browsers: [],
     };
 
@@ -42,9 +42,6 @@ export const TopBar: React.FC = () => {
 
   return (
     <div id="TopBar__container">
-      <div id="TopBar__addBoard" onClick={addBoard}>
-        +
-      </div>
       {boards.map((b) => {
         return (
           <div
@@ -66,6 +63,9 @@ export const TopBar: React.FC = () => {
           </div>
         );
       })}
+      <div id="TopBar__addBoard" onClick={addBoard}>
+        +
+      </div>
     </div>
   );
 };

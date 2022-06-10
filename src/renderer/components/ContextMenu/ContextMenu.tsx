@@ -5,7 +5,7 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 
 import { useAppDispatch } from '../../store/hooks';
-import { setIsRenamingBoard } from '../../store/reducers/Addaps';
+import { setIsRenamingBoard, removeBoard } from '../../store/reducers/Addaps';
 
 import { ContextMenuProps } from './Types';
 
@@ -34,6 +34,14 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
     [dispatch]
   );
 
+  const closeBoard = useCallback(
+    (renameTarget: EventTarget | null) => {
+      const boardId = renameTarget?.getAttribute('data-boardid');
+      dispatch(removeBoard({ boardId }));
+    },
+    [dispatch]
+  );
+
   useEffect(() => {
     container.current.style.top = `${y}px`;
     container.current.style.left = `${x}px`;
@@ -51,6 +59,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
         setMenuItems({
           'Inspect element': () => inspectElement(x, y),
           Rename: () => renameBoard(target),
+          Close: () => closeBoard(target),
         });
         break;
     }

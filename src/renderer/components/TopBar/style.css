@@ -18,7 +18,7 @@
 
 .TopBar__tab {
   display: flex;
-  border-left: 1px solid white;
+  border-right: 1px solid white;
   padding-left: 5px;
   padding-right: 5px;
   align-items: center;

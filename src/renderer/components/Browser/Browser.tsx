@@ -14,7 +14,7 @@ import {
   updateBrowserUrl,
   updateBrowserFav,
 } from '../../store/reducers/Addaps';
-import { bringBrowserToTheFront } from '../../helpers/d2';
+import { bringBrowserToTheFront, overlaps } from '../../helpers/d2';
 
 import { BrowserProps } from './Types';
 
