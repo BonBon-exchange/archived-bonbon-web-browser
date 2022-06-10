@@ -9,3 +9,13 @@ export const overlaps = (a, b) => {
   const isOverlapping = isInHoriztonalBounds && isInVerticalBounds;
   return isOverlapping;
 };
+
+export const bringBrowserToTheFront = (document: Document, browser) => {
+  const webviews = document.querySelectorAll('.Browser__draggable-container');
+
+  webviews.forEach((w) => {
+    w.style.zIndex = '1';
+  });
+
+  browser.style.zIndex = '2';
+};

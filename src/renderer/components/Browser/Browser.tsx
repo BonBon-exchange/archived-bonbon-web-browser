@@ -14,6 +14,7 @@ import {
   updateBrowserUrl,
   updateBrowserFav,
 } from '../../store/reducers/Addaps';
+import { bringBrowserToTheFront } from '../../helpers/d2';
 
 import { BrowserProps } from './Types';
 
@@ -144,17 +145,10 @@ export const Browser: React.FC<BrowserProps> = ({
 
     webview.addEventListener('ipc-message', (event, ...args) => {
       if (event.channel === 'clickOnPage') {
-        const webviews = document.querySelectorAll(
-          '.Browser__draggable-container'
+        bringBrowserToTheFront(
+          document,
+          container.current.closest('.Browser__draggable-container')
         );
-
-        webviews.forEach((w) => {
-          w.style.zIndex = '1';
-        });
-
-        container.current.closest(
-          '.Browser__draggable-container'
-        ).style.zIndex = '2';
       }
     });
   }, []);
@@ -171,6 +165,10 @@ export const Browser: React.FC<BrowserProps> = ({
       );
     });
   });
+
+  useEffect(() => {
+    bringBrowserToTheFront(document, document.querySelector(`#Browser__${id}`));
+  }, [id]);
 
   return (
     <Rnd

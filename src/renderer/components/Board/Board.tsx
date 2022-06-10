@@ -7,6 +7,7 @@ import { ButtonAddBrowser } from '../ButtonAddBrowser';
 import { Browser } from '../Browser';
 import { setBoards } from '../../store/reducers/Addaps';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { bringBrowserToTheFront } from '../../helpers/d2';
 
 import './style.css';
 
@@ -16,8 +17,9 @@ export const Board: React.FC = () => {
   const board = boards.find((b) => b.id === activeBoard);
 
   const addBrowser = (): void => {
+    const browserId = v4();
     const newBrowser = {
-      id: v4(),
+      id: browserId,
       url: 'https://www.google.fr',
       top: 120,
       left: 120,

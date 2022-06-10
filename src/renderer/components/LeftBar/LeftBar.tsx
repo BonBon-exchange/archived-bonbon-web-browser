@@ -3,6 +3,7 @@
 /* eslint-disable import/prefer-default-export */
 import React from 'react';
 import { useAppSelector } from '../../store/hooks';
+import { bringBrowserToTheFront } from '../../helpers/d2';
 
 import './style.css';
 
@@ -14,13 +15,10 @@ export const LeftBar: React.FC = () => {
     document.querySelector(`#Browser__${browserId}`)?.scrollIntoView();
     window.scrollBy(0, -100);
 
-    const webviews = document.querySelectorAll('.Browser__draggable-container');
-
-    webviews.forEach((w) => {
-      w.style.zIndex = '1';
-    });
-
-    document.querySelector(`#Browser__${browserId}`).style.zIndex = '2';
+    bringBrowserToTheFront(
+      document,
+      document.querySelector(`#Browser__${browserId}`)
+    );
   };
 
   return (
