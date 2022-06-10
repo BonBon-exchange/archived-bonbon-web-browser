@@ -82,7 +82,16 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
         });
         break;
     }
-  }, [targetClass, targetId, x, y, target, renameBoard]);
+  }, [
+    targetClass,
+    targetId,
+    x,
+    y,
+    target,
+    renameBoard,
+    closeBoard,
+    closeBrowser,
+  ]);
 
   return (
     <div id="ContextMenu__container" ref={container}>

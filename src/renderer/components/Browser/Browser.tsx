@@ -194,7 +194,12 @@ export const Browser: React.FC<BrowserProps> = ({
           toggleFullsizeBrowser={toggleFullsizeBrowser}
           title={title}
         />
-        <BrowserControlBar goBack={goBack} goForward={goForward} />
+        <BrowserControlBar
+          goBack={goBack}
+          goForward={goForward}
+          url={url}
+          browserId={id}
+        />
         <div className="Browser__webview-container">
           <WebView
             src={renderedUrl}
