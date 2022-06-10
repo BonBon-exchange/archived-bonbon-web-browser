@@ -24,6 +24,8 @@ export const Addaps: React.FC = () => {
       setContextMenuProps({
         x: e.x,
         y: e.y,
+        targetId: e.target?.id,
+        targetClass: e.target?.className,
       });
       setShowContextMenu(true);
     });
