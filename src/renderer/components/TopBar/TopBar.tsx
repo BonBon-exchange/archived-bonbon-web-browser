@@ -4,14 +4,20 @@
 /* eslint-disable no-use-before-define */
 import React from 'react';
 import { v4 } from 'uuid';
+import TextField from '@mui/material/TextField';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { setBoards, setActiveBoard } from '../../store/reducers/Addaps';
+import {
+  setBoards,
+  setActiveBoard,
+  setIsRenamingBoard,
+  renameBoard,
+} from '../../store/reducers/Addaps';
 
 import './style.css';
 
 export const TopBar: React.FC = () => {
-  const { boards } = useAppSelector((state) => state.addaps);
+  const { boards, isRenamingBoard } = useAppSelector((state) => state.addaps);
   const dispatch = useAppDispatch();
 
   const addBoard = () => {
@@ -27,6 +33,13 @@ export const TopBar: React.FC = () => {
     dispatch(setActiveBoard(id));
   };
 
+  const tabOnKeyPress = (e: KeyboardEvent, boardId: string) => {
+    if (e.code === 'Enter' || e.code === 'NumpadEnter') {
+      dispatch(setIsRenamingBoard(null));
+      dispatch(renameBoard({ boardId, label: e.target?.value }));
+    }
+  };
+
   return (
     <div id="TopBar__container">
       <div id="TopBar__addBoard" onClick={addBoard}>
@@ -38,8 +51,18 @@ export const TopBar: React.FC = () => {
             className="TopBar__tab"
             key={b.id}
             onClick={() => dispatch(setActiveBoard(b.id))}
+            data-boardid={b.id}
           >
-            {b.label}
+            {isRenamingBoard === b.id ? (
+              <TextField
+                label="Board name"
+                defaultValue={b.label}
+                variant="standard"
+                onKeyPress={(e) => tabOnKeyPress(e, b.id)}
+              />
+            ) : (
+              b.label
+            )}
           </div>
         );
       })}

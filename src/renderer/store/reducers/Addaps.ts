@@ -14,9 +14,15 @@ type UpdateBrowserFavType = {
   boardId: string;
 };
 
+type RenameBoardType = {
+  boardId: string;
+  label: string;
+};
+
 interface AddapsState {
   boards: BoardType[];
   activeBoard: string;
+  isRenamingBoard: string | null;
 }
 
 const id = v4();
@@ -29,6 +35,7 @@ const newBoard = {
 const initialState: AddapsState = {
   boards: [newBoard],
   activeBoard: id,
+  isRenamingBoard: null,
 };
 
 export const addapsSlice = createSlice({
@@ -40,6 +47,9 @@ export const addapsSlice = createSlice({
     },
     setActiveBoard: (state, action: PayloadAction<string>) => {
       state.activeBoard = action.payload;
+    },
+    setIsRenamingBoard: (state, action: PayloadAction<string | null>) => {
+      state.isRenamingBoard = action.payload;
     },
     updateBrowserUrl: (state, action: PayloadAction<UpdateBrowserUrlType>) => {
       const boards = [...state.boards];
@@ -71,10 +81,26 @@ export const addapsSlice = createSlice({
         state.boards = boards;
       }
     },
+    renameBoard: (state, action: PayloadAction<RenameBoardType>) => {
+      const boards = [...state.boards];
+      const boardIndex = boards.findIndex(
+        (b) => b.id === action.payload.boardId
+      );
+      if (boardIndex > -1) {
+        boards[boardIndex].label = action.payload.label;
+        state.boards = boards;
+      }
+    },
   },
 });
 
-export const { setBoards, setActiveBoard, updateBrowserUrl, updateBrowserFav } =
-  addapsSlice.actions;
+export const {
+  setBoards,
+  setActiveBoard,
+  updateBrowserUrl,
+  updateBrowserFav,
+  setIsRenamingBoard,
+  renameBoard,
+} = addapsSlice.actions;
 
 export default addapsSlice.reducer;

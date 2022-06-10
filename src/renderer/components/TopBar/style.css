@@ -23,3 +23,12 @@
   padding-right: 5px;
   align-items: center;
 }
+
+.TopBar__tab input {
+  color: black;
+  background-color: white;
+}
+
+.TopBar__tab .MuiInput-root {
+  margin-top: 0 !important;
+}

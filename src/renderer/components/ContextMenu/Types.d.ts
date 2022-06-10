@@ -3,4 +3,5 @@ export interface ContextMenuProps {
   y: number;
   targetId?: string;
   targetClass?: string;
+  target: EventTarget | null;
 }

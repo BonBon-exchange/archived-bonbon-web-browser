@@ -2,7 +2,10 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable import/prefer-default-export */
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useCallback } from 'react';
+
+import { useAppDispatch } from '../../store/hooks';
+import { setIsRenamingBoard } from '../../store/reducers/Addaps';
 
 import { ContextMenuProps } from './Types';
 
@@ -17,10 +20,19 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
   y,
   targetClass,
   targetId,
+  target,
 }) => {
   const container = useRef(null);
-
+  const dispatch = useAppDispatch();
   const [menuItems, setMenuItems] = useState<Record<string, () => void>>({});
+
+  const renameBoard = useCallback(
+    (renameTarget: EventTarget | null) => {
+      const boardId = renameTarget?.getAttribute('data-boardid');
+      dispatch(setIsRenamingBoard(boardId));
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     container.current.style.top = `${y}px`;
@@ -38,11 +50,11 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
       case 'TopBar__tab':
         setMenuItems({
           'Inspect element': () => inspectElement(x, y),
-          Rename: () => null,
+          Rename: () => renameBoard(target),
         });
         break;
     }
-  }, [targetClass, targetId, x, y]);
+  }, [targetClass, targetId, x, y, target, renameBoard]);
 
   return (
     <div id="ContextMenu__container" ref={container}>

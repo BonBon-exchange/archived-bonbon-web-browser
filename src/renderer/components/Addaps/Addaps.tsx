@@ -16,6 +16,7 @@ export const Addaps: React.FC = () => {
   const [contextMenuProps, setContextMenuProps] = useState<ContextMenuProps>({
     x: 0,
     y: 0,
+    target: null,
   });
 
   useEffect(() => {
@@ -26,6 +27,7 @@ export const Addaps: React.FC = () => {
         y: e.y,
         targetId: e.target?.id,
         targetClass: e.target?.className,
+        target: e.target,
       });
       setShowContextMenu(true);
     });
