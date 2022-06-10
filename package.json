@@ -109,7 +109,8 @@
     "react-draggable": "^4.4.5",
     "react-redux": "^8.0.2",
     "react-rnd": "^10.3.7",
-    "react-router-dom": "^6.3.0"
+    "react-router-dom": "^6.3.0",
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.6",
