@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable import/prefer-default-export */
 import React from 'react';
 import { useAppSelector } from '../../store/hooks';
 
@@ -10,6 +13,14 @@ export const LeftBar: React.FC = () => {
   const scrollToBrowser = (browserId: string): void => {
     document.querySelector(`#Browser__${browserId}`)?.scrollIntoView();
     window.scrollBy(0, -100);
+
+    const webviews = document.querySelectorAll('.Browser__draggable-container');
+
+    webviews.forEach((w) => {
+      w.style.zIndex = '1';
+    });
+
+    document.querySelector(`#Browser__${browserId}`).style.zIndex = '2';
   };
 
   return (
