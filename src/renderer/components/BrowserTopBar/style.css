@@ -23,3 +23,8 @@
   color: white;
   margin-right: 5px;
 }
+
+.BrowserTopBar__favicon {
+  margin-right: 5px;
+  margin-top: 4px;
+}

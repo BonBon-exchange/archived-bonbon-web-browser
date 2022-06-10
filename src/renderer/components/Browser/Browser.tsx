@@ -30,6 +30,7 @@ export const Browser: React.FC<BrowserProps> = ({
   width,
   isFullSize,
   firstRendering,
+  favicon,
 }) => {
   const dispatch = useAppDispatch();
   const { boards, activeBoard } = useAppSelector((state) => state.addaps);
@@ -193,6 +194,7 @@ export const Browser: React.FC<BrowserProps> = ({
           closeBrowser={closeBrowser}
           toggleFullsizeBrowser={toggleFullsizeBrowser}
           title={title}
+          favicon={favicon}
         />
         <BrowserControlBar
           goBack={goBack}
