@@ -1,14 +1,14 @@
 .BrowserControlBar__container {
-    height: 25px;
-    display: flex;
-    flex-direction: row;
+  height: 25px;
+  display: flex;
+  flex-direction: row;
 }
 
 .BrowserControlBar__controls {
-    display: flex;
-    flex-direction: row;
-    width: 30%;
-    justify-content: space-around;
+  display: flex;
+  flex-direction: row;
+  width: 30%;
+  justify-content: space-around;
 }
 
 .BrowserControlBar__container .MuiInput-root {
@@ -17,4 +17,8 @@
 
 .BrowserControlBar_url-input {
   flex-grow: 1;
+}
+
+.BrowserControlBar_url-input input {
+  font-size: 14px;
 }

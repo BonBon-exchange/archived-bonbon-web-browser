@@ -1,11 +1,14 @@
 .LeftBar__browserFavContainer {
   position: fixed;
-  top: 70px;
+  top: 30px;
+  height: calc(100% - 30px);
+  padding-top: 70px;
   display: flex;
   flex-direction: column;
   width: 50px;
   align-items: center;
   z-index: 10;
+  background-color: #e6eaf7;
 }
 
 .LeftBar__browserFav {

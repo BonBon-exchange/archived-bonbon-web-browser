@@ -6,6 +6,7 @@ import React from 'react';
 import { v4 } from 'uuid';
 import TextField from '@mui/material/TextField';
 import AddIcon from '@mui/icons-material/Add';
+import clsx from 'clsx';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
@@ -18,7 +19,9 @@ import {
 import './style.css';
 
 export const TopBar: React.FC = () => {
-  const { boards, isRenamingBoard } = useAppSelector((state) => state.addaps);
+  const { boards, isRenamingBoard, activeBoard } = useAppSelector(
+    (state) => state.addaps
+  );
   const dispatch = useAppDispatch();
 
   const addBoard = () => {
@@ -49,7 +52,7 @@ export const TopBar: React.FC = () => {
           <div
             className="TopBar__tab"
             key={b.id}
-            onClick={() => dispatch(setActiveBoard(b.id))}
+            onClick={() => !isRenamingBoard && dispatch(setActiveBoard(b.id))}
             data-boardid={b.id}
           >
             {isRenamingBoard === b.id ? (
@@ -60,7 +63,9 @@ export const TopBar: React.FC = () => {
                 onKeyPress={(e) => tabOnKeyPress(e, b.id)}
               />
             ) : (
-              b.label
+              <span className={clsx({ bold: activeBoard === b.id })}>
+                {b.label}
+              </span>
             )}
           </div>
         );

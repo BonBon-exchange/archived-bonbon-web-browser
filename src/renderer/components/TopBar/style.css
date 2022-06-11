@@ -1,9 +1,9 @@
 #TopBar__container {
   display: flex;
   height: 30px;
-  background-color: black;
+  background-color: #e6eaf7;
   flex-grow: 1;
-  color: white;
+  color: rgb(32, 29, 29);
   position: fixed;
   width: 100%;
   z-index: 1000;
@@ -18,10 +18,11 @@
 
 .TopBar__tab {
   display: flex;
-  border-right: 1px solid white;
+  border-right: 1px solid rgb(32, 29, 29);
   padding-left: 5px;
   padding-right: 5px;
   align-items: center;
+  font-size: 14px;
 }
 
 .TopBar__tab input {

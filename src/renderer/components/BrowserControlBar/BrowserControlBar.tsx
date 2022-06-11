@@ -64,7 +64,6 @@ export const BrowserControlBar: React.FC<BrowserControlBarProps> = ({
         </div>
       </div>
       <TextField
-        label="Url"
         variant="standard"
         value={urlInputValue}
         className="BrowserControlBar_url-input"
