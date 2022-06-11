@@ -73,6 +73,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
         break;
 
       case 'TopBar__tab':
+      case 'TopBar__tab bold':
         setMenuItems({
           'Inspect element': () => inspectElement(x, y),
           Rename: () => renameBoard(target),

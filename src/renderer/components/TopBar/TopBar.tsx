@@ -50,7 +50,7 @@ export const TopBar: React.FC = () => {
       {boards.map((b) => {
         return (
           <div
-            className="TopBar__tab"
+            className={clsx({ TopBar__tab: true, bold: activeBoard === b.id })}
             key={b.id}
             onClick={() => !isRenamingBoard && dispatch(setActiveBoard(b.id))}
             data-boardid={b.id}
@@ -63,9 +63,7 @@ export const TopBar: React.FC = () => {
                 onKeyPress={(e) => tabOnKeyPress(e, b.id)}
               />
             ) : (
-              <span className={clsx({ bold: activeBoard === b.id })}>
-                {b.label}
-              </span>
+              b.label
             )}
           </div>
         );
