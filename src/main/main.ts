@@ -159,7 +159,7 @@ app
       client_id: machineIdSync(),
       events: [
         {
-          name: 'openApp',
+          name: 'open_app',
           params: {},
         },
       ],

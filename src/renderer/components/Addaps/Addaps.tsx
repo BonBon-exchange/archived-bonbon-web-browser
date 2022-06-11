@@ -49,6 +49,11 @@ export const Addaps: React.FC = () => {
     });
   }, []);
 
+  useEffect(() => {
+    window.gtag('config', 'G-PDRJCJWQYM');
+    window.gtag('event', 'load_app');
+  }, []);
+
   return (
     <>
       <TopBar />

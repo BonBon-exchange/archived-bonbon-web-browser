@@ -31,6 +31,7 @@ export const TopBar: React.FC = () => {
     const editedBoards = [...boards, newBoard];
     dispatch(setBoards(editedBoards));
     dispatch(setActiveBoard(id));
+    window.gtag('event', 'add_board');
   };
 
   const tabOnKeyPress = (e: KeyboardEvent, boardId: string) => {
