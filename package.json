@@ -1,16 +1,15 @@
 {
-  "description": "Banb Web3 Browser",
+  "description": "Bonb Browser",
   "keywords": [
-    "browser",
-    "web3"
+    "browser"
   ],
-  "homepage": "https://github.com/danielfebrero/Banb-web3-browser#readme",
+  "homepage": "https://github.com/danielfebrero/bonb-browser#readme",
   "bugs": {
-    "url": "https://github.com/danielfebrero/Banb-web3-browser/issues"
+    "url": "https://github.com/danielfebrero/bonb-browser/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/danielfebrero/Banb-web3-browser.git"
+    "url": "git+https://github.com/danielfebrero/bonb-browser.git"
   },
   "license": "MIT",
   "author": {
@@ -184,8 +183,8 @@
     "webpack-merge": "^5.8.0"
   },
   "build": {
-    "productName": "Banb",
-    "appId": "org.erb.Banb",
+    "productName": "Bonb",
+    "appId": "org.erb.Bonb",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
@@ -244,7 +243,7 @@
     "publish": {
       "provider": "github",
       "owner": "danielfebrero",
-      "repo": "banb-web3-browser"
+      "repo": "bonb-web3-browser"
     }
   },
   "devEngines": {

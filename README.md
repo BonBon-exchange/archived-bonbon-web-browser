@@ -3,10 +3,10 @@ Built with Electron, React, TypeScript, Redux.
 
 ---
 
-## Try Banb today
+## Try Bonb today
 
 Work in progress, it's just the beginning.
-Dowload for windows: [Banb 0.1.0](https://github.com/danielfebrero/banb-web3-browser/raw/master/release/build/Banb%20Setup%200.1.0.exe)
+Dowload for windows: [Bonb 0.1.0](https://github.com/danielfebrero/bonb-web3-browser/raw/master/release/build/Bonb%20Setup%200.1.0.exe)
 
 ---
 

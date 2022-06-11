@@ -1,12 +1,12 @@
 {
-  "name": "band",
+  "name": "bonb",
   "version": "0.1.0",
-  "description": "A foundation for scalable desktop apps",
+  "description": "Bonb browser",
   "license": "MIT",
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://github.com/electron-react-boilerplate"
+    "name": "Daniel Febrero",
+    "email": "febrero@me.com",
+    "url": "https://github.com/danielfebrero/bonb-browser"
   },
   "main": "./dist/main/main.js",
   "scripts": {
