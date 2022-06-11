@@ -1,4 +1,6 @@
-Band, new version of Metalyfe and Addaps, developped from scratch.
+# Bonb Browser
+
+Bonb, new version of Metalyfe and Addaps.
 
 Built with Electron, React, TypeScript, Redux.
 
@@ -13,8 +15,6 @@ Download for Windows: [Bonb 0.2.0](https://github.com/danielfebrero/bonb-web3-br
 ---
 
 An innovative user experience.
-
----
 
 You own your data.
 
