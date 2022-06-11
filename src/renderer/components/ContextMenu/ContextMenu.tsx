@@ -9,6 +9,7 @@ import {
   setIsRenamingBoard,
   removeBoard,
   removeBrowser,
+  removeAllBrowsers,
 } from '../../store/reducers/Addaps';
 
 import { ContextMenuProps } from './Types';
@@ -54,6 +55,10 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
     [dispatch]
   );
 
+  const closeAllBrowsers = useCallback(() => {
+    dispatch(removeAllBrowsers());
+  }, [dispatch]);
+
   useEffect(() => {
     container.current.style.top = `${y}px`;
     container.current.style.left = `${x}px`;
@@ -79,6 +84,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
         setMenuItems({
           'Inspect element': () => inspectElement(x, y),
           Close: () => closeBrowser(target),
+          'Close all': () => closeAllBrowsers(),
         });
         break;
     }

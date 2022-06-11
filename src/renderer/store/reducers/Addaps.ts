@@ -120,6 +120,14 @@ export const addapsSlice = createSlice({
         state.boards = boards;
       }
     },
+    removeAllBrowsers: (state, _action: PayloadAction<null>) => {
+      const boards = [...state.boards];
+      const boardIndex = boards.findIndex((b) => b.id === state.activeBoard);
+      if (boardIndex > -1) {
+        boards[boardIndex].browsers = [];
+        state.boards = boards;
+      }
+    },
   },
 });
 
@@ -132,6 +140,7 @@ export const {
   renameBoard,
   removeBoard,
   removeBrowser,
+  removeAllBrowsers,
 } = addapsSlice.actions;
 
 export default addapsSlice.reducer;
