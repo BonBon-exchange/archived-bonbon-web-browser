@@ -11,9 +11,12 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain, session } from 'electron';
+import { app, BrowserWindow, shell, session } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import axios from 'axios';
+import { machineIdSync } from 'node-machine-id';
+
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { makeEvents } from './ipcMainEvents';
@@ -143,6 +146,7 @@ app
       // dock icon is clicked and there are no other windows open.
       if (mainWindow === null) createWindow();
     });
+
     session
       .fromPartition('user-partition')
       .setPermissionRequestHandler((webContents, permission, callback) => {
@@ -150,5 +154,20 @@ app
         console.log(url, permission);
         callback(false);
       });
+
+    const payload = {
+      client_id: machineIdSync(),
+      events: [
+        {
+          name: 'openApp',
+          params: {},
+        },
+      ],
+    };
+
+    axios.post(
+      'https://google-analytics.com/mp/collect?api_secret=wvmixxOmSEm5svFi35Qo4g&measurement_id=G-PDRJCJWQYM',
+      payload
+    );
   })
   .catch(console.log);
