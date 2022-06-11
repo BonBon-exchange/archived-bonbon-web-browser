@@ -135,6 +135,10 @@ app.on('web-contents-created', (_event, contents) => {
     // Disable Node.js integration
     webPreferences.nodeIntegration = false;
   });
+
+  contents.on('new-window', function (e) {
+    e.preventDefault();
+  });
 });
 
 app

@@ -222,6 +222,7 @@ export const Browser: React.FC<BrowserProps> = ({
         />
         <div className="Browser__webview-container">
           <WebView
+            allowpopups="true"
             src={renderedUrl}
             onPageTitleSet={(e) => setTitle(e.title)}
             partition="persist:user-partition"

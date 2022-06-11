@@ -13,10 +13,10 @@ export const bringBrowserToTheFront = (document: Document, browser) => {
   const browsers = document.querySelectorAll('.Browser__draggable-container');
 
   browsers.forEach((w) => {
-    w.style.zIndex = '1';
+    if (w) w.style.zIndex = '1';
   });
 
-  browser.style.zIndex = '2';
+  if (browser) browser.style.zIndex = '2';
 };
 
 export const getCoordinateWithNoCollision = (
