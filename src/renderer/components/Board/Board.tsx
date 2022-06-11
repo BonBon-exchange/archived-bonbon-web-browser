@@ -22,7 +22,6 @@ export const Board: React.FC = () => {
   const addBrowser = (): void => {
     const browserId = v4();
     const { x, y } = getCoordinateWithNoCollision(document, 800, 600);
-    console.log({ x, y });
     const newBrowser = {
       id: browserId,
       url: 'https://www.google.fr',

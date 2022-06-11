@@ -82,16 +82,6 @@ export const Browser: React.FC<BrowserProps> = ({
     });
   };
 
-  const onDidStartLoading = (e) => {
-    dispatch(
-      updateBrowserUrl({
-        url: e.target.src,
-        browserId: id,
-        boardId: activeBoard,
-      })
-    );
-  };
-
   const onResizeStop = (delta) => {
     updateBoard({ width: width + delta.width, height: height + delta.height });
   };
@@ -166,7 +156,18 @@ export const Browser: React.FC<BrowserProps> = ({
         })
       );
     });
-  });
+
+    webview.addEventListener('will-navigate', (event) => {
+      window.gtag('event', 'browser_navigate');
+      dispatch(
+        updateBrowserUrl({
+          url: event.url,
+          browserId: id,
+          boardId: activeBoard,
+        })
+      );
+    });
+  }, [activeBoard, dispatch, id]);
 
   useEffect(() => {
     bringBrowserToTheFront(document, document.querySelector(`#Browser__${id}`));
@@ -216,7 +217,6 @@ export const Browser: React.FC<BrowserProps> = ({
           <WebView
             src={renderedUrl}
             onPageTitleSet={(e) => setTitle(e.title)}
-            onLoadCommit={onDidStartLoading}
             partition="persist:user-partition"
           />
         </div>
