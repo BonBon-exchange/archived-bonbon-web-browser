@@ -164,11 +164,11 @@ export const Browser: React.FC<BrowserProps> = ({
       );
     });
 
-    webview.addEventListener('will-navigate', (event) => {
+    webview.addEventListener('load-commit', (event) => {
       window.gtag('event', 'browser_navigate');
       dispatch(
         updateBrowserUrl({
-          url: event.url,
+          url: event.target.src,
           browserId: id,
           boardId: activeBoard,
         })
