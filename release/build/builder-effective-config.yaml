@@ -2,8 +2,8 @@ directories:
   output: release/build
   buildResources: assets
   app: release/app
-productName: Banb
-appId: org.erb.Banb
+productName: Bonb
+appId: org.erb.Bonb
 asar: true
 asarUnpack: '**\*.{node,dll}'
 files:
@@ -44,5 +44,5 @@ extraResources:
 publish:
   provider: github
   owner: danielfebrero
-  repo: banb-web3-browser
+  repo: bonb-web3-browser
 electronVersion: 18.3.3

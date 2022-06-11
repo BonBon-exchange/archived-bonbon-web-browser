@@ -1,8 +1,8 @@
-version: 0.1.0
+version: 0.2.0
 files:
-  - url: Banb-Setup-0.1.0.exe
-    sha512: DnEAIGZSR0SF64zamfK/DwG8ewY/tDmUGMB0vd/74BBqmgBwBWkL8cYC91vD65dG0JEIdadQUyvzNg7zVMWMaQ==
-    size: 64155703
-path: Banb-Setup-0.1.0.exe
-sha512: DnEAIGZSR0SF64zamfK/DwG8ewY/tDmUGMB0vd/74BBqmgBwBWkL8cYC91vD65dG0JEIdadQUyvzNg7zVMWMaQ==
-releaseDate: '2022-06-10T17:49:56.906Z'
+  - url: Bonb-Setup-0.2.0.exe
+    sha512: G7zwnsIboGvzAW6cwxl7bwbE3DVrwQAI4U3uUGxhj7CEYeqvsuRNi5JoXiSElrR/9m3gxBmvv6VVqBB37dZE6Q==
+    size: 64191940
+path: Bonb-Setup-0.2.0.exe
+sha512: G7zwnsIboGvzAW6cwxl7bwbE3DVrwQAI4U3uUGxhj7CEYeqvsuRNi5JoXiSElrR/9m3gxBmvv6VVqBB37dZE6Q==
+releaseDate: '2022-06-11T19:43:58.456Z'

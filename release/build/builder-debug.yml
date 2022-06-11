@@ -19,8 +19,8 @@ x64:
     - package.json
 nsis:
   script: |-
-    !include "C:\Users\exr499\Dev\banb-web3-browser\node_modules\app-builder-lib\templates\nsis\include\StdUtils.nsh"
-    !addincludedir "C:\Users\exr499\Dev\banb-web3-browser\node_modules\app-builder-lib\templates\nsis\include"
+    !include "C:\Users\exr499\Dev\bonb-browser\node_modules\app-builder-lib\templates\nsis\include\StdUtils.nsh"
+    !addincludedir "C:\Users\exr499\Dev\bonb-browser\node_modules\app-builder-lib\templates\nsis\include"
     !macro _isUpdated _a _b _t _f
       ${StdUtils.TestParameter} $R9 "updated"
       StrCmp "$R9" "true" `${_t}` `${_f}`
@@ -93,7 +93,7 @@ nsis:
     !macroend
 
     !addplugindir /x86-unicode "C:\Users\exr499\AppData\Local\electron-builder\Cache\nsis\nsis-resources-3.4.1\plugins\x86-unicode"
-    !include "C:\Users\exr499\AppData\Local\Temp\t-mEj1EV\0-messages.nsh"
+    !include "C:\Users\exr499\AppData\Local\Temp\t-0MnEWt\0-messages.nsh"
 
     Var newStartMenuLink
     Var oldStartMenuLink
