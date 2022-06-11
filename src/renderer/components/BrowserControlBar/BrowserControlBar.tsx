@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField';
 import CachedIcon from '@mui/icons-material/Cached';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import HomeIcon from '@mui/icons-material/Home';
 
 import { BrowserControlBarProps } from './Types';
 
@@ -17,6 +18,7 @@ export const BrowserControlBar: React.FC<BrowserControlBarProps> = ({
   reload,
   url,
   browserId,
+  goHome,
 }) => {
   const [urlInputValue, setUrlInputValue] = useState<string>(url);
 
@@ -44,6 +46,9 @@ export const BrowserControlBar: React.FC<BrowserControlBarProps> = ({
         </div>
         <div className="BrowserControlBar__control" onClick={reload}>
           <CachedIcon />
+        </div>
+        <div className="BrowserControlBar__control" onClick={goHome}>
+          <HomeIcon />
         </div>
       </div>
       <TextField

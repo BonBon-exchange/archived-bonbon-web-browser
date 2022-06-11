@@ -121,6 +121,10 @@ export const Browser: React.FC<BrowserProps> = ({
     container.current.querySelector('webview').reload();
   };
 
+  const goHome = () => {
+    container.current.querySelector('webview').loadURL('https://www.google.fr');
+  };
+
   const style = {
     display: 'flex',
     border: 'solid 1px #ddd',
@@ -204,6 +208,7 @@ export const Browser: React.FC<BrowserProps> = ({
           goBack={goBack}
           goForward={goForward}
           reload={reload}
+          goHome={goHome}
           url={url}
           browserId={id}
         />
