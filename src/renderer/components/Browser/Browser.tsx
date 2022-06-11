@@ -117,6 +117,10 @@ export const Browser: React.FC<BrowserProps> = ({
     container.current.querySelector('webview').goForward();
   };
 
+  const reload = () => {
+    container.current.querySelector('webview').reload();
+  };
+
   const style = {
     display: 'flex',
     border: 'solid 1px #ddd',
@@ -199,6 +203,7 @@ export const Browser: React.FC<BrowserProps> = ({
         <BrowserControlBar
           goBack={goBack}
           goForward={goForward}
+          reload={reload}
           url={url}
           browserId={id}
         />

@@ -3,6 +3,9 @@
 /* eslint-disable import/prefer-default-export */
 import React, { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
+import CachedIcon from '@mui/icons-material/Cached';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 import { BrowserControlBarProps } from './Types';
 
@@ -11,6 +14,7 @@ import './style.css';
 export const BrowserControlBar: React.FC<BrowserControlBarProps> = ({
   goBack,
   goForward,
+  reload,
   url,
   browserId,
 }) => {
@@ -33,10 +37,13 @@ export const BrowserControlBar: React.FC<BrowserControlBarProps> = ({
     <div className="BrowserControlBar__container">
       <div className="BrowserControlBar__controls">
         <div className="BrowserControlBar__control" onClick={goBack}>
-          {'<'}
+          <ArrowBackIcon />
         </div>
         <div className="BrowserControlBar__control" onClick={goForward}>
-          {'>'}
+          <ArrowForwardIcon />
+        </div>
+        <div className="BrowserControlBar__control" onClick={reload}>
+          <CachedIcon />
         </div>
       </div>
       <TextField
