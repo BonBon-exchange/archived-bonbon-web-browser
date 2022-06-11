@@ -9,6 +9,8 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import HomeIcon from '@mui/icons-material/Home';
 
 import { BrowserControlBarProps } from './Types';
+import { updateBrowserUrl } from '../../store/reducers/Addaps';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 import './style.css';
 
@@ -21,6 +23,8 @@ export const BrowserControlBar: React.FC<BrowserControlBarProps> = ({
   goHome,
 }) => {
   const [urlInputValue, setUrlInputValue] = useState<string>(url);
+  const dispatch = useAppDispatch();
+  const { activeBoard } = useAppSelector((state) => state.addaps);
 
   const urlInputOnKeyPress = (e: KeyboardEvent) => {
     if (e.code === 'Enter' || e.code === 'NumpadEnter') {
@@ -28,6 +32,14 @@ export const BrowserControlBar: React.FC<BrowserControlBarProps> = ({
         .querySelector(`#Browser__${browserId}`)
         ?.querySelector('webview')
         ?.loadURL(e.target?.value);
+
+      dispatch(
+        updateBrowserUrl({
+          url: e.target?.value,
+          browserId,
+          boardId: activeBoard,
+        })
+      );
     }
   };
 

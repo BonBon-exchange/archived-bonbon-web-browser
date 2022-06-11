@@ -97,6 +97,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
     renameBoard,
     closeBoard,
     closeBrowser,
+    closeAllBrowsers,
   ]);
 
   return (

@@ -120,7 +120,7 @@ export const addapsSlice = createSlice({
         state.boards = boards;
       }
     },
-    removeAllBrowsers: (state, _action: PayloadAction<null>) => {
+    removeAllBrowsers: (state, _action: PayloadAction) => {
       const boards = [...state.boards];
       const boardIndex = boards.findIndex((b) => b.id === state.activeBoard);
       if (boardIndex > -1) {

@@ -113,6 +113,13 @@ export const Browser: React.FC<BrowserProps> = ({
 
   const goHome = () => {
     container.current.querySelector('webview').loadURL('https://www.google.fr');
+    dispatch(
+      updateBrowserUrl({
+        url: 'https://www.google.fr',
+        browserId: id,
+        boardId: activeBoard,
+      })
+    );
   };
 
   const style = {
