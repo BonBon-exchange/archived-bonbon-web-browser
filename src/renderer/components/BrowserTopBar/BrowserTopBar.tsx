@@ -3,6 +3,8 @@
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-use-before-define */
 import React from 'react';
+import CloseIcon from '@mui/icons-material/Close';
+import CropSquareIcon from '@mui/icons-material/CropSquare';
 
 import './style.css';
 import { BrowserTopBarProps } from './Types';
@@ -27,13 +29,13 @@ export const BrowserTopBar: React.FC<BrowserTopBarProps> = ({
       <div className="BrowserTopBar__title">{title}</div>
       <div className="BrowserTopBar__controls">
         <div className="BrowserTopBar__control-button" onClick={closeBrowser}>
-          x
+          <CloseIcon />
         </div>
         <div
           className="BrowserTopBar__control-button"
           onClick={toggleFullsizeBrowser}
         >
-          o
+          <CropSquareIcon />
         </div>
       </div>
     </div>

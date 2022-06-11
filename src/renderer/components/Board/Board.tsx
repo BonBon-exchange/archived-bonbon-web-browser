@@ -20,7 +20,7 @@ export const Board: React.FC = () => {
   const board = boards.find((b) => b.id === activeBoard);
 
   const addBrowser = useCallback(
-    ({ url }: { url: string }): void => {
+    ({ url }: { url?: string }): void => {
       const browserId = v4();
       const { x, y } = getCoordinateWithNoCollision(document, 800, 600);
       const newBrowser = {

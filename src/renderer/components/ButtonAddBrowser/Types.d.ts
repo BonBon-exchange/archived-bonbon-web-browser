@@ -1,3 +1,3 @@
 export interface ButtonAddBrowserProps {
-    onClick: () => void;
+  onClick: ({ url }: { url?: string }) => void;
 }

@@ -5,6 +5,7 @@
 import React from 'react';
 import { v4 } from 'uuid';
 import TextField from '@mui/material/TextField';
+import AddIcon from '@mui/icons-material/Add';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
@@ -65,7 +66,7 @@ export const TopBar: React.FC = () => {
         );
       })}
       <div id="TopBar__addBoard" onClick={addBoard}>
-        +
+        <AddIcon />
       </div>
     </div>
   );

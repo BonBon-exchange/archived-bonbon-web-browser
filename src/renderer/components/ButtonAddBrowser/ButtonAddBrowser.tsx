@@ -11,5 +11,5 @@ import './style.css';
 export const ButtonAddBrowser: React.FC<ButtonAddBrowserProps> = ({
   onClick,
 }) => {
-  return <AddIcon id="ButtonAddBrowser" onClick={onClick} />;
+  return <AddIcon id="ButtonAddBrowser" onClick={() => onClick({})} />;
 };
