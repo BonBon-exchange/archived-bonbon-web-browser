@@ -1,7 +1,7 @@
 import Dexie, { Table } from 'dexie';
 
 export class DataDB extends Dexie {
-  navigate!: Table<{ id: string; url: string; date: Date }, number>;
+  navigate!: Table<{ id?: string; url: string; date: Date }, number>;
 
   constructor() {
     super('data');

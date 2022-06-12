@@ -1,3 +1,4 @@
+/* eslint-disable promise/catch-or-return */
 /* eslint-disable promise/no-callback-in-promise */
 /* eslint-disable consistent-return */
 /* eslint global-require: off, no-console: off, promise/always-return: off */

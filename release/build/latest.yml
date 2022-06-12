@@ -1,8 +1,8 @@
-version: 0.2.0
+version: 0.3.0
 files:
-  - url: Bonb-Setup-0.2.0.exe
-    sha512: G7zwnsIboGvzAW6cwxl7bwbE3DVrwQAI4U3uUGxhj7CEYeqvsuRNi5JoXiSElrR/9m3gxBmvv6VVqBB37dZE6Q==
-    size: 64191940
-path: Bonb-Setup-0.2.0.exe
-sha512: G7zwnsIboGvzAW6cwxl7bwbE3DVrwQAI4U3uUGxhj7CEYeqvsuRNi5JoXiSElrR/9m3gxBmvv6VVqBB37dZE6Q==
-releaseDate: '2022-06-11T19:43:58.456Z'
+  - url: Bonb-Setup-0.3.0.exe
+    sha512: olAvJGSHCSNGGO2ceI4djxNZ/S7dvMUszZzSA9YJZfOzyUhxrn9/dCChmJSiI9OfN6gXS0vyN1T8oojJnaQWLw==
+    size: 64213610
+path: Bonb-Setup-0.3.0.exe
+sha512: olAvJGSHCSNGGO2ceI4djxNZ/S7dvMUszZzSA9YJZfOzyUhxrn9/dCChmJSiI9OfN6gXS0vyN1T8oojJnaQWLw==
+releaseDate: '2022-06-12T15:28:20.933Z'
