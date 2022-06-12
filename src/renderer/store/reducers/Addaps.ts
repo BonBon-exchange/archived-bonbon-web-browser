@@ -53,6 +53,9 @@ export const addapsSlice = createSlice({
     setBoards: (state, action: PayloadAction<BoardType[]>) => {
       state.boards = action.payload;
     },
+    addBoard: (state, action: PayloadAction<BoardType>) => {
+      state.boards.push(action.payload);
+    },
     setActiveBoard: (state, action: PayloadAction<string>) => {
       state.activeBoard = action.payload;
     },
@@ -141,6 +144,7 @@ export const {
   removeBoard,
   removeBrowser,
   removeAllBrowsers,
+  addBoard,
 } = addapsSlice.actions;
 
 export default addapsSlice.reducer;

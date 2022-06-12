@@ -2,7 +2,7 @@
   position: fixed;
   background-color: rgb(196, 196, 196);
   color: black;
-  z-index: 1000;
+  z-index: 10000;
 }
 
 #ContextMenu__container ul {

@@ -6,6 +6,6 @@ export interface BrowserProps {
   height: number;
   width: number;
   isFullSize: boolean;
-  firstRendering: boolean;
-  favicon: string;
+  firstRendering?: boolean;
+  favicon?: string;
 }

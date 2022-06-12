@@ -56,11 +56,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
       if (board) {
         userDb.boards.put({ id: board.id, label: board.label });
         board.browsers.forEach((browser) => {
-          userDb.browsers.put({
-            id: browser.id,
-            boardId: board.id,
-            url: browser.url,
-          });
+          userDb.browsers.put({ boardId: board.id, ...browser });
         });
       }
     },

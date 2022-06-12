@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable promise/always-return */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -7,21 +8,51 @@ import { Rnd } from 'react-rnd';
 import CloseIcon from '@mui/icons-material/Close';
 
 import { userDb } from 'renderer/db/userDb';
+import { addBoard, setActiveBoard } from 'renderer/store/reducers/Addaps';
+import { useAppDispatch } from 'renderer/store/hooks';
 
 import { LibraryProps } from './Types';
+import { BoardType } from '../Board/Types';
 
 import './style.css';
 
 export const Library: React.FC<LibraryProps> = ({ closeLibrary }) => {
-  const [boards, setBoards] = useState<{ id: string; label: string }[]>([]);
+  const [boardsState, setBoardsState] = useState<
+    { id: string; label: string }[]
+  >([]);
+  const dispatch = useAppDispatch();
+
+  const openBoard = (b: { id: string; label: string }) => {
+    userDb.browsers
+      .where({ boardId: b.id })
+      .toArray()
+      .then((res) => {
+        const board = {
+          id: b.id,
+          label: b.label,
+          browsers: res,
+        };
+
+        dispatch(addBoard(board as BoardType));
+        dispatch(setActiveBoard(b.id));
+        closeLibrary();
+      })
+      .catch(console.log);
+  };
 
   useEffect(() => {
     userDb.boards
       .toArray()
       .then((res) => {
-        setBoards(res);
+        setBoardsState(res);
       })
       .catch(console.log);
+  }, []);
+
+  useEffect(() => {
+    window.gtag('event', 'screen_view', {
+      screen_name: 'Library',
+    });
   }, []);
 
   return (
@@ -41,8 +72,12 @@ export const Library: React.FC<LibraryProps> = ({ closeLibrary }) => {
       <div id="Library__title">Boards</div>
       <div id="Library__items">
         <ul>
-          {boards.map((b) => {
-            return <li key={b.id}>{b.label}</li>;
+          {boardsState.map((b) => {
+            return (
+              <li key={b.id} onClick={() => openBoard(b)}>
+                {b.label}
+              </li>
+            );
           })}
         </ul>
       </div>
