@@ -4,7 +4,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Rnd } from 'react-rnd';
 import clsx from 'clsx';
-import WebView from '@tianhuil/react-electron-webview';
 
 import { BrowserControlBar } from '../BrowserControlBar';
 import { BrowserTopBar } from '../BrowserTopBar';
@@ -70,7 +69,7 @@ export const Browser: React.FC<BrowserProps> = ({
     });
   };
 
-  const onDragStop = (e) => {
+  const onDragStop = (e: any) => {
     updateBoard({
       top: getOffset(e.target).top,
       left: getOffset(e.target).left,
@@ -82,7 +81,7 @@ export const Browser: React.FC<BrowserProps> = ({
     });
   };
 
-  const onResizeStop = (delta) => {
+  const onResizeStop = (delta: { width: number; height: number }) => {
     updateBoard({ width: width + delta.width, height: height + delta.height });
   };
 
@@ -100,19 +99,21 @@ export const Browser: React.FC<BrowserProps> = ({
   };
 
   const goBack = () => {
-    container.current.querySelector('webview').goBack();
+    container.current?.querySelector('webview').goBack();
   };
 
   const goForward = () => {
-    container.current.querySelector('webview').goForward();
+    container.current?.querySelector('webview').goForward();
   };
 
   const reload = () => {
-    container.current.querySelector('webview').reload();
+    container.current?.querySelector('webview').reload();
   };
 
   const goHome = () => {
-    container.current.querySelector('webview').loadURL('https://www.google.fr');
+    container.current
+      ?.querySelector('webview')
+      .loadURL('https://www.google.fr');
     dispatch(
       updateBrowserUrl({
         url: 'https://www.google.fr',
@@ -136,24 +137,28 @@ export const Browser: React.FC<BrowserProps> = ({
   }, [firstRenderingState, url]);
 
   useEffect(() => {
-    const webview = container.current.querySelector('webview');
+    const webview = container.current?.querySelector('webview');
 
     webview.addEventListener('dom-ready', () => {
       // webview.openDevTools();
+    });
+
+    webview.addEventListener('page-title-updated', (e) => {
+      setTitle(e.title);
     });
 
     webview.addEventListener('ipc-message', (event, ...args) => {
       if (event.channel === 'clickOnPage') {
         bringBrowserToTheFront(
           document,
-          container.current.closest('.Browser__draggable-container')
+          container.current?.closest('.Browser__draggable-container')
         );
       }
     });
   }, []);
 
   useEffect(() => {
-    const webview = container.current.querySelector('webview');
+    const webview = container.current?.querySelector('webview');
     webview.addEventListener('page-favicon-updated', (e) => {
       dispatch(
         updateBrowserFav({
@@ -164,11 +169,10 @@ export const Browser: React.FC<BrowserProps> = ({
       );
     });
 
-    webview.addEventListener('load-commit', (event) => {
-      window.gtag('event', 'browser_navigate');
+    webview.addEventListener('load-commit', (e: any) => {
       dispatch(
         updateBrowserUrl({
-          url: event.target.src,
+          url: e.target.src,
           browserId: id,
           boardId: activeBoard,
         })
@@ -179,6 +183,10 @@ export const Browser: React.FC<BrowserProps> = ({
   useEffect(() => {
     bringBrowserToTheFront(document, document.querySelector(`#Browser__${id}`));
   }, [id]);
+
+  useEffect(() => {
+    window.gtag('event', 'browser_navigate');
+  }, [url]);
 
   return (
     <Rnd
@@ -221,10 +229,9 @@ export const Browser: React.FC<BrowserProps> = ({
           browserId={id}
         />
         <div className="Browser__webview-container">
-          <WebView
+          <webview
             allowpopups="true"
             src={renderedUrl}
-            onPageTitleSet={(e) => setTitle(e.title)}
             partition="persist:user-partition"
           />
         </div>

@@ -12,6 +12,7 @@ declare global {
         once(channel: string, func: (...args: unknown[]) => void): void;
       };
     };
+    gtat(args: unknown[]): void;
   }
 }
 

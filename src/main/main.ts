@@ -137,7 +137,7 @@ app.on('web-contents-created', (_event, contents) => {
     webPreferences.nodeIntegration = false;
   });
 
-  contents.on('new-window', function (e) {
+  contents.on('new-window', (e) => {
     e.preventDefault();
   });
 });
