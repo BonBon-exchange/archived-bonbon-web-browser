@@ -4,13 +4,14 @@
 /* eslint-disable import/prefer-default-export */
 import { useRef, useEffect, useState, useCallback } from 'react';
 
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   setIsRenamingBoard,
   removeBoard,
   removeBrowser,
   removeAllBrowsers,
 } from '../../store/reducers/Addaps';
+import { userDb } from '../../db/userDb';
 
 import { ContextMenuProps } from './Types';
 
@@ -29,6 +30,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
 }) => {
   const container = useRef(null);
   const dispatch = useAppDispatch();
+  const { boards } = useAppSelector((state) => state.addaps);
   const [menuItems, setMenuItems] = useState<Record<string, () => void>>({});
 
   const renameBoard = useCallback(
@@ -45,6 +47,24 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
       dispatch(removeBoard({ boardId }));
     },
     [dispatch]
+  );
+
+  const saveBoard = useCallback(
+    (renameTarget: EventTarget | null) => {
+      const boardId = renameTarget?.getAttribute('data-boardid');
+      const board = boards.find((b) => b.id === boardId);
+      if (board) {
+        userDb.boards.put({ id: board.id, label: board.label });
+        board.browsers.forEach((browser) => {
+          userDb.browsers.put({
+            id: browser.id,
+            boardId: board.id,
+            url: browser.url,
+          });
+        });
+      }
+    },
+    [boards]
   );
 
   const closeBrowser = useCallback(
@@ -77,6 +97,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
         setMenuItems({
           'Inspect element': () => inspectElement(x, y),
           Rename: () => renameBoard(target),
+          Save: () => saveBoard(target),
           Close: () => closeBoard(target),
         });
         break;

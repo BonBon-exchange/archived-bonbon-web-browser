@@ -14,3 +14,13 @@
 .LeftBar__browserFav {
   margin-bottom: 10px;
 }
+
+.LeftBar__browserFavImg {
+  width: 24px;
+  height: 24px;
+}
+
+.LeftBar__browserFavImg:hover {
+  height: 26px;
+  width: 26px;
+}

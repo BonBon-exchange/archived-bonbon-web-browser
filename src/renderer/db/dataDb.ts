@@ -18,4 +18,4 @@ export class DataDB extends Dexie {
   }
 }
 
-export const db = new DataDB();
+export const dataDb = new DataDB();

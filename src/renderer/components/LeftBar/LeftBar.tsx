@@ -22,8 +22,6 @@ export const LeftBar: React.FC = () => {
           >
             <img
               src={b.favicon}
-              width="32"
-              height="32"
               className="LeftBar__browserFavImg"
               alt={b.url}
               data-browserid={b.id}
