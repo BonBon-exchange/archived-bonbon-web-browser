@@ -56,6 +56,8 @@ const installExtensions = async () => {
     .catch(console.log);
 };
 
+const machineId = machineIdSync();
+
 const createWindow = async () => {
   if (isDebug) {
     await installExtensions();
@@ -114,6 +116,30 @@ const createWindow = async () => {
   new AppUpdater();
 
   makeEvents(mainWindow);
+
+  mainWindow.webContents
+    .executeJavaScript(
+      `localStorage.setItem("machineId", "${machineId}");`,
+      true
+    )
+    .then((result) => {
+      console.log(result);
+    });
+
+  const payload = {
+    client_id: machineIdSync(),
+    events: [
+      {
+        name: 'open_app',
+        params: {},
+      },
+    ],
+  };
+
+  axios.post(
+    'https://google-analytics.com/mp/collect?api_secret=wvmixxOmSEm5svFi35Qo4g&measurement_id=G-PDRJCJWQYM',
+    payload
+  );
 };
 
 /**
@@ -159,20 +185,5 @@ app
         console.log(url, permission);
         callback(false);
       });
-
-    const payload = {
-      client_id: machineIdSync(),
-      events: [
-        {
-          name: 'open_app',
-          params: {},
-        },
-      ],
-    };
-
-    axios.post(
-      'https://google-analytics.com/mp/collect?api_secret=wvmixxOmSEm5svFi35Qo4g&measurement_id=G-PDRJCJWQYM',
-      payload
-    );
   })
   .catch(console.log);

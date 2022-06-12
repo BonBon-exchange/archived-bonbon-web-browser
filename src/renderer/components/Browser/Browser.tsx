@@ -15,6 +15,7 @@ import {
   removeBrowser,
 } from '../../store/reducers/Addaps';
 import { bringBrowserToTheFront } from '../../helpers/d2';
+import { db } from '../../db/db';
 
 import { BrowserProps } from './Types';
 
@@ -186,6 +187,11 @@ export const Browser: React.FC<BrowserProps> = ({
 
   useEffect(() => {
     window.gtag('event', 'browser_navigate');
+    const encrypted = CryptoJS.AES.encrypt(
+      url,
+      localStorage.getItem('machineId')
+    );
+    db.navigate.add({ url: encrypted.toString(), date: new Date() });
   }, [url]);
 
   return (
