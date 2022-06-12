@@ -3,4 +3,9 @@
   top: 55px;
   left: 13px;
   z-index: 1000;
+  height: 18px;
+}
+
+#ButtonAddBrowser:hover {
+  height: 20px;
 }

@@ -1,12 +1,34 @@
 #TopBar__container {
   display: flex;
   height: 30px;
-  background-color: #e6eaf7;
-  flex-grow: 1;
-  color: rgb(32, 29, 29);
   position: fixed;
   width: 100%;
+  background-color: #e6eaf7;
   z-index: 1000;
+}
+
+#TopBar__tabs-container {
+  display: flex;
+  flex-grow: 1;
+}
+
+#TopBar__menu-container {
+  display: flex;
+  padding-right: 10px;
+}
+
+.TopBar__menu-item {
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.TopBar__menu-item svg{
+  height: 18px;
+}
+
+.TopBar__menu-item svg:hover{
+  height: 20px;
 }
 
 #TopBar__addBoard {
@@ -32,4 +54,12 @@
 
 .TopBar__tab .MuiInput-root {
   margin-top: 0 !important;
+}
+
+#TopBar__addBoard svg {
+  height: 18px;
+}
+
+#TopBar__addBoard svg:hover {
+  height: 20px;
 }

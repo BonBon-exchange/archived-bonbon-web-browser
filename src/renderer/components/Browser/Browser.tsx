@@ -230,6 +230,7 @@ export const Browser: React.FC<BrowserProps> = ({
         />
         <div className="Browser__webview-container">
           <webview
+            // @ts-ignore
             allowpopups="true"
             src={renderedUrl}
             partition="persist:user-partition"

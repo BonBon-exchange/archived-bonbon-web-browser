@@ -9,6 +9,7 @@
   flex-direction: row;
   width: 30%;
   justify-content: space-around;
+  align-items: center;
 }
 
 .BrowserControlBar__container .MuiInput-root {
@@ -21,4 +22,12 @@
 
 .BrowserControlBar_url-input input {
   font-size: 14px;
+}
+
+.BrowserControlBar__control svg {
+  height: 18px;
+}
+
+.BrowserControlBar__control svg:hover {
+  height: 20px;
 }

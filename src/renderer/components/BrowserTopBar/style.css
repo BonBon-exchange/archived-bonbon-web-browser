@@ -18,11 +18,20 @@
 .BrowserTopBar__controls {
   display: flex;
   flex-direction: row-reverse;
+  align-items: center;
 }
 
 .BrowserTopBar__control-button {
   color: rgb(32, 29, 29);
   margin-right: 5px;
+}
+
+.BrowserTopBar__control-button svg {
+  height: 18px;
+}
+
+.BrowserTopBar__control-button svg:hover {
+  height: 20px;
 }
 
 .BrowserTopBar__favicon {

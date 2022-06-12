@@ -7,6 +7,8 @@ import { v4 } from 'uuid';
 import TextField from '@mui/material/TextField';
 import AddIcon from '@mui/icons-material/Add';
 import clsx from 'clsx';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import BookmarksIcon from '@mui/icons-material/Bookmarks';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
@@ -47,29 +49,42 @@ export const TopBar: React.FC = () => {
 
   return (
     <div id="TopBar__container">
-      {boards.map((b) => {
-        return (
-          <div
-            className={clsx({ TopBar__tab: true, bold: activeBoard === b.id })}
-            key={b.id}
-            onClick={() => !isRenamingBoard && dispatch(setActiveBoard(b.id))}
-            data-boardid={b.id}
-          >
-            {isRenamingBoard === b.id ? (
-              <TextField
-                label="Board name"
-                defaultValue={b.label}
-                variant="standard"
-                onKeyPress={(e) => tabOnKeyPress(e, b.id)}
-              />
-            ) : (
-              b.label
-            )}
-          </div>
-        );
-      })}
-      <div id="TopBar__addBoard" onClick={addBoard}>
-        <AddIcon />
+      <div id="TopBar__tabs-container">
+        {boards.map((b) => {
+          return (
+            <div
+              className={clsx({
+                TopBar__tab: true,
+                bold: activeBoard === b.id,
+              })}
+              key={b.id}
+              onClick={() => !isRenamingBoard && dispatch(setActiveBoard(b.id))}
+              data-boardid={b.id}
+            >
+              {isRenamingBoard === b.id ? (
+                <TextField
+                  label="Board name"
+                  defaultValue={b.label}
+                  variant="standard"
+                  onKeyPress={(e) => tabOnKeyPress(e, b.id)}
+                />
+              ) : (
+                b.label
+              )}
+            </div>
+          );
+        })}
+        <div id="TopBar__addBoard" onClick={addBoard}>
+          <AddIcon />
+        </div>
+      </div>
+      <div id="TopBar__menu-container">
+        <div className="TopBar__menu-item">
+          <BookmarksIcon />
+        </div>
+        <div className="TopBar__menu-item">
+          <AccountCircleIcon />
+        </div>
       </div>
     </div>
   );
