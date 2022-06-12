@@ -7,12 +7,14 @@ import { TopBar } from '../TopBar';
 import { Board } from '../Board';
 import { LeftBar } from '../LeftBar';
 import { ContextMenu } from '../ContextMenu';
+import { Library } from '../Library';
 
 import './style.css';
 import { ContextMenuProps } from '../ContextMenu/Types';
 
 export const Addaps: React.FC = () => {
   const [showContextMenu, setShowContextMenu] = useState<boolean>(false);
+  const [showLibrary, setShowLibrary] = useState<boolean>(false);
   const [contextMenuProps, setContextMenuProps] = useState<ContextMenuProps>({
     x: 0,
     y: 0,
@@ -56,10 +58,11 @@ export const Addaps: React.FC = () => {
 
   return (
     <>
-      <TopBar />
+      <TopBar setShowLibrary={setShowLibrary} />
       <LeftBar />
       <Board />
       {showContextMenu && <ContextMenu {...contextMenuProps} />}
+      {showLibrary && <Library closeLibrary={() => setShowLibrary(false)} />}
     </>
   );
 };

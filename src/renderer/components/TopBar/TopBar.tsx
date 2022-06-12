@@ -18,9 +18,11 @@ import {
   renameBoard,
 } from '../../store/reducers/Addaps';
 
+import { TopBarProps } from './Types';
+
 import './style.css';
 
-export const TopBar: React.FC = () => {
+export const TopBar: React.FC<TopBarProps> = ({ setShowLibrary }) => {
   const { boards, isRenamingBoard, activeBoard } = useAppSelector(
     (state) => state.addaps
   );
@@ -80,7 +82,7 @@ export const TopBar: React.FC = () => {
       </div>
       <div id="TopBar__menu-container">
         <div className="TopBar__menu-item">
-          <BookmarksIcon />
+          <BookmarksIcon onClick={() => setShowLibrary(true)} />
         </div>
         <div className="TopBar__menu-item">
           <AccountCircleIcon />
