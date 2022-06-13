@@ -58,7 +58,7 @@ export const Board: React.FC = () => {
         addBrowser({ url: e.url });
       });
     });
-  }, [addBrowser]);
+  }, []);
 
   return (
     <div className="Board__container">
