@@ -33,16 +33,29 @@ interface AddapsState {
   isRenamingBoard: string | null;
 }
 
-const id = v4();
+const browserId = v4();
+const newBrowser = {
+  id: browserId,
+  url: 'https://www.google.com',
+  top: 120,
+  left: 120,
+  height: 800,
+  width: 600,
+  isFullSize: false,
+  firstRendering: true,
+  favicon: '',
+};
+
+const boardId = v4();
 const newBoard = {
-  id,
+  id: boardId,
   label: 'Board 1',
-  browsers: [],
+  browsers: [newBrowser],
 };
 
 const initialState: AddapsState = {
   boards: [newBoard],
-  activeBoard: id,
+  activeBoard: boardId,
   isRenamingBoard: null,
 };
 
