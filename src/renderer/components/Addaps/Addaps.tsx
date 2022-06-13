@@ -52,7 +52,10 @@ export const Addaps: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    window.gtag('config', 'G-PDRJCJWQYM', { app_name: 'Bonb' });
+    window.gtag('config', 'G-PDRJCJWQYM', {
+      app_name: 'Bonb',
+      app_is_packaged: localStorage.getItem('appIsPackaged'),
+    });
     window.gtag('event', 'load_app');
   }, []);
 

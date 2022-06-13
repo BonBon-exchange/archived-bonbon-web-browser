@@ -35,10 +35,27 @@ export const Browser: React.FC<BrowserProps> = ({
   const dispatch = useAppDispatch();
   const { boards, activeBoard } = useAppSelector((state) => state.addaps);
   const [title, setTitle] = useState<string>('');
-  const [firstRenderingState, setFirstRenderingState] =
-    useState<boolean>(firstRendering);
+  const [firstRenderingState, setFirstRenderingState] = useState<boolean>(
+    firstRendering || true
+  );
   const [renderedUrl, setRenderedUrl] = useState<string>('');
   const container = useRef(null);
+
+  const disablePointerEventsForOthers = () => {
+    const webviews = document.querySelectorAll('.Browser__webview-container');
+    webviews.forEach((webview) => {
+      // @ts-ignore
+      webview.style['pointer-events'] = 'none';
+    });
+  };
+
+  const enablePointerEventsForAll = () => {
+    const webviews = document.querySelectorAll('.Browser__webview-container');
+    webviews.forEach((webview) => {
+      // @ts-ignore
+      webview.style['pointer-events'] = 'auto';
+    });
+  };
 
   const updateBoard = (update: Record<string, unknown>) => {
     const newBoards = [...boards];
@@ -63,11 +80,7 @@ export const Browser: React.FC<BrowserProps> = ({
   };
 
   const onDragStart = () => {
-    const webviews = document.querySelectorAll('.Browser__webview-container');
-    webviews.forEach((webview) => {
-      // @ts-ignore
-      webview.style['pointer-events'] = 'none';
-    });
+    disablePointerEventsForOthers();
   };
 
   const onDragStop = (e: any) => {
@@ -75,15 +88,17 @@ export const Browser: React.FC<BrowserProps> = ({
       top: getOffset(e.target).top,
       left: getOffset(e.target).left,
     });
-    const webviews = document.querySelectorAll('.Browser__webview-container');
-    webviews.forEach((webview) => {
-      // @ts-ignore
-      webview.style['pointer-events'] = 'auto';
-    });
+
+    enablePointerEventsForAll();
   };
 
   const onResizeStop = (delta: { width: number; height: number }) => {
     updateBoard({ width: width + delta.width, height: height + delta.height });
+    enablePointerEventsForAll();
+  };
+
+  const onResizeStart = () => {
+    disablePointerEventsForOthers();
   };
 
   const closeBrowser = () => {
@@ -211,6 +226,7 @@ export const Browser: React.FC<BrowserProps> = ({
       onDragStart={onDragStart}
       onDragStop={onDragStop}
       onResizeStop={(_e, _dir, _ref, delta, _pos) => onResizeStop(delta)}
+      onResizeStart={onResizeStart}
       bounds=".Board__container"
       id={`Browser__${id}`}
       className={clsx({

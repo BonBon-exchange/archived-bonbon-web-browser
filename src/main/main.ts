@@ -17,6 +17,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import axios from 'axios';
 import { machineIdSync } from 'node-machine-id';
+import contextMenu from 'electron-context-menu';
 
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
@@ -120,7 +121,7 @@ const createWindow = async () => {
 
   mainWindow.webContents
     .executeJavaScript(
-      `localStorage.setItem("machineId", "${machineId}");`,
+      `localStorage.setItem("machineId", "${machineId}"); localStorage.setItem("appIsPackaged", "${app.isPackaged}");`,
       true
     )
     .then((result) => {
@@ -166,6 +167,13 @@ app.on('web-contents-created', (_event, contents) => {
 
   contents.on('new-window', (e) => {
     e.preventDefault();
+  });
+
+  contextMenu({
+    window: contents,
+    showInspectElement: true,
+    showSearchWithGoogle: false,
+    showCopyImageAddress: true,
   });
 });
 
