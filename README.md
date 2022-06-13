@@ -1,3 +1,5 @@
+![Logo](https://github.com/danielfebrero/bonb-browser/blob/master/images/logo.PNG)
+
 # Bonb Browser
 
 Bonb, new version of Metalyfe and Addaps.
@@ -21,3 +23,5 @@ You own your data.
 Your activity is locally encrypted.
 
 Exchange your data against cryptocurrency.
+
+![Desktop](https://github.com/danielfebrero/bonb-browser/blob/master/images/desktop.PNG)
