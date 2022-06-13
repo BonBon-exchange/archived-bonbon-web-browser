@@ -50,8 +50,8 @@ export const Library: React.FC<LibraryProps> = ({ closeLibrary }) => {
   }, []);
 
   useEffect(() => {
-    window.gtag('event', 'screen_view', {
-      screen_name: 'Library',
+    window.electron.ipcRenderer.sendMessage('analytics', {
+      eventName: 'open_library',
     });
   }, []);
 

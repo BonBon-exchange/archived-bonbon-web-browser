@@ -201,7 +201,9 @@ export const Browser: React.FC<BrowserProps> = ({
   }, [id]);
 
   useEffect(() => {
-    window.gtag('event', 'browser_navigate');
+    window.electron.ipcRenderer.sendMessage('analytics', {
+      eventName: 'browser_navigate',
+    });
     const encrypted = CryptoJS.AES.encrypt(
       url,
       localStorage.getItem('machineId')
