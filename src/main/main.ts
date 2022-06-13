@@ -133,7 +133,10 @@ const createWindow = async () => {
     events: [
       {
         name: 'open_app',
-        params: {},
+        params: {
+          app_is_packaged: app.isPackaged ? 'true' : 'false',
+          engagement_time_msec: 1,
+        },
       },
     ],
   };
