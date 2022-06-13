@@ -2,6 +2,9 @@
 import axios from 'axios';
 import { machineIdSync } from 'node-machine-id';
 import { app } from 'electron';
+import { v4 } from 'uuid';
+
+const sessionId = v4();
 
 const makePayload = (eventName: string, params?: Record<string, unknown>) => {
   return {
@@ -13,6 +16,7 @@ const makePayload = (eventName: string, params?: Record<string, unknown>) => {
           app_is_packaged: app.isPackaged ? 'true' : 'false',
           engagement_time_msec: 1,
           app_name: 'Bonb',
+          session_id: sessionId,
           ...params,
         },
       },

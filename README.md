@@ -6,7 +6,7 @@ Built with Electron, React, TypeScript, Redux.
 
 ---
 
-## Try Bonb today
+### Try Bonb today
 
 Work in progress, it's just the beginning.
 
