@@ -15,7 +15,6 @@ import path from 'path';
 import { app, BrowserWindow, shell, session } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
-import axios from 'axios';
 import { machineIdSync } from 'node-machine-id';
 import contextMenu from 'electron-context-menu';
 
@@ -78,7 +77,7 @@ const createWindow = async () => {
     show: false,
     width: 1024,
     height: 728,
-    icon: getAssetPath('b.png'),
+    icon: getAssetPath('icon.png'),
     webPreferences: {
       webviewTag: true,
       preload: app.isPackaged
