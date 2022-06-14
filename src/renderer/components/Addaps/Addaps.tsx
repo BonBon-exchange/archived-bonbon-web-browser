@@ -59,7 +59,12 @@ export const Addaps: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    document.body.className = 'dark-theme';
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addEventListener('change', (e) => {
+        const colorScheme = e.matches ? 'dark-theme' : 'light-theme';
+        window.document.querySelector('body').className = colorScheme;
+      });
   }, []);
 
   return (

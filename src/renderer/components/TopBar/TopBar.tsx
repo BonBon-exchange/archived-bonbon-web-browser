@@ -9,6 +9,8 @@ import AddIcon from '@mui/icons-material/Add';
 import clsx from 'clsx';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
@@ -81,6 +83,9 @@ export const TopBar: React.FC<TopBarProps> = ({ setShowLibrary }) => {
         </div>
       </div>
       <div id="TopBar__menu-container">
+        <div className="TopBar__menu-item">
+          <Brightness4Icon onClick={() => window.darkMode.toggle()} />
+        </div>
         <div className="TopBar__menu-item">
           <BookmarksIcon onClick={() => setShowLibrary(true)} />
         </div>
