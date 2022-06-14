@@ -25,6 +25,7 @@
 .BrowserControlBar_url-input input {
   font-size: 14px;
   background-color: var(--color-icon-secondary);
+  color: var(--color-text-secondary);
   border-radius: 15px;
   height: 15px;
   padding-left: 10px;

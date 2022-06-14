@@ -58,15 +58,6 @@ export const Addaps: React.FC = () => {
     window.bonb.analytics.event('load_app');
   }, []);
 
-  useEffect(() => {
-    window
-      .matchMedia('(prefers-color-scheme: dark)')
-      .addEventListener('change', (e) => {
-        const colorScheme = e.matches ? 'dark-theme' : 'light-theme';
-        window.document.querySelector('body').className = colorScheme;
-      });
-  }, []);
-
   return (
     <>
       <TopBar setShowLibrary={setShowLibrary} />

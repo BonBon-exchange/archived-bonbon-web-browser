@@ -1,9 +1,9 @@
 body.light-theme {
   --color-text-primary: rgba(0, 0, 0, 0.87);
   --color-text-secondary: white;
-  --color-background-primary: white;
-  --color-background-secondary: white;
-  --color-background-tertiary: white;
-  --color-icon-primary: #17FDBE;
-  --color-icon-secondary: black;
+  --color-background-primary: rgb(231, 236, 240);
+  --color-background-secondary: rgb(221, 231, 240);;
+  --color-background-tertiary: rgb(220, 226, 231);;
+  --color-icon-primary: #4285e9;
+  --color-icon-secondary: #1c2736;
 }
