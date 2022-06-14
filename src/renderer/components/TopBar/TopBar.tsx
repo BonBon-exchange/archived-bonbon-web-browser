@@ -2,13 +2,15 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-use-before-define */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { v4 } from 'uuid';
 import TextField from '@mui/material/TextField';
 import AddIcon from '@mui/icons-material/Add';
 import clsx from 'clsx';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
@@ -20,9 +22,11 @@ import {
 
 import { TopBarProps } from './Types';
 
-import './style.css';
+import './style.scss';
 
 export const TopBar: React.FC<TopBarProps> = ({ setShowLibrary }) => {
+  const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(dark);
   const { boards, isRenamingBoard, activeBoard } = useAppSelector(
     (state) => state.addaps
   );
@@ -48,6 +52,21 @@ export const TopBar: React.FC<TopBarProps> = ({ setShowLibrary }) => {
       dispatch(renameBoard({ boardId, label: e.target?.value }));
     }
   };
+
+  useEffect(() => {
+    const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    window.document.querySelector('body').className = dark
+      ? 'dark-theme'
+      : 'light-theme';
+
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addEventListener('change', (e) => {
+        const colorScheme = e.matches ? 'dark-theme' : 'light-theme';
+        setIsDarkMode(e.matches);
+        window.document.querySelector('body').className = colorScheme;
+      });
+  }, []);
 
   return (
     <div id="TopBar__container">
@@ -81,6 +100,13 @@ export const TopBar: React.FC<TopBarProps> = ({ setShowLibrary }) => {
         </div>
       </div>
       <div id="TopBar__menu-container">
+        <div className="TopBar__menu-item">
+          {isDarkMode ? (
+            <Brightness7Icon onClick={() => window.darkMode.toggle()} />
+          ) : (
+            <Brightness4Icon onClick={() => window.darkMode.toggle()} />
+          )}
+        </div>
         <div className="TopBar__menu-item">
           <BookmarksIcon onClick={() => setShowLibrary(true)} />
         </div>

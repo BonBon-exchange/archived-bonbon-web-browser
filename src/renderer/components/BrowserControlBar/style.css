@@ -2,6 +2,7 @@
   height: 25px;
   display: flex;
   flex-direction: row;
+  background-color: var(--color-background-secondary);
 }
 
 .BrowserControlBar__controls {
@@ -10,6 +11,7 @@
   width: 30%;
   justify-content: space-around;
   align-items: center;
+  color: var(--color-text-primary);
 }
 
 .BrowserControlBar__container .MuiInput-root {
@@ -22,6 +24,11 @@
 
 .BrowserControlBar_url-input input {
   font-size: 14px;
+  background-color: var(--color-icon-secondary);
+  color: var(--color-text-secondary);
+  border-radius: 15px;
+  height: 15px;
+  padding-left: 10px;
 }
 
 .BrowserControlBar__control svg {

@@ -139,12 +139,6 @@ export const Browser: React.FC<BrowserProps> = ({
     );
   };
 
-  const style = {
-    display: 'flex',
-    border: 'solid 1px #ddd',
-    background: '#f0f0f0',
-  } as const;
-
   useEffect(() => {
     if (firstRenderingState) {
       setFirstRenderingState(false);
@@ -213,7 +207,7 @@ export const Browser: React.FC<BrowserProps> = ({
 
   return (
     <Rnd
-      style={style}
+      style={{ display: 'flex' }}
       default={
         isFullSize
           ? undefined

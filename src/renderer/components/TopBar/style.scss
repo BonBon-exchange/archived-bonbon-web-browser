@@ -1,0 +1,74 @@
+#TopBar__container {
+  display: flex;
+  height: 30px;
+  position: fixed;
+  width: 100%;
+  background-color: var(--color-background-tertiary);
+  color: var(--color-text-primary);
+  z-index: 1000;
+}
+
+#TopBar__tabs-container {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  padding-left: 25px;
+
+  .TopBar__tab {
+    display: flex;
+    padding-left: 10px;
+    padding-right: 10px;
+    align-items: center;
+    font-size: 14px;
+    border-radius: 10px;
+    color: var(--color-text-secondary);
+    background: var(--color-icon-secondary);
+    margin-left: 3px;
+    margin-right: 3px;
+    height: 20px;
+
+    input {
+      color: black;
+      background-color: white;
+    }
+
+    .MuiInput-root {
+      margin-top: 0 !important;
+    }
+  }
+}
+
+#TopBar__menu-container {
+  display: flex;
+  padding-right: 10px;
+}
+
+.TopBar__menu-item {
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.TopBar__menu-item svg{
+  height: 18px;
+}
+
+.TopBar__menu-item svg:hover{
+  height: 20px;
+}
+
+#TopBar__addBoard {
+  width: 50px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+
+  svg {
+    color: var(--color-icon-primary);
+    height: 18px;
+  }
+}
+
+#TopBar__addBoard svg:hover {
+  height: 20px;
+}

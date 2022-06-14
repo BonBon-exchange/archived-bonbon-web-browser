@@ -1,0 +1,9 @@
+body.dark-theme {
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #2C2626;
+  --color-background-primary: #424242;
+  --color-background-secondary: #323232;
+  --color-background-tertiary: #2C2626;
+  --color-icon-primary: #17FDBE;
+  --color-icon-secondary: #D9D9D9;
+}

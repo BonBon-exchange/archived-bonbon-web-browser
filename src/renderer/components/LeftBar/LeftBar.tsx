@@ -5,7 +5,7 @@ import React from 'react';
 import { useAppSelector } from '../../store/hooks';
 import { scrollToBrowser } from '../../helpers/d2';
 
-import './style.css';
+import './style.scss';
 
 export const LeftBar: React.FC = () => {
   const { boards, activeBoard } = useAppSelector((state) => state.addaps);

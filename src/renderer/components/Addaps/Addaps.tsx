@@ -12,6 +12,8 @@ import { Library } from '../Library';
 import { ContextMenuProps } from '../ContextMenu/Types';
 
 import './style.css';
+import 'renderer/style/dark.css';
+import 'renderer/style/light.css';
 
 export const Addaps: React.FC = () => {
   const [showContextMenu, setShowContextMenu] = useState<boolean>(false);
