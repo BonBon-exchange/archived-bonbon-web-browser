@@ -1,0 +1,6 @@
+body.dark-theme {
+  --color-text-primary: #ffffff;
+  --color-background-primary: rgba(50, 50, 50, 0.92);
+  --color-background-secondary: #323232;
+  --color-background-tertiary: #2C2626;
+}

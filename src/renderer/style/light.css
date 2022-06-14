@@ -1,0 +1,6 @@
+body.light-theme {
+  --color-text-primary: rgba(0, 0, 0, 0.87);
+  --color-background-primary: white;
+  --color-background-secondary: white;
+  --color-background-tertiary: white;
+}
