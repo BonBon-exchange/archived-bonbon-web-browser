@@ -186,13 +186,15 @@ export const Browser: React.FC<BrowserProps> = ({
     });
 
     webview.addEventListener('load-commit', (e: any) => {
-      dispatch(
-        updateBrowserUrl({
-          url: e.target.src,
-          browserId: id,
-          boardId: activeBoard,
-        })
-      );
+      setTimeout(() => {
+        dispatch(
+          updateBrowserUrl({
+            url: e.target.src,
+            browserId: id,
+            boardId: activeBoard,
+          })
+        );
+      }, 0);
     });
   }, [activeBoard, dispatch, id]);
 
