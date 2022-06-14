@@ -1,8 +1,10 @@
+<div style="text-align: center;">
 ![Logo](https://github.com/danielfebrero/bonb-browser/blob/master/images/logo.PNG)
+</div>
 
 # Bonb Browser
 
-Bonb, new version of Metalyfe and Addaps.
+Bonb, claim back your data ownership.
 
 Built with Electron, React, TypeScript, Redux.
 
@@ -16,12 +18,32 @@ Download for Windows: [Bonb 0.6.0](https://github.com/danielfebrero/bonb-browser
 
 ---
 
-An innovative user experience.
+### Features
 
-You own your data.
+Completed:
 
-Your activity is locally encrypted.
+- boards: create a composition of webviews, save it, reuse it, present it
 
-Exchange your data against cryptocurrency.
+- encrypted browsing history
+
+In progres:
+
+- new UX
+
+- dark mode
+
+- adblock
+
+- permission handler
+
+- insecure web handler
+
+- whatsapp, messenger and telegram integration
+
+- chrome extension minimal compatibility
+
+- auto update
+
+- app signing
 
 ![Desktop](https://github.com/danielfebrero/bonb-browser/blob/master/images/desktop.PNG)

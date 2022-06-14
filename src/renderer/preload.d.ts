@@ -1,5 +1,3 @@
-import { Channels } from 'main/preload';
-
 declare global {
   interface Window {
     bonb: {
