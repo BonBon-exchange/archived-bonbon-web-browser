@@ -1,5 +1,5 @@
 .BrowserTopBar__container {
-  background-color: white;
+  background-color: var(--color-background-primary);
   height: 25px;
   display: flex;
   flex-direction: row;
@@ -10,7 +10,7 @@
 .BrowserTopBar__title {
   display: flex;
   flex-grow: 1;
-  color: rgb(32, 29, 29);
+  color: var(--color-text-primary);
   align-items: center;
   font-size: 14px;
 }
@@ -22,7 +22,7 @@
 }
 
 .BrowserTopBar__control-button {
-  color: rgb(32, 29, 29);
+  color: var(--color-icon-primary);
   margin-right: 5px;
 }
 

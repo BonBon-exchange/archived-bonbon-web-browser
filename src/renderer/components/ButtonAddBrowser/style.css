@@ -4,6 +4,7 @@
   left: 13px;
   z-index: 1000;
   height: 18px;
+  color: var(--color-icon-primary);
 }
 
 #ButtonAddBrowser:hover {

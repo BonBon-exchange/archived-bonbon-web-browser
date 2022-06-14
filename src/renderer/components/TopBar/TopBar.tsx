@@ -20,7 +20,7 @@ import {
 
 import { TopBarProps } from './Types';
 
-import './style.css';
+import './style.scss';
 
 export const TopBar: React.FC<TopBarProps> = ({ setShowLibrary }) => {
   const { boards, isRenamingBoard, activeBoard } = useAppSelector(
