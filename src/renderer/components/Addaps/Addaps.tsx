@@ -53,9 +53,7 @@ export const Addaps: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    window.electron.ipcRenderer.sendMessage('analytics', {
-      eventName: 'load_app',
-    });
+    window.bonb.analytics.event('load_app');
   }, []);
 
   return (

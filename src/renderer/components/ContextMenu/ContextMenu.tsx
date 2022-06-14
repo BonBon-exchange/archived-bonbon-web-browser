@@ -18,7 +18,7 @@ import { ContextMenuProps } from './Types';
 import './style.css';
 
 const inspectElement = (x: number, y: number) => {
-  window.electron.ipcRenderer.sendMessage('inspectElement', { x, y });
+  window.bonb.tools.inspectElement({ x, y });
 };
 
 export const ContextMenu: React.FC<ContextMenuProps> = ({

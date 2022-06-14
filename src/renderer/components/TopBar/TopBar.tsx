@@ -39,9 +39,7 @@ export const TopBar: React.FC<TopBarProps> = ({ setShowLibrary }) => {
     const editedBoards = [...boards, newBoard];
     dispatch(setBoards(editedBoards));
     dispatch(setActiveBoard(id));
-    window.electron.ipcRenderer.sendMessage('analytics', {
-      eventName: 'add_board',
-    });
+    window.bonb.analytics.event('add_board');
   };
 
   const tabOnKeyPress = (e: KeyboardEvent, boardId: string) => {

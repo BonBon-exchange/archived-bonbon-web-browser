@@ -42,9 +42,7 @@ export const Board: React.FC = () => {
         const boardIndex = newBoards.findIndex((b) => b.id === activeBoard);
         newBoards[boardIndex] = newBoard;
         dispatch(setBoards(newBoards));
-        window.electron.ipcRenderer.sendMessage('analytics', {
-          eventName: 'add_browser',
-        });
+        window.bonb.analytics.event('add_browser');
         setTimeout(() => scrollToBrowser(document, browserId), 300);
       }
     },

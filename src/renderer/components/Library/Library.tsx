@@ -50,9 +50,7 @@ export const Library: React.FC<LibraryProps> = ({ closeLibrary }) => {
   }, []);
 
   useEffect(() => {
-    window.electron.ipcRenderer.sendMessage('analytics', {
-      eventName: 'open_library',
-    });
+    window.bonb.analytics.event('open_library');
   }, []);
 
   return (
