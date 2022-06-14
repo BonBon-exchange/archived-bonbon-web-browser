@@ -3,6 +3,7 @@ import axios from 'axios';
 import { machineIdSync } from 'node-machine-id';
 import { app } from 'electron';
 import { v4 } from 'uuid';
+import * as appPackageJson from '../../../release/app/package.json';
 
 const sessionId = v4();
 
@@ -16,6 +17,7 @@ const makePayload = (eventName: string, params?: Record<string, unknown>) => {
           app_is_packaged: app.isPackaged ? 'true' : 'false',
           engagement_time_msec: 1,
           app_name: 'Bonb',
+          app_version: appPackageJson.default.version,
           session_id: sessionId,
           ...params,
         },
