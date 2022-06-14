@@ -12,7 +12,7 @@ Built with Electron, React, TypeScript, Redux.
 
 Work in progress, it's just the beginning.
 
-Download for Windows: [Bonb 0.4.0](https://github.com/danielfebrero/bonb-browser/raw/master/release/build/Bonb%20Setup%200.4.0.exe)
+Download for Windows: [Bonb 0.5.0](https://github.com/danielfebrero/bonb-browser/releases/download/v0.5.0/Bonb.Setup.0.5.0.exe)
 
 ---
 
