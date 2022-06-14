@@ -1,6 +1,4 @@
-<div style="text-align: center;">
 ![Logo](https://github.com/danielfebrero/bonb-browser/blob/master/images/logo.PNG)
-</div>
 
 # Bonb Browser
 
