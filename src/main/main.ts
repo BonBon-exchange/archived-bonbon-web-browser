@@ -22,6 +22,7 @@ import contextMenu from 'electron-context-menu';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { makeEvents } from './ipcMainEvents';
+import { event } from '../renderer/helpers/analytics';
 
 export default class AppUpdater {
   constructor() {
@@ -128,23 +129,7 @@ const createWindow = async () => {
       console.log(result);
     });
 
-  const payload = {
-    client_id: machineIdSync(),
-    events: [
-      {
-        name: 'open_app',
-        params: {
-          app_is_packaged: app.isPackaged ? 'true' : 'false',
-          engagement_time_msec: 1,
-        },
-      },
-    ],
-  };
-
-  axios.post(
-    'https://google-analytics.com/mp/collect?api_secret=wvmixxOmSEm5svFi35Qo4g&measurement_id=G-PDRJCJWQYM',
-    payload
-  );
+  event('open_app');
 };
 
 /**
