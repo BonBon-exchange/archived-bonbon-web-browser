@@ -20,22 +20,27 @@ export const bringBrowserToTheFront = (document: Document, browser) => {
 };
 
 export const getCoordinateWithNoCollision = (
-  document,
-  height,
-  width
+  document: Document,
+  height: number,
+  width: number
 ): { x: number; y: number } => {
-  const x = 120;
+  let x = 0;
   let y = 0;
+  const maxX = document.querySelector('.Board__container').clientWidth - width;
 
   const browsers = document.querySelectorAll('.Browser__draggable-container');
   let collide = true;
-  while (collide === true) {
+  while (collide) {
     y += 100;
-    let loopCollide = false;
-    browsers.forEach((b) => {
-      if (overlaps(x, y, height, width, b)) loopCollide = true;
-    });
-    collide = loopCollide;
+    while (collide && x < maxX) {
+      x += 100;
+      let loopCollide = false;
+      browsers.forEach((b) => {
+        if (overlaps(x, y, height, width, b)) loopCollide = true;
+      });
+      collide = loopCollide;
+    }
+    if (collide) x = 0;
   }
 
   return { x, y };

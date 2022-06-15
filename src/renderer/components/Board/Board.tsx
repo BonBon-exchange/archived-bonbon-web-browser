@@ -53,7 +53,7 @@ export const Board: React.FC = () => {
     window.bonb.listener.newWindow((_e, args: { url: string }) =>
       addBrowser(args)
     );
-  }, []);
+  });
 
   return (
     <div className="Board__container">

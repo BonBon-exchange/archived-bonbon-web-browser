@@ -3,7 +3,7 @@ import axios from 'axios';
 import { machineIdSync } from 'node-machine-id';
 import { app } from 'electron';
 import { v4 } from 'uuid';
-import * as appPackageJson from '../../../release/app/package.json';
+import * as appPackageJson from '../../release/app/package.json';
 
 const sessionId = v4();
 

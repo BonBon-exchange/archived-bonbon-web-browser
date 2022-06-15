@@ -28,7 +28,7 @@ import contextMenu from 'electron-context-menu';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { makeEvents } from './ipcMainEvents';
-import { event } from '../renderer/helpers/analytics';
+import { event } from './analytics';
 
 export default class AppUpdater {
   constructor() {

@@ -54,8 +54,9 @@ export const TopBar: React.FC<TopBarProps> = ({ setShowLibrary }) => {
   };
 
   useEffect(() => {
-    const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    window.document.querySelector('body').className = dark
+    window.document.querySelector('body').className = window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    ).matches
       ? 'dark-theme'
       : 'light-theme';
 
