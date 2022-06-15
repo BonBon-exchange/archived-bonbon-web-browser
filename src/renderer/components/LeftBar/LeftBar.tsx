@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/prefer-default-export */
@@ -23,7 +24,6 @@ export const LeftBar: React.FC = () => {
             <img
               src={b.favicon}
               className="LeftBar__browserFavImg"
-              alt={b.url}
               data-browserid={b.id}
             />
           </div>
