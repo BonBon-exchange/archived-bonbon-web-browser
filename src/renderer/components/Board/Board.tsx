@@ -53,6 +53,7 @@ export const Board: React.FC = () => {
     const webviews = document.querySelectorAll('webview');
     webviews.forEach((webview) => {
       webview.addEventListener('new-window', (e) => {
+        console.log(e);
         addBrowser({ url: e.url });
       });
     });

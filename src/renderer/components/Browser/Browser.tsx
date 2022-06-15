@@ -230,6 +230,7 @@ export const Browser: React.FC<BrowserProps> = ({
         'Browser__draggable-container': true,
       })}
       disableDragging={isFullSize}
+      enableResizing={isFullSize ? {} : undefined}
     >
       <div className="Browser__container" ref={container}>
         <BrowserTopBar
