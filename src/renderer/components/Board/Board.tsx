@@ -50,13 +50,9 @@ export const Board: React.FC = () => {
   );
 
   useEffect(() => {
-    const webviews = document.querySelectorAll('webview');
-    webviews.forEach((webview) => {
-      webview.addEventListener('new-window', (e) => {
-        console.log(e);
-        addBrowser({ url: e.url });
-      });
-    });
+    window.bonb.listener.newWindow((_e, args: { url: string }) =>
+      addBrowser(args)
+    );
   }, []);
 
   return (

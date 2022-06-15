@@ -11,6 +11,11 @@ contextBridge.exposeInMainWorld('bonb', {
       ipcRenderer.send('inspectElement', point);
     },
   },
+  listener: {
+    newWindow: (action: unknown) => {
+      ipcRenderer.on('new-window', action);
+    },
+  },
 });
 
 contextBridge.exposeInMainWorld('darkMode', {

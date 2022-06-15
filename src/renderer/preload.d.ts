@@ -7,6 +7,9 @@ declare global {
       tools: {
         inspectElement: (point: { x: number; y: number }) => void;
       };
+      listener: {
+        newWindow: (action: unknown) => void;
+      };
     };
   }
 }

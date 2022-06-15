@@ -172,8 +172,9 @@ app.on('web-contents-created', (_event, contents) => {
     webPreferences.nodeIntegration = false;
   });
 
-  contents.on('new-window', (e) => {
+  contents.on('new-window', (e, url) => {
     e.preventDefault();
+    mainWindow?.webContents.send('new-window', { url });
   });
 
   contextMenu({
