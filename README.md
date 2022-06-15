@@ -46,4 +46,6 @@ In progres:
 
 - app signing
 
-![Desktop](https://github.com/danielfebrero/bonb-browser/blob/master/images/desktop.PNG)
+![Desktop](https://github.com/danielfebrero/bonb-browser/blob/master/images/desktop1.PNG)
+
+![Desktop2](https://github.com/danielfebrero/bonb-browser/blob/master/images/desktop2.PNG)
