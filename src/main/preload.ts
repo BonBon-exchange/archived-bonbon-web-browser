@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer } from 'electron';
+import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
 contextBridge.exposeInMainWorld('bonb', {
   analytics: {
@@ -12,7 +12,7 @@ contextBridge.exposeInMainWorld('bonb', {
     },
   },
   listener: {
-    newWindow: (action: unknown) => {
+    newWindow: (action: (event: IpcRendererEvent, ...args: any[]) => void) => {
       ipcRenderer.on('new-window', action);
     },
   },

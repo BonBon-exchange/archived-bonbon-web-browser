@@ -28,7 +28,9 @@ export const getCoordinateWithNoCollision = (
   let y = 0;
   const maxX = document.querySelector('.Board__container').clientWidth - width;
 
-  const browsers = document.querySelectorAll('.Browser__draggable-container');
+  const browsers = document.querySelectorAll(
+    '.Browser__draggable-container :not(.Browser__is-full-size)'
+  );
   let collide = true;
   while (collide) {
     y += 100;

@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 } from 'uuid';
+
+import { BrowserProps } from 'renderer/components/Browser/Types';
 import { BoardType } from '../../components/Board/Types';
 
 type UpdateBrowserUrlType = {
@@ -74,6 +76,15 @@ export const addapsSlice = createSlice({
     },
     setIsRenamingBoard: (state, action: PayloadAction<string | null>) => {
       state.isRenamingBoard = action.payload;
+    },
+    addBrowser: (state, action: PayloadAction<BrowserProps>) => {
+      const boards = [...state.boards];
+      const boardIndex = boards.findIndex((b) => b.id === state.activeBoard);
+
+      if (boardIndex > -1) {
+        boards[boardIndex].browsers.push(action.payload);
+        state.boards = boards;
+      }
     },
     updateBrowserUrl: (state, action: PayloadAction<UpdateBrowserUrlType>) => {
       const boards = [...state.boards];
@@ -158,6 +169,7 @@ export const {
   removeBrowser,
   removeAllBrowsers,
   addBoard,
+  addBrowser,
 } = addapsSlice.actions;
 
 export default addapsSlice.reducer;
