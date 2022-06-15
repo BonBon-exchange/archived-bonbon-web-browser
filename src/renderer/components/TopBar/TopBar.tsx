@@ -65,6 +65,7 @@ export const TopBar: React.FC<TopBarProps> = ({ setShowLibrary }) => {
         const colorScheme = e.matches ? 'dark-theme' : 'light-theme';
         setIsDarkMode(e.matches);
         window.document.querySelector('body').className = colorScheme;
+        window.bonb.analytics.event('toogle_darkmode', { theme: colorScheme });
       });
   }, []);
 
