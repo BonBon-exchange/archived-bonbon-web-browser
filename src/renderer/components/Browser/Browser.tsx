@@ -44,6 +44,7 @@ export const Browser: React.FC<BrowserProps> = ({
   const [renderedUrl, setRenderedUrl] = useState<string>('');
   const container = useRef<HTMLDivElement>(null);
   const [userAgent, setUserAgent] = useState<string | undefined>();
+  const [isFullSize, setIsFullSize] = useState<boolean>(false);
 
   const webview = container.current?.querySelector('webview');
 
@@ -164,6 +165,15 @@ export const Browser: React.FC<BrowserProps> = ({
     }
   }, [url]);
 
+  // Bug fix for Rnd renderer
+  useEffect(() => {
+    if (board?.isFullSize) {
+      setTimeout(() => setIsFullSize(true), 0);
+    } else {
+      setIsFullSize(false);
+    }
+  }, [board?.isFullSize]);
+
   return (
     <Rnd
       style={{ display: 'flex' }}
@@ -181,7 +191,7 @@ export const Browser: React.FC<BrowserProps> = ({
       bounds=".Board__container"
       id={`Browser__${id}`}
       className={clsx({
-        'Browser__is-full-size': board?.isFullSize,
+        'Browser__is-full-size': isFullSize,
         'Browser__draggable-container': true,
       })}
       disableDragging={board?.isFullSize}
