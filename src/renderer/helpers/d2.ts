@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-loop-func */
+
+import { BoardType } from 'renderer/components/Board/Types';
+
 /* eslint-disable import/prefer-default-export */
-export const overlaps = (x, y, height, width, b) => {
-  const rect2 = b.getBoundingClientRect();
-  rect2.y += window.scrollY;
+export const overlaps = (x, y, height, width, rect2) => {
   const isInHoriztonalBounds = x < rect2.x + rect2.width && x + width > rect2.x;
   const isInVerticalBounds = y < rect2.y + rect2.height && y + height > rect2.y;
   const isOverlapping = isInHoriztonalBounds && isInVerticalBounds;
@@ -21,26 +22,30 @@ export const bringBrowserToTheFront = (document: Document, browser) => {
 
 export const getCoordinateWithNoCollision = (
   document: Document,
+  board: BoardType,
   height: number,
   width: number
 ): { x: number; y: number } => {
   let x = 0;
   let y = 0;
-  const maxX = document.querySelector('.Board__container').clientWidth - width;
+  const step = 90;
+  const maxX =
+    document.querySelector('.Board__container')?.clientWidth - width - step;
 
-  const browsers = document.querySelectorAll(
-    '.Browser__draggable-container :not(.Browser__is-full-size)'
-  );
   let collide = true;
   while (collide) {
-    y += 100;
+    y += step;
     while (collide && x < maxX) {
-      x += 100;
-      let loopCollide = false;
-      browsers.forEach((b) => {
-        if (overlaps(x, y, height, width, b)) loopCollide = true;
-      });
-      collide = loopCollide;
+      x += step;
+      collide = !board.browsers.every(
+        (b) =>
+          overlaps(x, y, height, width, {
+            x: b.left,
+            y: b.top,
+            width: b.width,
+            height: b.height,
+          }) === false
+      );
     }
     if (collide) x = 0;
   }

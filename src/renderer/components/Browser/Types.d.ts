@@ -5,7 +5,6 @@ export interface BrowserProps {
   left: number;
   height: number;
   width: number;
-  isFullSize: boolean;
   firstRendering?: boolean;
   favicon?: string;
   title?: string;

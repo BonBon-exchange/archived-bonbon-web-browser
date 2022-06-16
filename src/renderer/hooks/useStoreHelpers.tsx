@@ -1,16 +1,22 @@
 /* eslint-disable import/prefer-default-export */
-import { useDispatch } from 'react-redux';
 import { v4 } from 'uuid';
 
-import { addBrowser } from '../store/reducers/Addaps';
-import { scrollToBrowser, getCoordinateWithNoCollision } from '../helpers/d2';
+import { useAppDispatch } from 'renderer/store/hooks';
+
+import { addBrowser } from 'renderer/store/reducers/Addaps';
+import {
+  scrollToBrowser,
+  getCoordinateWithNoCollision,
+} from 'renderer/helpers/d2';
+import { useBoard } from './useBoard';
 
 export const useStoreHelpers = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const board = useBoard();
 
   const makeAndAddBrowser = (params: { url?: string }): void => {
     const browserId = v4();
-    const { x, y } = getCoordinateWithNoCollision(document, 800, 600);
+    const { x, y } = getCoordinateWithNoCollision(document, board, 800, 600);
     const newBrowser = {
       id: browserId,
       url: params.url || 'https://www.google.fr',
@@ -18,7 +24,6 @@ export const useStoreHelpers = () => {
       left: x,
       height: 800,
       width: 600,
-      isFullSize: false,
       firstRendering: true,
       favicon: '',
     };

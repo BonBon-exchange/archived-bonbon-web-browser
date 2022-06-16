@@ -51,7 +51,6 @@ const newBrowser = {
   left: 120,
   height: 800,
   width: 600,
-  isFullSize: false,
   firstRendering: true,
   favicon: '',
   title: '',
@@ -63,6 +62,7 @@ const newBoard = {
   label: 'Board 1',
   browsers: [newBrowser],
   activeBrowser: browserId,
+  isFullSize: false,
 };
 
 const initialState: AddapsState = {
@@ -86,6 +86,15 @@ export const addapsSlice = createSlice({
     },
     setIsRenamingBoard: (state, action: PayloadAction<string | null>) => {
       state.isRenamingBoard = action.payload;
+    },
+    toggleBoardFullSize: (state, _action: PayloadAction) => {
+      const boards = [...state.boards];
+      const boardIndex = boards.findIndex((b) => b.id === state.activeBoard);
+
+      if (boardIndex > -1) {
+        boards[boardIndex].isFullSize = !boards[boardIndex].isFullSize;
+        state.boards = boards;
+      }
     },
     setActiveBrowser: (state, action: PayloadAction<string>) => {
       const boards = [...state.boards];
@@ -217,6 +226,7 @@ export const {
   setActiveBrowser,
   updateBrowserTitle,
   updateBrowser,
+  toggleBoardFullSize,
 } = addapsSlice.actions;
 
 export default addapsSlice.reducer;

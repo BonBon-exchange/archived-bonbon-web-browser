@@ -14,6 +14,7 @@ import {
   updateBrowserUrl,
   removeBrowser,
   updateBrowser,
+  toggleBoardFullSize,
 } from 'renderer/store/reducers/Addaps';
 import { bringBrowserToTheFront } from 'renderer/helpers/d2';
 import { dataDb } from 'renderer/db/dataDb';
@@ -29,7 +30,6 @@ export const Browser: React.FC<BrowserProps> = ({
   left,
   height,
   width,
-  isFullSize,
   firstRendering,
   favicon,
   title,
@@ -37,6 +37,7 @@ export const Browser: React.FC<BrowserProps> = ({
   useBrowserEvents(id);
   const dispatch = useAppDispatch();
   const { boards, activeBoard } = useAppSelector((state) => state.addaps);
+  const board = boards.find((b) => b.id === activeBoard);
   const [firstRenderingState, setFirstRenderingState] = useState<boolean>(
     firstRendering || true
   );
@@ -106,17 +107,7 @@ export const Browser: React.FC<BrowserProps> = ({
   };
 
   const toggleFullsizeBrowser = () => {
-    const boardIndex = boards.findIndex((b) => b.id === activeBoard);
-    const browserIndex = boards[boardIndex].browsers.findIndex(
-      (b) => b.id === id
-    );
-    const fullSize = !boards[boardIndex].browsers[browserIndex].isFullSize;
-    dispatch(
-      updateBrowser({
-        browserId: id,
-        params: { isFullSize: fullSize },
-      })
-    );
+    dispatch(toggleBoardFullSize());
   };
 
   const goBack = () => {
@@ -167,16 +158,12 @@ export const Browser: React.FC<BrowserProps> = ({
   return (
     <Rnd
       style={{ display: 'flex' }}
-      default={
-        isFullSize
-          ? undefined
-          : {
-              x: left,
-              y: top,
-              width,
-              height,
-            }
-      }
+      default={{
+        x: left,
+        y: top,
+        width,
+        height,
+      }}
       dragHandleClassName="BrowserTopBar__container"
       onDragStart={onDragStart}
       onDragStop={onDragStop}
@@ -185,11 +172,11 @@ export const Browser: React.FC<BrowserProps> = ({
       bounds=".Board__container"
       id={`Browser__${id}`}
       className={clsx({
-        'Browser__is-full-size': isFullSize,
+        'Browser__is-full-size': board?.isFullSize,
         'Browser__draggable-container': true,
       })}
-      disableDragging={isFullSize}
-      enableResizing={isFullSize ? {} : undefined}
+      disableDragging={board?.isFullSize}
+      enableResizing={board?.isFullSize ? {} : undefined}
     >
       <div className="Browser__container" ref={container}>
         <BrowserTopBar
