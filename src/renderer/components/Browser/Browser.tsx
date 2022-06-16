@@ -168,7 +168,7 @@ export const Browser: React.FC<BrowserProps> = ({
   // Bug fix for Rnd renderer
   useEffect(() => {
     if (board?.isFullSize) {
-      setTimeout(() => setIsFullSize(true), 0);
+      setIsFullSize(true);
     } else {
       setIsFullSize(false);
     }
