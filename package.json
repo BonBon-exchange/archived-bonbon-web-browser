@@ -107,6 +107,7 @@
     "electron-log": "^4.4.7",
     "electron-updater": "^5.0.1",
     "node-machine-id": "^1.1.12",
+    "nucleus-nodejs": "^3.0.9",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-redux": "^8.0.2",

@@ -12,6 +12,7 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
+import Nucleus from 'nucleus-nodejs';
 import {
   app,
   BrowserWindow,
@@ -29,6 +30,16 @@ import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { makeEvents } from './ipcMainEvents';
 import { event } from './analytics';
+import * as appPackageJson from '../../release/app/package.json';
+
+Nucleus.init('62aaf235a3310eb923a238e2');
+Nucleus.setUserId(machineIdSync());
+Nucleus.setProps(
+  {
+    version: appPackageJson.default.version,
+  },
+  true
+);
 
 export default class AppUpdater {
   constructor() {
@@ -188,6 +199,7 @@ app.on('web-contents-created', (_event, contents) => {
 app
   .whenReady()
   .then(() => {
+    Nucleus.appStarted();
     createWindow();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the

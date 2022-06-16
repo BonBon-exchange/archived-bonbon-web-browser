@@ -3,6 +3,8 @@ import axios from 'axios';
 import { machineIdSync } from 'node-machine-id';
 import { app } from 'electron';
 import { v4 } from 'uuid';
+import Nucleus from 'nucleus-nodejs';
+
 import * as appPackageJson from '../../release/app/package.json';
 
 const sessionId = v4();
@@ -34,4 +36,6 @@ export const event = (eventName: string, params?: Record<string, unknown>) => {
       payload
     )
     .catch(console.log);
+
+  Nucleus.track(eventName, params);
 };
