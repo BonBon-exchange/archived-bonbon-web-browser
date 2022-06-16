@@ -53,6 +53,7 @@ const newBoard = {
   id: boardId,
   label: 'Board 1',
   browsers: [newBrowser],
+  activeBrowser: browserId,
 };
 
 const initialState: AddapsState = {
@@ -76,6 +77,15 @@ export const addapsSlice = createSlice({
     },
     setIsRenamingBoard: (state, action: PayloadAction<string | null>) => {
       state.isRenamingBoard = action.payload;
+    },
+    setActiveBrowser: (state, action: PayloadAction<string>) => {
+      const boards = [...state.boards];
+      const boardIndex = boards.findIndex((b) => b.id === state.activeBoard);
+
+      if (boardIndex > -1) {
+        boards[boardIndex].activeBrowser = action.payload;
+        state.boards = boards;
+      }
     },
     addBrowser: (state, action: PayloadAction<BrowserProps>) => {
       const boards = [...state.boards];
@@ -170,6 +180,7 @@ export const {
   removeAllBrowsers,
   addBoard,
   addBrowser,
+  setActiveBrowser,
 } = addapsSlice.actions;
 
 export default addapsSlice.reducer;

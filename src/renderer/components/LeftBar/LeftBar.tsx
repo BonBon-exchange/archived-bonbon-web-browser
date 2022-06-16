@@ -12,6 +12,11 @@ export const LeftBar: React.FC = () => {
   const { boards, activeBoard } = useAppSelector((state) => state.addaps);
   const board = boards.find((b) => b.id === activeBoard);
 
+  const clickOnFavicon = (browserId: string) => {
+    scrollToBrowser(document, browserId);
+    window.bonb.analytics.event('switch_browser');
+  };
+
   return (
     <div className="LeftBar__browserFavContainer">
       {board?.browsers.map((b) => {
@@ -19,7 +24,7 @@ export const LeftBar: React.FC = () => {
           <div
             className="LeftBar__browserFav"
             key={b.id}
-            onClick={() => scrollToBrowser(document, b.id)}
+            onClick={() => clickOnFavicon(b.id)}
           >
             <img
               src={b.favicon}

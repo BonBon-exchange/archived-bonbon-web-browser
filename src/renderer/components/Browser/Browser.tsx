@@ -13,6 +13,7 @@ import {
   updateBrowserUrl,
   updateBrowserFav,
   removeBrowser,
+  setActiveBrowser,
 } from '../../store/reducers/Addaps';
 import { bringBrowserToTheFront } from '../../helpers/d2';
 import { dataDb } from '../../db/dataDb';
@@ -159,16 +160,24 @@ export const Browser: React.FC<BrowserProps> = ({
     webview.addEventListener('page-title-updated', (e) => {
       setTitle(e.title);
     });
+  }, []);
 
+  useEffect(() => {
+    const webview = container.current?.querySelector('webview');
     webview.addEventListener('ipc-message', (event, ...args) => {
       if (event.channel === 'clickOnPage') {
         bringBrowserToTheFront(
           document,
           container.current?.closest('.Browser__draggable-container')
         );
+        dispatch(setActiveBrowser(id));
       }
     });
-  }, []);
+
+    container.current.addEventListener('click', () => {
+      dispatch(setActiveBrowser(id));
+    });
+  }, [dispatch, id]);
 
   useEffect(() => {
     const webview = container.current?.querySelector('webview');
