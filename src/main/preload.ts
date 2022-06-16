@@ -15,6 +15,13 @@ contextBridge.exposeInMainWorld('bonb', {
     newWindow: (action: (event: IpcRendererEvent, ...args: any[]) => void) => {
       ipcRenderer.on('new-window', action);
     },
+    off: {
+      newWindow: (
+        action: (event: IpcRendererEvent, ...args: any[]) => void
+      ) => {
+        ipcRenderer.off('new-window', action);
+      },
+    },
   },
 });
 
