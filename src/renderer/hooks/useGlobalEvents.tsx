@@ -38,7 +38,8 @@ export const useGlobalEvents = () => {
 
   useEffect(() => {
     window.bonb.listener.newWindow(newWindowAction);
-  });
+    return () => window.bonb.off.newWindow();
+  }, [newWindowAction]);
 
   useEffect(() => {
     window.addEventListener('keydown', keyDownListener, false);

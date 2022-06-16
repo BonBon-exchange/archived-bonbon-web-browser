@@ -151,14 +151,10 @@ const createWindow = async () => {
 
   makeEvents(mainWindow);
 
-  mainWindow.webContents
-    .executeJavaScript(
-      `localStorage.setItem("machineId", "${machineId}"); localStorage.setItem("appIsPackaged", "${app.isPackaged}");`,
-      true
-    )
-    .then((result) => {
-      console.log(result);
-    });
+  mainWindow.webContents.executeJavaScript(
+    `localStorage.setItem("machineId", "${machineId}"); localStorage.setItem("appIsPackaged", "${app.isPackaged}");`,
+    true
+  );
 
   event('open_app');
 };

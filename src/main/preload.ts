@@ -16,6 +16,11 @@ contextBridge.exposeInMainWorld('bonb', {
       ipcRenderer.on('new-window', action);
     },
   },
+  off: {
+    newWindow: () => {
+      ipcRenderer.removeAllListeners('new-window');
+    },
+  },
 });
 
 contextBridge.exposeInMainWorld('darkMode', {

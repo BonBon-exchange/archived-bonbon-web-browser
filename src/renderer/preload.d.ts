@@ -10,6 +10,9 @@ declare global {
       listener: {
         newWindow: (action: unknown) => void;
       };
+      off: {
+        newWindow: () => void;
+      };
     };
   }
 }

@@ -43,6 +43,7 @@ export const Browser: React.FC<BrowserProps> = ({
   );
   const [renderedUrl, setRenderedUrl] = useState<string>('');
   const container = useRef<HTMLDivElement>(null);
+  const [userAgent, setUserAgent] = useState<string | undefined>();
 
   const webview = container.current?.querySelector('webview');
 
@@ -153,6 +154,14 @@ export const Browser: React.FC<BrowserProps> = ({
       localStorage.getItem('machineId') || 'bonb'
     );
     dataDb.navigate.add({ url: encrypted.toString(), date: new Date() });
+
+    if (url === 'https://web.whatsapp.com/') {
+      setUserAgent(
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36'
+      );
+    } else {
+      setUserAgent(undefined);
+    }
   }, [url]);
 
   return (
@@ -199,6 +208,7 @@ export const Browser: React.FC<BrowserProps> = ({
             allowpopups="true"
             src={renderedUrl}
             partition="persist:user-partition"
+            useragent={userAgent}
           />
         </div>
       </div>
