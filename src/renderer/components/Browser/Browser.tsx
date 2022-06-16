@@ -5,15 +5,14 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Rnd } from 'react-rnd';
 import clsx from 'clsx';
 
+import { useBrowserEvents } from 'renderer/hooks/useBrowserEvents';
 import { BrowserControlBar } from '../BrowserControlBar';
 import { BrowserTopBar } from '../BrowserTopBar';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
-  setBoards,
   updateBrowserUrl,
-  updateBrowserFav,
   removeBrowser,
-  setActiveBrowser,
+  updateBrowser,
 } from '../../store/reducers/Addaps';
 import { bringBrowserToTheFront } from '../../helpers/d2';
 import { dataDb } from '../../db/dataDb';
@@ -32,15 +31,16 @@ export const Browser: React.FC<BrowserProps> = ({
   isFullSize,
   firstRendering,
   favicon,
+  title,
 }) => {
+  useBrowserEvents(id);
   const dispatch = useAppDispatch();
   const { boards, activeBoard } = useAppSelector((state) => state.addaps);
-  const [title, setTitle] = useState<string>('');
   const [firstRenderingState, setFirstRenderingState] = useState<boolean>(
     firstRendering || true
   );
   const [renderedUrl, setRenderedUrl] = useState<string>('');
-  const container = useRef(null);
+  const container = useRef<HTMLDivElement>(null);
 
   const disablePointerEventsForOthers = () => {
     const webviews = document.querySelectorAll('.Browser__webview-container');
@@ -58,20 +58,6 @@ export const Browser: React.FC<BrowserProps> = ({
     });
   };
 
-  const updateBoard = (update: Record<string, unknown>) => {
-    const newBoards = [...boards];
-    const boardIndex = newBoards.findIndex((b) => b.id === activeBoard);
-    const newBoard = { ...newBoards[boardIndex] };
-    const newBrowserIndex = newBoard.browsers.findIndex((b) => b.id === id);
-    const newBrowsers = [...newBoard.browsers];
-    const newBrowser = { ...newBrowsers[newBrowserIndex], ...update };
-
-    newBrowsers[newBrowserIndex] = newBrowser;
-    newBoard.browsers = newBrowsers;
-    newBoards[boardIndex] = newBoard;
-    dispatch(setBoards(newBoards));
-  };
-
   const getOffset = (el: Element) => {
     const rect = el.getBoundingClientRect();
     return {
@@ -85,16 +71,26 @@ export const Browser: React.FC<BrowserProps> = ({
   };
 
   const onDragStop = (e: any) => {
-    updateBoard({
-      top: getOffset(e.target).top,
-      left: getOffset(e.target).left,
-    });
+    dispatch(
+      updateBrowser({
+        browserId: id,
+        params: {
+          top: getOffset(e.target).top,
+          left: getOffset(e.target).left,
+        },
+      })
+    );
 
     enablePointerEventsForAll();
   };
 
   const onResizeStop = (delta: { width: number; height: number }) => {
-    updateBoard({ width: width + delta.width, height: height + delta.height });
+    dispatch(
+      updateBrowser({
+        browserId: id,
+        params: { width: width + delta.width, height: height + delta.height },
+      })
+    );
     enablePointerEventsForAll();
   };
 
@@ -112,33 +108,37 @@ export const Browser: React.FC<BrowserProps> = ({
       (b) => b.id === id
     );
     const fullSize = !boards[boardIndex].browsers[browserIndex].isFullSize;
-    updateBoard({ isFullSize: fullSize });
+    dispatch(
+      updateBrowser({
+        browserId: id,
+        params: { isFullSize: fullSize },
+      })
+    );
   };
 
   const goBack = () => {
-    container.current?.querySelector('webview').goBack();
+    container.current?.querySelector('webview')?.goBack();
     window.bonb.analytics.event('browser_go_back');
   };
 
   const goForward = () => {
-    container.current?.querySelector('webview').goForward();
+    container.current?.querySelector('webview')?.goForward();
     window.bonb.analytics.event('browser_go_forward');
   };
 
   const reload = () => {
-    container.current?.querySelector('webview').reload();
+    container.current?.querySelector('webview')?.reload();
     window.bonb.analytics.event('browser_reload');
   };
 
   const goHome = () => {
     container.current
       ?.querySelector('webview')
-      .loadURL('https://www.google.fr');
+      ?.loadURL('https://www.google.fr');
     dispatch(
       updateBrowserUrl({
         url: 'https://www.google.fr',
         browserId: id,
-        boardId: activeBoard,
       })
     );
   };
@@ -149,60 +149,6 @@ export const Browser: React.FC<BrowserProps> = ({
       setRenderedUrl(url);
     }
   }, [firstRenderingState, url]);
-
-  useEffect(() => {
-    const webview = container.current?.querySelector('webview');
-
-    webview.addEventListener('dom-ready', () => {
-      // webview.openDevTools();
-    });
-
-    webview.addEventListener('page-title-updated', (e) => {
-      setTitle(e.title);
-    });
-  }, []);
-
-  useEffect(() => {
-    const webview = container.current?.querySelector('webview');
-    webview.addEventListener('ipc-message', (event, ...args) => {
-      if (event.channel === 'clickOnPage') {
-        bringBrowserToTheFront(
-          document,
-          container.current?.closest('.Browser__draggable-container')
-        );
-        dispatch(setActiveBrowser(id));
-      }
-    });
-
-    container.current.addEventListener('click', () => {
-      dispatch(setActiveBrowser(id));
-    });
-  }, [dispatch, id]);
-
-  useEffect(() => {
-    const webview = container.current?.querySelector('webview');
-    webview.addEventListener('page-favicon-updated', (e) => {
-      dispatch(
-        updateBrowserFav({
-          favicon: e.favicons[0],
-          boardId: activeBoard,
-          browserId: id,
-        })
-      );
-    });
-
-    webview.addEventListener('load-commit', (e: any) => {
-      setTimeout(() => {
-        dispatch(
-          updateBrowserUrl({
-            url: e.target.src,
-            browserId: id,
-            boardId: activeBoard,
-          })
-        );
-      }, 0);
-    });
-  }, [activeBoard, dispatch, id]);
 
   useEffect(() => {
     bringBrowserToTheFront(document, document.querySelector(`#Browser__${id}`));

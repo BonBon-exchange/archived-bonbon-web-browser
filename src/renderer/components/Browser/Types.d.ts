@@ -8,4 +8,5 @@ export interface BrowserProps {
   isFullSize: boolean;
   firstRendering?: boolean;
   favicon?: string;
+  title?: string;
 }

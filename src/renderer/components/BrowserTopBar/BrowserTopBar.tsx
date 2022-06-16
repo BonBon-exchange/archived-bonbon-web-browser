@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable import/prefer-default-export */
@@ -28,7 +29,7 @@ export const BrowserTopBar: React.FC<BrowserTopBarProps> = ({
           className="BrowserTopBar__favicon"
         />
       )}
-      <div className="BrowserTopBar__title">{title}</div>
+      <div className="BrowserTopBar__title">{title || ''}</div>
       <div className="BrowserTopBar__controls">
         <div className="BrowserTopBar__control-button" onClick={closeBrowser}>
           <CloseIcon />

@@ -4,16 +4,24 @@ import { v4 } from 'uuid';
 import { BrowserProps } from 'renderer/components/Browser/Types';
 import { BoardType } from '../../components/Board/Types';
 
+type UpdateBrowserType = {
+  browserId: string;
+  params: Partial<BrowserProps>;
+};
+
 type UpdateBrowserUrlType = {
   url: string;
   browserId: string;
-  boardId: string;
+};
+
+type UpdateBrowserTitleType = {
+  title: string;
+  browserId: string;
 };
 
 type UpdateBrowserFavType = {
   favicon: string;
   browserId: string;
-  boardId: string;
 };
 
 type RenameBoardType = {
@@ -46,6 +54,7 @@ const newBrowser = {
   isFullSize: false,
   firstRendering: true,
   favicon: '',
+  title: '',
 };
 
 const boardId = v4();
@@ -96,11 +105,22 @@ export const addapsSlice = createSlice({
         state.boards = boards;
       }
     },
+    updateBrowser: (state, action: PayloadAction<UpdateBrowserType>) => {
+      const boards = [...state.boards];
+      const boardIndex = boards.findIndex((b) => b.id === state.activeBoard);
+      if (boardIndex > -1) {
+        const browserIndex = boards[boardIndex].browsers.findIndex(
+          (b) => b.id === action.payload.browserId
+        );
+        const browser = boards[boardIndex].browsers[browserIndex];
+        const editedBrowser = { ...browser, ...action.payload.params };
+        boards[boardIndex].browsers[browserIndex] = editedBrowser;
+        state.boards = boards;
+      }
+    },
     updateBrowserUrl: (state, action: PayloadAction<UpdateBrowserUrlType>) => {
       const boards = [...state.boards];
-      const boardIndex = boards.findIndex(
-        (b) => b.id === action.payload.boardId
-      );
+      const boardIndex = boards.findIndex((b) => b.id === state.activeBoard);
       if (boardIndex > -1) {
         const browserIndex = boards[boardIndex].browsers.findIndex(
           (b) => b.id === action.payload.browserId
@@ -111,11 +131,25 @@ export const addapsSlice = createSlice({
         state.boards = boards;
       }
     },
+    updateBrowserTitle: (
+      state,
+      action: PayloadAction<UpdateBrowserTitleType>
+    ) => {
+      const boards = [...state.boards];
+      const boardIndex = boards.findIndex((b) => b.id === state.activeBoard);
+      if (boardIndex > -1) {
+        const browserIndex = boards[boardIndex].browsers.findIndex(
+          (b) => b.id === action.payload.browserId
+        );
+        const browser = boards[boardIndex].browsers[browserIndex];
+        browser.title = action.payload.title;
+        boards[boardIndex].browsers[browserIndex] = browser;
+        state.boards = boards;
+      }
+    },
     updateBrowserFav: (state, action: PayloadAction<UpdateBrowserFavType>) => {
       const boards = [...state.boards];
-      const boardIndex = boards.findIndex(
-        (b) => b.id === action.payload.boardId
-      );
+      const boardIndex = boards.findIndex((b) => b.id === state.activeBoard);
       if (boardIndex > -1) {
         const browserIndex = boards[boardIndex].browsers.findIndex(
           (b) => b.id === action.payload.browserId
@@ -181,6 +215,8 @@ export const {
   addBoard,
   addBrowser,
   setActiveBrowser,
+  updateBrowserTitle,
+  updateBrowser,
 } = addapsSlice.actions;
 
 export default addapsSlice.reducer;
