@@ -3,8 +3,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/prefer-default-export */
 import React from 'react';
-import { useAppSelector } from '../../store/hooks';
-import { scrollToBrowser } from '../../helpers/d2';
+import { useAppSelector } from 'renderer/store/hooks';
+import { scrollToBrowser } from 'renderer/helpers/d2';
 
 import './style.scss';
 

@@ -7,16 +7,16 @@ import clsx from 'clsx';
 import CryptoJS from 'crypto-js';
 
 import { useBrowserEvents } from 'renderer/hooks/useBrowserEvents';
-import { BrowserControlBar } from '../BrowserControlBar';
-import { BrowserTopBar } from '../BrowserTopBar';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { BrowserControlBar } from 'renderer/components/BrowserControlBar';
+import { BrowserTopBar } from 'renderer/components/BrowserTopBar';
+import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
 import {
   updateBrowserUrl,
   removeBrowser,
   updateBrowser,
-} from '../../store/reducers/Addaps';
-import { bringBrowserToTheFront } from '../../helpers/d2';
-import { dataDb } from '../../db/dataDb';
+} from 'renderer/store/reducers/Addaps';
+import { bringBrowserToTheFront } from 'renderer/helpers/d2';
+import { dataDb } from 'renderer/db/dataDb';
 
 import { BrowserProps } from './Types';
 

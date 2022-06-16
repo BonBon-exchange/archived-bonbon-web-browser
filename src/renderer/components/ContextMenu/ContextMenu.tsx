@@ -4,14 +4,14 @@
 /* eslint-disable import/prefer-default-export */
 import { useRef, useEffect, useState, useCallback } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
 import {
   setIsRenamingBoard,
   removeBoard,
   removeBrowser,
   removeAllBrowsers,
-} from '../../store/reducers/Addaps';
-import { userDb } from '../../db/userDb';
+} from 'renderer/store/reducers/Addaps';
+import { userDb } from 'renderer/db/userDb';
 
 import { ContextMenuProps } from './Types';
 

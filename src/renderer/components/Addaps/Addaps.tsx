@@ -4,13 +4,13 @@
 import React, { useEffect, useState } from 'react';
 
 import { useGlobalEvents } from 'renderer/hooks/useGlobalEvents';
-import { TopBar } from '../TopBar';
-import { Board } from '../Board';
-import { LeftBar } from '../LeftBar';
-import { ContextMenu } from '../ContextMenu';
-import { Library } from '../Library';
+import { TopBar } from 'renderer/components/TopBar';
+import { Board } from 'renderer/components/Board';
+import { LeftBar } from 'renderer/components/LeftBar';
+import { ContextMenu } from 'renderer/components/ContextMenu';
+import { Library } from 'renderer/components/Library';
 
-import { ContextMenuProps } from '../ContextMenu/Types';
+import { ContextMenuProps } from 'renderer/components/ContextMenu/Types';
 
 import './style.css';
 import 'renderer/style/dark.css';

@@ -12,13 +12,13 @@ import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
 import {
   setBoards,
   setActiveBoard,
   setIsRenamingBoard,
   renameBoard,
-} from '../../store/reducers/Addaps';
+} from 'renderer/store/reducers/Addaps';
 
 import { TopBarProps } from './Types';
 

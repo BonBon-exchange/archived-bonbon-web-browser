@@ -11,8 +11,8 @@ import { userDb } from 'renderer/db/userDb';
 import { addBoard, setActiveBoard } from 'renderer/store/reducers/Addaps';
 import { useAppDispatch } from 'renderer/store/hooks';
 
+import { BoardType } from 'renderer/components/Board/Types';
 import { LibraryProps } from './Types';
-import { BoardType } from '../Board/Types';
 
 import './style.css';
 

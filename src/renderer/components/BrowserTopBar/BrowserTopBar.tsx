@@ -7,8 +7,9 @@ import React from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import CropSquareIcon from '@mui/icons-material/CropSquare';
 
-import './style.css';
 import { BrowserTopBarProps } from './Types';
+
+import './style.css';
 
 export const BrowserTopBar: React.FC<BrowserTopBarProps> = ({
   closeBrowser,

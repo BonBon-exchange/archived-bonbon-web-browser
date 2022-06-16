@@ -1,16 +1,16 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/prefer-default-export */
-import React, { useEffect, useState } from 'react';
+import React, { KeyboardEventHandler, useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import CachedIcon from '@mui/icons-material/Cached';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import HomeIcon from '@mui/icons-material/Home';
 
+import { updateBrowserUrl } from 'renderer/store/reducers/Addaps';
+import { useAppDispatch } from 'renderer/store/hooks';
 import { BrowserControlBarProps } from './Types';
-import { updateBrowserUrl } from '../../store/reducers/Addaps';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 import './style.css';
 
@@ -24,9 +24,8 @@ export const BrowserControlBar: React.FC<BrowserControlBarProps> = ({
 }) => {
   const [urlInputValue, setUrlInputValue] = useState<string>(url);
   const dispatch = useAppDispatch();
-  const { activeBoard } = useAppSelector((state) => state.addaps);
 
-  const urlInputOnKeyPress = (e: KeyboardEvent) => {
+  const urlInputOnKeyPress: KeyboardEventHandler = (e) => {
     if (e.code === 'Enter' || e.code === 'NumpadEnter') {
       document
         .querySelector(`#Browser__${browserId}`)
@@ -37,7 +36,6 @@ export const BrowserControlBar: React.FC<BrowserControlBarProps> = ({
         updateBrowserUrl({
           url: e.target?.value,
           browserId,
-          boardId: activeBoard,
         })
       );
     }

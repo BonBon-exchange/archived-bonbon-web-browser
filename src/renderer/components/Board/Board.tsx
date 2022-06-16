@@ -4,9 +4,9 @@
 import React from 'react';
 
 import { useStoreHelpers } from 'renderer/hooks/useStoreHelpers';
-import { ButtonAddBrowser } from '../ButtonAddBrowser';
-import { Browser } from '../Browser';
-import { useAppSelector } from '../../store/hooks';
+import { ButtonAddBrowser } from 'renderer/components/ButtonAddBrowser';
+import { Browser } from 'renderer/components/Browser';
+import { useAppSelector } from 'renderer/store/hooks';
 
 import './style.css';
 
