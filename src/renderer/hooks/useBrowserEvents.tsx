@@ -16,12 +16,14 @@ import {
   setActiveBrowser,
 } from 'renderer/store/reducers/Addaps';
 import { bringBrowserToTheFront } from 'renderer/helpers/d2';
+import { useStoreHelpers } from './useStoreHelpers';
 
 export const useBrowserEvents = (browserId: string) => {
   const container = document.querySelector(`#Browser__${browserId}`);
   const webview = container?.querySelector('webview');
 
   const dispatch = useAppDispatch();
+  const { browser } = useStoreHelpers();
 
   const ipcMessageListener = useCallback(
     (e: Event, _args: unknown[]) => {
@@ -30,8 +32,11 @@ export const useBrowserEvents = (browserId: string) => {
         bringBrowserToTheFront(document, container);
         dispatch(setActiveBrowser(browserId));
       }
+      if (event.channel === 'ctrl+t') {
+        browser.add({});
+      }
     },
-    [browserId, container, dispatch]
+    [browserId, container, dispatch, browser]
   );
 
   const loadCommitListener = useCallback(
