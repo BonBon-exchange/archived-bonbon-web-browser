@@ -37,6 +37,7 @@ Nucleus.setUserId(machineIdSync());
 Nucleus.setProps(
   {
     version: appPackageJson.default.version,
+    app_is_packaged: app.isPackaged,
   },
   true
 );
