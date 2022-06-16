@@ -116,14 +116,17 @@ export const Browser: React.FC<BrowserProps> = ({
 
   const goBack = () => {
     container.current?.querySelector('webview').goBack();
+    window.bonb.analytics.event('browser_go_back');
   };
 
   const goForward = () => {
     container.current?.querySelector('webview').goForward();
+    window.bonb.analytics.event('browser_go_forward');
   };
 
   const reload = () => {
     container.current?.querySelector('webview').reload();
+    window.bonb.analytics.event('browser_reload');
   };
 
   const goHome = () => {

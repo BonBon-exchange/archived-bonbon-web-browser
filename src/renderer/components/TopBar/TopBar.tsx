@@ -53,6 +53,13 @@ export const TopBar: React.FC<TopBarProps> = ({ setShowLibrary }) => {
     }
   };
 
+  const switchBoard = (boarId: string) => {
+    if (!isRenamingBoard) {
+      dispatch(setActiveBoard(boarId));
+      window.bonb.analytics.event('switch_board');
+    }
+  };
+
   useEffect(() => {
     window.document.querySelector('body').className = window.matchMedia(
       '(prefers-color-scheme: dark)'
@@ -81,7 +88,7 @@ export const TopBar: React.FC<TopBarProps> = ({ setShowLibrary }) => {
                 bold: activeBoard === b.id,
               })}
               key={b.id}
-              onClick={() => !isRenamingBoard && dispatch(setActiveBoard(b.id))}
+              onClick={() => switchBoard(b.id)}
               data-boardid={b.id}
             >
               {isRenamingBoard === b.id ? (
