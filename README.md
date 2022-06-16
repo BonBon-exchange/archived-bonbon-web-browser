@@ -26,7 +26,7 @@ Completed:
 
 - encrypted browsing history
 
-In progres:
+In progress:
 
 - new UX
 
