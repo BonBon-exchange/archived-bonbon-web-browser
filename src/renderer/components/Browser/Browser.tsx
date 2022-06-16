@@ -4,6 +4,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Rnd } from 'react-rnd';
 import clsx from 'clsx';
+import CryptoJS from 'crypto-js';
 
 import { useBrowserEvents } from 'renderer/hooks/useBrowserEvents';
 import { BrowserControlBar } from '../BrowserControlBar';
@@ -42,19 +43,21 @@ export const Browser: React.FC<BrowserProps> = ({
   const [renderedUrl, setRenderedUrl] = useState<string>('');
   const container = useRef<HTMLDivElement>(null);
 
+  const webview = container.current?.querySelector('webview');
+
   const disablePointerEventsForOthers = () => {
-    const webviews = document.querySelectorAll('.Browser__webview-container');
-    webviews.forEach((webview) => {
+    const containers = document.querySelectorAll('.Browser__webview-container');
+    containers.forEach((c) => {
       // @ts-ignore
-      webview.style['pointer-events'] = 'none';
+      c.style['pointer-events'] = 'none';
     });
   };
 
   const enablePointerEventsForAll = () => {
-    const webviews = document.querySelectorAll('.Browser__webview-container');
-    webviews.forEach((webview) => {
+    const containers = document.querySelectorAll('.Browser__webview-container');
+    containers.forEach((c) => {
       // @ts-ignore
-      webview.style['pointer-events'] = 'auto';
+      c.style['pointer-events'] = 'auto';
     });
   };
 
@@ -117,24 +120,22 @@ export const Browser: React.FC<BrowserProps> = ({
   };
 
   const goBack = () => {
-    container.current?.querySelector('webview')?.goBack();
+    webview?.goBack();
     window.bonb.analytics.event('browser_go_back');
   };
 
   const goForward = () => {
-    container.current?.querySelector('webview')?.goForward();
+    webview?.goForward();
     window.bonb.analytics.event('browser_go_forward');
   };
 
   const reload = () => {
-    container.current?.querySelector('webview')?.reload();
+    webview?.reload();
     window.bonb.analytics.event('browser_reload');
   };
 
   const goHome = () => {
-    container.current
-      ?.querySelector('webview')
-      ?.loadURL('https://www.google.fr');
+    webview?.loadURL('https://www.google.fr');
     dispatch(
       updateBrowserUrl({
         url: 'https://www.google.fr',
@@ -158,7 +159,7 @@ export const Browser: React.FC<BrowserProps> = ({
     window.bonb.analytics.event('browser_navigate');
     const encrypted = CryptoJS.AES.encrypt(
       url,
-      localStorage.getItem('machineId')
+      localStorage.getItem('machineId') || 'bonb'
     );
     dataDb.navigate.add({ url: encrypted.toString(), date: new Date() });
   }, [url]);
