@@ -16,11 +16,13 @@ export const BrowserTopBar: React.FC<BrowserTopBarProps> = ({
   toggleFullsizeBrowser,
   title,
   favicon,
+  onClick,
 }) => {
   return (
     <div
       className="BrowserTopBar__container"
       onDoubleClick={toggleFullsizeBrowser}
+      onClick={onClick}
     >
       {favicon && (
         <img

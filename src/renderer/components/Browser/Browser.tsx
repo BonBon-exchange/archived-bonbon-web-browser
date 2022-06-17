@@ -15,6 +15,7 @@ import {
   removeBrowser,
   updateBrowser,
   toggleBoardFullSize,
+  setActiveBrowser,
 } from 'renderer/store/reducers/Addaps';
 import { bringBrowserToTheFront } from 'renderer/helpers/d2';
 import { dataDb } from 'renderer/db/dataDb';
@@ -111,6 +112,11 @@ export const Browser: React.FC<BrowserProps> = ({
     dispatch(toggleBoardFullSize());
   };
 
+  const givePriorityToBrowser = () => {
+    bringBrowserToTheFront(document, document.querySelector(`#Browser__${id}`));
+    dispatch(setActiveBrowser(id));
+  };
+
   const goBack = () => {
     webview?.goBack();
     window.bonb.analytics.event('browser_go_back');
@@ -192,6 +198,7 @@ export const Browser: React.FC<BrowserProps> = ({
         <BrowserTopBar
           closeBrowser={closeBrowser}
           toggleFullsizeBrowser={toggleFullsizeBrowser}
+          onClick={givePriorityToBrowser}
           title={title}
           favicon={favicon}
         />
