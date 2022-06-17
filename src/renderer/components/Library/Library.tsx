@@ -18,19 +18,18 @@ import './style.css';
 
 export const Library: React.FC<LibraryProps> = ({ closeLibrary }) => {
   const [boardsState, setBoardsState] = useState<
-    { id: string; label: string }[]
+    { id: string; label: string; isFullSize: boolean }[]
   >([]);
   const dispatch = useAppDispatch();
 
-  const openBoard = (b: { id: string; label: string }) => {
+  const openBoard = (b: { id: string; label: string; isFullSize: boolean }) => {
     userDb.browsers
       .where({ boardId: b.id })
       .toArray()
       .then((res) => {
         const board = {
-          id: b.id,
-          label: b.label,
           browsers: res,
+          ...b,
         };
 
         dispatch(addBoard(board as BoardType));

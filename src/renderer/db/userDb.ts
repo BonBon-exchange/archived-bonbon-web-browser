@@ -1,7 +1,7 @@
 import Dexie, { Table } from 'dexie';
 
 export class UserDB extends Dexie {
-  boards!: Table<{ id: string; label: string }, number>;
+  boards!: Table<{ id: string; label: string; isFullSize: boolean }, number>;
 
   browsers!: Table<
     {
@@ -12,16 +12,15 @@ export class UserDB extends Dexie {
       height: number;
       top: number;
       left: number;
-      isFullSize: boolean;
     },
     number
   >;
 
   constructor() {
     super('user');
-    this.version(1).stores({
-      boards: 'id, label',
-      browsers: 'id, boardId, url, width, height, top, left, isFullSize',
+    this.version(2).stores({
+      boards: 'id, label, isFullSize',
+      browsers: 'id, boardId, url, width, height, top, left',
     });
     navigator.storage.persist();
   }

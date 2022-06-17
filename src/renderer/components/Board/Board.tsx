@@ -6,14 +6,13 @@ import React from 'react';
 import { useStoreHelpers } from 'renderer/hooks/useStoreHelpers';
 import { ButtonAddBrowser } from 'renderer/components/ButtonAddBrowser';
 import { Browser } from 'renderer/components/Browser';
-import { useAppSelector } from 'renderer/store/hooks';
+import { useBoard } from 'renderer/hooks/useBoard';
 
 import './style.css';
 
 export const Board: React.FC = () => {
   const { browser } = useStoreHelpers();
-  const { boards, activeBoard } = useAppSelector((state) => state.addaps);
-  const board = boards.find((b) => b.id === activeBoard);
+  const board = useBoard();
 
   return (
     <div className="Board__container">

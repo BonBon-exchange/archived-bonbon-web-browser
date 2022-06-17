@@ -9,7 +9,7 @@ import CryptoJS from 'crypto-js';
 import { useBrowserEvents } from 'renderer/hooks/useBrowserEvents';
 import { BrowserControlBar } from 'renderer/components/BrowserControlBar';
 import { BrowserTopBar } from 'renderer/components/BrowserTopBar';
-import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
+import { useAppDispatch } from 'renderer/store/hooks';
 import {
   updateBrowserUrl,
   removeBrowser,
@@ -19,6 +19,7 @@ import {
 } from 'renderer/store/reducers/Addaps';
 import { bringBrowserToTheFront } from 'renderer/helpers/d2';
 import { dataDb } from 'renderer/db/dataDb';
+import { useBoard } from 'renderer/hooks/useBoard';
 
 import { BrowserProps } from './Types';
 
@@ -37,8 +38,7 @@ export const Browser: React.FC<BrowserProps> = ({
 }) => {
   useBrowserEvents(id);
   const dispatch = useAppDispatch();
-  const { boards, activeBoard } = useAppSelector((state) => state.addaps);
-  const board = boards.find((b) => b.id === activeBoard);
+  const board = useBoard();
   const [firstRenderingState, setFirstRenderingState] = useState<boolean>(
     firstRendering || true
   );

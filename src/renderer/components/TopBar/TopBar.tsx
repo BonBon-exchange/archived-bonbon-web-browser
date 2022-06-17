@@ -38,6 +38,7 @@ export const TopBar: React.FC<TopBarProps> = ({ setShowLibrary }) => {
       id,
       label: `Board ${boards.length + 1}`,
       browsers: [],
+      isFullSize: false,
     };
 
     const editedBoards = [...boards, newBoard];

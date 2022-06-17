@@ -4,14 +4,13 @@
 /* eslint-disable import/prefer-default-export */
 import React from 'react';
 
-import { useAppSelector } from 'renderer/store/hooks';
 import { scrollToBrowser } from 'renderer/helpers/d2';
+import { useBoard } from 'renderer/hooks/useBoard';
 
 import './style.scss';
 
 export const LeftBar: React.FC = () => {
-  const { boards, activeBoard } = useAppSelector((state) => state.addaps);
-  const board = boards.find((b) => b.id === activeBoard);
+  const board = useBoard();
 
   const clickOnFavicon = (browserId: string) => {
     scrollToBrowser(document, browserId);

@@ -54,7 +54,11 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
       const boardId = renameTarget?.getAttribute('data-boardid');
       const board = boards.find((b) => b.id === boardId);
       if (board) {
-        userDb.boards.put({ id: board.id, label: board.label });
+        userDb.boards.put({
+          id: board.id,
+          label: board.label,
+          isFullSize: board.isFullSize,
+        });
         board.browsers.forEach((browser) => {
           userDb.browsers.put({ boardId: board.id, ...browser });
         });
@@ -116,6 +120,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
     closeBoard,
     closeBrowser,
     closeAllBrowsers,
+    saveBoard,
   ]);
 
   return (
