@@ -53,15 +53,7 @@ export const Library: React.FC<LibraryProps> = ({ closeLibrary }) => {
   }, []);
 
   return (
-    <Rnd
-      id="Library__container"
-      default={{
-        x: window.innerWidth / 2 - 220,
-        y: window.innerHeight / 2 - 300,
-        width: 440,
-        height: 600,
-      }}
-    >
+    <Rnd id="Library__container">
       <div id="Library__close-icon" onClick={closeLibrary}>
         <CloseIcon />
       </div>

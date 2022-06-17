@@ -187,6 +187,9 @@ export const addapsSlice = createSlice({
       if (boardIndex > -1) {
         boards.splice(boardIndex, 1);
         state.boards = boards;
+        if (state.activeBoard === action.payload.boardId) {
+          state.activeBoard = state.boards[state.boards.length - 1].id;
+        }
       }
     },
     removeBrowser: (state, action: PayloadAction<RemoveBrowserType>) => {
