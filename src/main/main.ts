@@ -16,6 +16,7 @@ import Nucleus from 'nucleus-nodejs';
 import {
   app,
   BrowserWindow,
+  BrowserView,
   shell,
   session,
   ipcMain,
@@ -104,7 +105,21 @@ const createWindow = async () => {
     },
   });
 
-  mainWindow.loadURL(resolveHtmlPath('index.html'));
+  mainWindow.loadURL(resolveHtmlPath('titleBar.html'));
+  // mainWindow.show();
+  const view = new BrowserView({
+    webPreferences: {
+      webviewTag: true,
+      preload: app.isPackaged
+        ? path.join(__dirname, 'preload.js')
+        : path.join(__dirname, '../../.erb/dll/preload.js'),
+    },
+  });
+
+  mainWindow.setBrowserView(view);
+  view.setBounds({ x: 0, y: 30, width: 1024, height: 728 });
+  view.setAutoResize({ width: true, height: true });
+  view.webContents.loadURL(resolveHtmlPath('index.html'));
 
   ipcMain.handle('dark-mode:toggle', () => {
     if (nativeTheme.shouldUseDarkColors) {
