@@ -172,9 +172,12 @@ app.on('window-all-closed', () => {
 
 app.on('web-contents-created', (_event, contents) => {
   contents.on('will-attach-webview', (_wawevent, webPreferences, _params) => {
+    const pathToPreloadScipt = app.isPackaged
+      ? path.join(__dirname, '../../../assets/webview-preload.js')
+      : path.join(__dirname, '../../assets/webview-preload.js');
     // Strip away preload scripts if unused or verify their location is legitimate
     // console.log(webPreferences.preload, webPreferences.preloadURL);
-    webPreferences.preloadURL = `file://${__dirname}/webview-preload.js`;
+    webPreferences.preloadURL = `file://${pathToPreloadScipt}`;
     // Disable Node.js integration
     webPreferences.nodeIntegration = false;
   });
