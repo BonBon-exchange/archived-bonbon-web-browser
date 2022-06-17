@@ -115,6 +115,7 @@
     "react-redux": "^8.0.2",
     "react-rnd": "^10.3.7",
     "react-router-dom": "^6.3.0",
+    "react-tooltip": "^4.2.21",
     "redux-persist": "^6.0.0"
   },
   "devDependencies": {

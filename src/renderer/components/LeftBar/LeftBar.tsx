@@ -3,6 +3,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/prefer-default-export */
 import React from 'react';
+
 import { useAppSelector } from 'renderer/store/hooks';
 import { scrollToBrowser } from 'renderer/helpers/d2';
 
@@ -27,6 +28,7 @@ export const LeftBar: React.FC = () => {
             onClick={() => clickOnFavicon(b.id)}
           >
             <img
+              data-tip={b.title}
               src={b.favicon}
               className="LeftBar__browserFavImg"
               data-browserid={b.id}

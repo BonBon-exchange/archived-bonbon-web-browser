@@ -2,6 +2,7 @@
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-use-before-define */
 import React, { useEffect, useState } from 'react';
+import ReactTooltip from 'react-tooltip';
 
 import { useGlobalEvents } from 'renderer/hooks/useGlobalEvents';
 import { TopBar } from 'renderer/components/TopBar';
@@ -53,6 +54,7 @@ export const Addaps: React.FC = () => {
       <Board />
       {showContextMenu && <ContextMenu {...contextMenuProps} />}
       {showLibrary && <Library closeLibrary={() => setShowLibrary(false)} />}
+      <ReactTooltip />
     </>
   );
 };
