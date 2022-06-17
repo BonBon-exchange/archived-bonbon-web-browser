@@ -4,6 +4,7 @@
     "browser",
     "electron"
   ],
+  "version": "0.11.0",
   "homepage": "https://github.com/danielfebrero/bonb-browser#readme",
   "bugs": {
     "url": "https://github.com/danielfebrero/bonb-browser/issues"
@@ -246,7 +247,7 @@
     "publish": {
       "provider": "github",
       "owner": "danielfebrero",
-      "repo": "bonb-web3-browser"
+      "repo": "bonb-browser"
     }
   },
   "devEngines": {

@@ -15,21 +15,23 @@ export const useStoreHelpers = () => {
   const board = useBoard();
 
   const makeAndAddBrowser = (params: { url?: string }): void => {
-    const browserId = v4();
-    const { x, y } = getCoordinateWithNoCollision(document, board, 800, 600);
-    const newBrowser = {
-      id: browserId,
-      url: params.url || 'https://www.google.fr',
-      top: y,
-      left: x,
-      height: 800,
-      width: 600,
-      firstRendering: true,
-      favicon: '',
-    };
-    dispatch(addBrowser(newBrowser));
-    setTimeout(() => scrollToBrowser(document, browserId), 300);
-    window.bonb.analytics.event('add_browser');
+    if (board) {
+      const browserId = v4();
+      const { x, y } = getCoordinateWithNoCollision(document, board, 800, 600);
+      const newBrowser = {
+        id: browserId,
+        url: params.url || 'https://www.google.fr',
+        top: y,
+        left: x,
+        height: 800,
+        width: 600,
+        firstRendering: true,
+        favicon: '',
+      };
+      dispatch(addBrowser(newBrowser));
+      setTimeout(() => scrollToBrowser(document, browserId), 300);
+      window.bonb.analytics.event('add_browser');
+    }
   };
 
   return {

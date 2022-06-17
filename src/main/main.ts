@@ -30,13 +30,12 @@ import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { makeEvents } from './ipcMainEvents';
 import { event } from './analytics';
-import * as appPackageJson from '../../release/app/package.json';
 
 Nucleus.init('62aaf235a3310eb923a238e2');
 Nucleus.setUserId(machineIdSync());
 Nucleus.setProps(
   {
-    version: appPackageJson.default.version,
+    version: app.getVersion(),
     app_is_packaged: app.isPackaged,
   },
   true
