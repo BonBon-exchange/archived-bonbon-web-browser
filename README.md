@@ -14,7 +14,7 @@ Work in progress, it's just the beginning.
 
 Download Bonb for Windows: [Bonb 0.10.0 for Windows](https://github.com/danielfebrero/bonb-browser/releases/download/v0.10.0/Bonb.Setup.0.10.0.exe)
 
-Download Bonb for macOS: [Bonb 0.7.0 for macOS](https://github.com/danielfebrero/bonb-browser/releases/download/v0.7.0/Bonb-0.7.0.dmg)
+Download Bonb for macOS: [Bonb 0.10.0 for macOS](https://github.com/danielfebrero/bonb-browser/releases/download/v0.10.0/Bonb-0.10.0.dmg)
 
 ---
 
