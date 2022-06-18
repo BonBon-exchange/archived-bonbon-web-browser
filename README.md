@@ -1,6 +1,4 @@
-![Logo](https://github.com/danielfebrero/bonb-browser/blob/master/images/logo.PNG)
-
-# Bonb Browser
+# BonBon Web Browser
 
 Bonb, claim back your data ownership.
 
@@ -8,13 +6,13 @@ Built with Electron, React, TypeScript, Redux.
 
 ---
 
-### Try Bonb today
+### Try BonBon today
 
 Work in progress, it's just the beginning.
 
-Download Bonb for Windows: [Bonb 0.11.0 for Windows](https://github.com/danielfebrero/bonb-browser/releases/download/0.11.0/Bonb.Setup.0.11.0.exe)
+Download BonBon for Windows: [BonBon 0.11.0 for Windows](https://github.com/danielfebrero/bonbon-web-browser/releases/download/0.11.0/Bonb.Setup.0.11.0.exe)
 
-Download Bonb for macOS: [Bonb 0.10.0 for macOS](https://github.com/danielfebrero/bonb-browser/releases/download/v0.10.0/Bonb-0.10.0.dmg)
+Download BonBon for macOS: [BonBon 0.10.0 for macOS](https://github.com/danielfebrero/bonbon-web-browser/releases/download/v0.10.0/Bonb-0.10.0.dmg)
 
 ---
 
@@ -46,6 +44,6 @@ In progress:
 
 - app signing
 
-![Desktop](https://github.com/danielfebrero/bonb-browser/blob/master/images/desktop1.PNG)
+![Desktop](https://github.com/danielfebrero/bonbon-web-browser/blob/master/images/desktop1.PNG)
 
-![Desktop2](https://github.com/danielfebrero/bonb-browser/blob/master/images/desktop2.PNG)
+![Desktop2](https://github.com/danielfebrero/bonbon-web-browser/blob/master/images/desktop2.PNG)
