@@ -107,6 +107,8 @@ const createWindow = async () => {
     width: 1024,
     height: 728,
     icon: getAssetPath('icon.png'),
+    titleBarStyle: 'hidden',
+    titleBarOverlay: true,
     webPreferences: {
       webviewTag: false,
       preload: app.isPackaged
@@ -175,6 +177,7 @@ const createWindow = async () => {
   );
 
   event('open_app');
+  mainWindow.webContents.closeDevTools();
 };
 
 /**

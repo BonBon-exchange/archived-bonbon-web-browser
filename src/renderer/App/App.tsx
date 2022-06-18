@@ -15,8 +15,8 @@ export function App() {
 
   const loadBoardAction = useCallback((_e: any, args: { boardId: string }) => {
     persisted.current = getPersistedStoreAndPersistor(args.boardId);
-    setIsLoadedBoard(true);
     setBoardId(args.boardId);
+    setIsLoadedBoard(true);
   }, []);
 
   useEffect(() => {
@@ -28,19 +28,13 @@ export function App() {
     window.bonb.analytics.event('load_app');
   }, []);
 
-  // return isLoadedBoard ? (
-  //   <Provider store={persisted.current?.store}>
-  //     <PersistGate loading={null} persistor={persisted.current?.persistor}>
-  //       <Addaps boardId={boardId} />
-  //     </PersistGate>
-  //   </Provider>
-  // ) : (
-  //   <Provider store={store}>
-  //     <Addaps />
-  //   </Provider>
-  // );
-
-  return (
+  return isLoadedBoard ? (
+    <Provider store={persisted.current?.store}>
+      <PersistGate loading={null} persistor={persisted.current?.persistor}>
+        <Addaps boardId={boardId} />
+      </PersistGate>
+    </Provider>
+  ) : (
     <Provider store={store}>
       <Addaps />
     </Provider>

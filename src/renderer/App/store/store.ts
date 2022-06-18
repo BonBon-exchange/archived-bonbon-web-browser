@@ -32,7 +32,7 @@ export const getPersistedStoreAndPersistor = (id: string) => {
   const persistedAddaps = persistReducer(persistConfig, addapsReducer);
   const persistedStore = configureStore({
     reducer: {
-      addaps: addapsReducer,
+      addaps: persistedAddaps,
     },
     devTools: process.env.NODE_ENV !== 'production',
     middleware: (getDefaultMiddleware) =>
