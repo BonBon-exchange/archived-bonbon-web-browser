@@ -77,8 +77,8 @@ const createBrowserView = (sizes: [width: number, height: number]) => {
     webPreferences: {
       webviewTag: true,
       preload: app.isPackaged
-        ? path.join(__dirname, 'preload.js')
-        : path.join(__dirname, '../../.erb/dll/preload.js'),
+        ? path.join(__dirname, 'app.preload.js')
+        : path.join(__dirname, '../../.erb/dll/app.preload.js'),
     },
   });
 
@@ -108,18 +108,14 @@ const createWindow = async () => {
     height: 728,
     icon: getAssetPath('icon.png'),
     webPreferences: {
-      webviewTag: true,
+      webviewTag: false,
       preload: app.isPackaged
-        ? path.join(__dirname, 'preload.js')
-        : path.join(__dirname, '../../.erb/dll/preload.js'),
+        ? path.join(__dirname, 'titleBar.preload.js')
+        : path.join(__dirname, '../../.erb/dll/titleBar.preload.js'),
     },
   });
 
   mainWindow.loadURL(resolveHtmlPath('titleBar.html'));
-  // const sizes = mainWindow?.getSize();
-  // const view = createBrowserView(sizes);
-
-  // mainWindow.setBrowserView(view);
 
   ipcMain.handle('dark-mode:toggle', () => {
     if (nativeTheme.shouldUseDarkColors) {

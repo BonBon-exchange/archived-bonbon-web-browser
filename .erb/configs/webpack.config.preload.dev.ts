@@ -19,11 +19,14 @@ const configuration: webpack.Configuration = {
 
   target: 'electron-preload',
 
-  entry: path.join(webpackPaths.srcMainPath, 'preload.ts'),
+  entry: {
+    app: path.join(webpackPaths.srcMainPath, 'preload/app.ts'),
+    titleBar: path.join(webpackPaths.srcMainPath, 'preload/titleBar.ts'),
+  },
 
   output: {
     path: webpackPaths.dllPath,
-    filename: 'preload.js',
+    filename: '[name].preload.js',
   },
 
   plugins: [

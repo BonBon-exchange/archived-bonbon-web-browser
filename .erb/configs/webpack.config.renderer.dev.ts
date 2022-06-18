@@ -50,9 +50,9 @@ const configuration: webpack.Configuration = {
     main: [
       `webpack-dev-server/client?http://localhost:${port}/dist`,
       'webpack/hot/only-dev-server',
-      path.join(webpackPaths.srcRendererPath, 'index.tsx'),
+      path.join(webpackPaths.srcRendererPath, 'App/index.tsx'),
     ],
-    titleBar: path.join(webpackPaths.srcRendererPath, 'titleBar.tsx'),
+    titleBar: path.join(webpackPaths.srcRendererPath, 'TitleBar/index.tsx'),
   },
 
   output: {

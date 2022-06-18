@@ -3,8 +3,8 @@ import { ipcMain, BrowserWindow } from 'electron';
 import { event } from './analytics';
 
 export const makeEvents = (mainWindow: BrowserWindow) => {
-  ipcMain.on('inspectElement', (_event, args) => {
-    mainWindow?.webContents.inspectElement(args.x, args.y);
+  ipcMain.on('inspectElement', (event, args) => {
+    event.sender.inspectElement(args.x, args.y);
   });
 
   ipcMain.on('analytics', (_event, args) => {
