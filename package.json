@@ -1,5 +1,5 @@
 {
-  "description": "Bonb Browser",
+  "description": "BonBon Browser",
   "keywords": [
     "browser",
     "electron"
@@ -188,8 +188,8 @@
     "webpack-merge": "^5.8.0"
   },
   "build": {
-    "productName": "Bonb",
-    "appId": "org.erb.Bonb",
+    "productName": "BonBon",
+    "appId": "org.erb.BonBon",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [

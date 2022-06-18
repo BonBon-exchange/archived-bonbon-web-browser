@@ -16,7 +16,7 @@ const makePayload = (eventName: string, params?: Record<string, unknown>) => {
         params: {
           app_is_packaged: app.isPackaged ? 'true' : 'false',
           engagement_time_msec: 1,
-          app_name: 'Bonb',
+          app_name: 'BonBon',
           app_version: app.getVersion(),
           session_id: sessionId,
           ...params,
