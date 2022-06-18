@@ -21,6 +21,11 @@ contextBridge.exposeInMainWorld('bonb', {
       ipcRenderer.removeAllListeners('new-window');
     },
   },
+  tabs: {
+    select: (tabId: string) => {
+      ipcRenderer.send('tab-select', { tabId });
+    },
+  },
 });
 
 contextBridge.exposeInMainWorld('darkMode', {

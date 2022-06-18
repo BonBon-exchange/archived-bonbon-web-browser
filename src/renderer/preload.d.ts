@@ -13,6 +13,9 @@ declare global {
       off: {
         newWindow: () => void;
       };
+      tabs: {
+        select: (tabId: string) => void;
+      };
     };
   }
 }

@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import ReactTooltip from 'react-tooltip';
 
 import { useGlobalEvents } from 'renderer/hooks/useGlobalEvents';
-import { TopBar } from 'renderer/components/TopBar';
+// import { TopBar } from 'renderer/components/TopBar';
 import { Board } from 'renderer/components/Board';
 import { LeftBar } from 'renderer/components/LeftBar';
 import { ContextMenu } from 'renderer/components/ContextMenu';
@@ -49,7 +49,7 @@ export const Addaps: React.FC = () => {
 
   return (
     <>
-      <TopBar setShowLibrary={setShowLibrary} />
+      {/* <TopBar setShowLibrary={setShowLibrary} /> */}
       <LeftBar />
       <Board />
       {showContextMenu && <ContextMenu {...contextMenuProps} />}

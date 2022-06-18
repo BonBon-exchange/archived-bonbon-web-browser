@@ -79,6 +79,24 @@ const installExtensions = async () => {
 
 const machineId = machineIdSync();
 
+const views = {};
+
+const createBrowserView = () => {
+  const view = new BrowserView({
+    webPreferences: {
+      webviewTag: true,
+      preload: app.isPackaged
+        ? path.join(__dirname, 'preload.js')
+        : path.join(__dirname, '../../.erb/dll/preload.js'),
+    },
+  });
+
+  view.setBounds({ x: 0, y: 30, width: 1024, height: 728 });
+  view.setAutoResize({ width: true, height: true });
+  view.webContents.loadURL(resolveHtmlPath('index.html'));
+  return view;
+};
+
 const createWindow = async () => {
   if (isDebug) {
     await installExtensions();
@@ -164,6 +182,14 @@ const createWindow = async () => {
   new AppUpdater();
 
   makeEvents(mainWindow);
+
+  ipcMain.on('tab-select', (_event, args) => {
+    const viewToShow = views[args.tabId]
+      ? views[args.tabId]
+      : createBrowserView();
+    views[args.tabId] = viewToShow;
+    mainWindow?.setBrowserView(viewToShow);
+  });
 
   mainWindow.webContents.executeJavaScript(
     `localStorage.setItem("machineId", "${machineId}"); localStorage.setItem("appIsPackaged", "${app.isPackaged}");`,

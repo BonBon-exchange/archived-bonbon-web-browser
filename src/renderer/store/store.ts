@@ -12,6 +12,7 @@ import {
 import storage from 'redux-persist/lib/storage';
 
 import addapsReducer from './reducers/Addaps';
+import tabsReducer from './reducers/Tabs';
 
 const persistConfig = {
   key: 'root',
@@ -24,6 +25,7 @@ const persistedAddaps = persistReducer(persistConfig, addapsReducer);
 export const store = configureStore({
   reducer: {
     addaps: persistedAddaps,
+    tabs: tabsReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
   middleware: (getDefaultMiddleware) =>

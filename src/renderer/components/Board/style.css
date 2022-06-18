@@ -2,7 +2,7 @@
   display: flex;
   height: 300vh;
   width: calc(100% - 50px);
-  top: 30px;
+  top: 0px;
   left: 50px;
   position: absolute;
   background: linear-gradient(
