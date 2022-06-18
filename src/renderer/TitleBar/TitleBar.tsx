@@ -14,7 +14,7 @@ export const TitleBar: React.FC = () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <div id="TitleBar__container">
-          <TopBar setShowLibrary={() => true} />
+          <TopBar />
         </div>
       </PersistGate>
     </Provider>

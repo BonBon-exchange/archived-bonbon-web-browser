@@ -20,11 +20,9 @@ import {
   renameTab,
 } from 'renderer/TitleBar/store/reducers/Tabs';
 
-import { TopBarProps } from './Types';
-
 import './style.scss';
 
-export const TopBar: React.FC<TopBarProps> = ({ setShowLibrary }) => {
+export const TopBar: React.FC = () => {
   const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const [isDarkMode, setIsDarkMode] = useState<boolean>(dark);
   const { tabs, activeTab, isRenaming } = useAppSelector((state) => state.tabs);
@@ -62,6 +60,10 @@ export const TopBar: React.FC<TopBarProps> = ({ setShowLibrary }) => {
     (tab: Element) => dispatch(setIsRenaming(tab.getAttribute('data-tabid'))),
     [dispatch]
   );
+
+  const showLibrary = () => {
+    window.bonb.screens.library();
+  };
 
   useEffect(() => {
     window.document.querySelector('body').className = window.matchMedia(
@@ -138,7 +140,7 @@ export const TopBar: React.FC<TopBarProps> = ({ setShowLibrary }) => {
           )}
         </div>
         <div className="TopBar__menu-item">
-          <BookmarksIcon onClick={() => setShowLibrary(true)} />
+          <BookmarksIcon onClick={showLibrary} />
         </div>
         <div className="TopBar__menu-item">
           <AccountCircleIcon />

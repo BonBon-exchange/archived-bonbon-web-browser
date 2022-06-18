@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-use-before-define */
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import ReactTooltip from 'react-tooltip';
 
 import { useGlobalEvents } from 'renderer/App/hooks/useGlobalEvents';
@@ -30,6 +30,11 @@ export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
     target: null,
   });
 
+  const showLibraryAction = useCallback(
+    () => setShowLibrary(!showLibrary),
+    [showLibrary]
+  );
+
   useEffect(() => {
     window.addEventListener('contextmenu', (e) => {
       e.preventDefault();
@@ -49,6 +54,11 @@ export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
   useEffect(() => {
     if (boardId) board.load({ id: boardId });
   }, [board, boardId]);
+
+  useEffect(() => {
+    window.bonb.listener.showLibrary(showLibraryAction);
+    return () => window.bonb.off.showLibrary();
+  }, [showLibraryAction]);
 
   return (
     <>

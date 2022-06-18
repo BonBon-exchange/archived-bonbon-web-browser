@@ -70,6 +70,7 @@ const installExtensions = async () => {
 const machineId = machineIdSync();
 
 const views = {};
+let selectedView = null;
 
 const createBrowserView = (sizes: [width: number, height: number]) => {
   const [width, height] = sizes;
@@ -169,6 +170,11 @@ const createWindow = async () => {
       viewToShow.webContents.send('load-board', { boardId: args.tabId })
     );
     mainWindow?.setBrowserView(viewToShow);
+    selectedView = viewToShow;
+  });
+
+  ipcMain.on('show-library', () => {
+    selectedView.webContents.send('show-library');
   });
 
   mainWindow.webContents.executeJavaScript(

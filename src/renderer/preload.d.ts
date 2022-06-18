@@ -10,13 +10,18 @@ declare global {
       listener: {
         newWindow: (action: unknown) => void;
         loadBoard: (action: unknown) => void;
+        showLibrary: (action: unknown) => void;
       };
       off: {
         newWindow: () => void;
         loadBoard: () => void;
+        showLibrary: () => void;
       };
       tabs: {
         select: (tabId: string) => void;
+      };
+      screens: {
+        library: () => void;
       };
     };
   }

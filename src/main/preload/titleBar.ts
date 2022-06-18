@@ -16,6 +16,11 @@ contextBridge.exposeInMainWorld('bonb', {
       ipcRenderer.send('tab-select', { tabId });
     },
   },
+  screens: {
+    library: () => {
+      ipcRenderer.send('show-library');
+    },
+  },
 });
 
 contextBridge.exposeInMainWorld('darkMode', {

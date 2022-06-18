@@ -4,7 +4,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/prefer-default-export */
 import { useEffect, useState } from 'react';
-import { Rnd } from 'react-rnd';
+// import { Rnd } from 'react-rnd';
 import CloseIcon from '@mui/icons-material/Close';
 
 import { userDb } from 'renderer/App/db/userDb';
@@ -53,7 +53,7 @@ export const Library: React.FC<LibraryProps> = ({ closeLibrary }) => {
   }, []);
 
   return (
-    <Rnd id="Library__container">
+    <div id="Library__container">
       <div id="Library__close-icon" onClick={closeLibrary}>
         <CloseIcon />
       </div>
@@ -70,6 +70,6 @@ export const Library: React.FC<LibraryProps> = ({ closeLibrary }) => {
           })}
         </ul>
       </div>
-    </Rnd>
+    </div>
   );
 };

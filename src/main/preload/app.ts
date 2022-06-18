@@ -18,6 +18,11 @@ contextBridge.exposeInMainWorld('bonb', {
     loadBoard: (action: (event: IpcRendererEvent, ...args: any[]) => void) => {
       ipcRenderer.on('load-board', action);
     },
+    showLibrary: (
+      action: (event: IpcRendererEvent, ...args: any[]) => void
+    ) => {
+      ipcRenderer.on('show-library', action);
+    },
   },
   off: {
     newWindow: () => {
@@ -26,10 +31,8 @@ contextBridge.exposeInMainWorld('bonb', {
     loadBoard: () => {
       ipcRenderer.removeAllListeners('load-board');
     },
-  },
-  tabs: {
-    select: (tabId: string) => {
-      ipcRenderer.send('tab-select', { tabId });
+    showLibrary: () => {
+      ipcRenderer.removeAllListeners('show-library');
     },
   },
 });
