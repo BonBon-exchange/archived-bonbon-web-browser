@@ -173,6 +173,22 @@ const createWindow = async () => {
     selectedView = viewToShow;
   });
 
+  ipcMain.on('open-board', (_event, args) => {
+    mainWindow?.webContents.send('open-tab', args);
+
+    const sizes = mainWindow?.getSize();
+    const viewToShow: BrowserView = views[args.boardId]
+      ? views[args.boardId]
+      : createBrowserView(sizes);
+    views[args.boardId] = viewToShow;
+    viewToShow.webContents.on('dom-ready', () => {
+      viewToShow.webContents.send('load-board', { boardId: args.id });
+      viewToShow.webContents.send('open-board', args);
+    });
+    mainWindow?.setBrowserView(viewToShow);
+    selectedView = viewToShow;
+  });
+
   ipcMain.on('show-library', () => {
     selectedView.webContents.send('show-library');
   });

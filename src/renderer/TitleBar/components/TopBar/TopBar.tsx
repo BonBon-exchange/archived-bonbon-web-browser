@@ -29,17 +29,20 @@ export const TopBar: React.FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const pushTab = useCallback(() => {
-    const id = v4();
-    const newTab = {
-      id,
-      label: `Board ${tabs.length + 1}`,
-    };
+  const pushTab = useCallback(
+    (params: { id?: string; label?: string }) => {
+      const id = params.id || v4();
+      const newTab = {
+        id,
+        label: params.label || `Board ${tabs.length + 1}`,
+      };
 
-    dispatch(addTab(newTab));
-    window.bonb.tabs.select(id);
-    window.bonb.analytics.event('add_board');
-  }, [dispatch, tabs.length]);
+      dispatch(addTab(newTab));
+      window.bonb.tabs.select(id);
+      window.bonb.analytics.event('add_board');
+    },
+    [dispatch, tabs.length]
+  );
 
   const tabOnKeyPress = (e: KeyboardEvent, id: string) => {
     if (e.code === 'Enter' || e.code === 'NumpadEnter') {
@@ -64,6 +67,13 @@ export const TopBar: React.FC = () => {
   const showLibrary = () => {
     window.bonb.screens.library();
   };
+
+  const openTabListener = useCallback(
+    (_e: any, args: { id?: string; label?: string }) => {
+      pushTab(args);
+    },
+    [pushTab]
+  );
 
   useEffect(() => {
     window.document.querySelector('body').className = window.matchMedia(
@@ -97,7 +107,12 @@ export const TopBar: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (tabs.length === 0) pushTab();
+    window.bonb.listener.openTab(openTabListener);
+    return () => window.bonb.off.openTab();
+  }, [openTabListener]);
+
+  useEffect(() => {
+    if (tabs.length === 0) pushTab({});
   }, [tabs, pushTab]);
 
   return (
@@ -127,7 +142,7 @@ export const TopBar: React.FC = () => {
             </div>
           );
         })}
-        <div id="TopBar__addBoard" onClick={pushTab}>
+        <div id="TopBar__addBoard" onClick={() => pushTab({})}>
           <AddIcon />
         </div>
       </div>

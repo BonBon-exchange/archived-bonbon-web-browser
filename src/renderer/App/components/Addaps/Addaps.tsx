@@ -1,3 +1,4 @@
+/* eslint-disable promise/always-return */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-use-before-define */
@@ -11,6 +12,9 @@ import { LeftBar } from 'renderer/App/components/LeftBar';
 import { ContextMenu } from 'renderer/App/components/ContextMenu';
 import { Library } from 'renderer/App/components/Library';
 import { useStoreHelpers } from 'renderer/App/hooks/useStoreHelpers';
+import { userDb } from 'renderer/App/db/userDb';
+import { useAppDispatch } from 'renderer/App/store/hooks';
+import { addBoard, setActiveBoard } from 'renderer/App/store/reducers/Addaps';
 
 import { ContextMenuProps } from 'renderer/App/components/ContextMenu/Types';
 import { AddapsProps } from './Types';
@@ -21,6 +25,7 @@ import 'renderer/style/light.css';
 
 export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
   useGlobalEvents();
+  const dispatch = useAppDispatch();
   const { board } = useStoreHelpers();
   const [showContextMenu, setShowContextMenu] = useState<boolean>(false);
   const [showLibrary, setShowLibrary] = useState<boolean>(false);
@@ -33,6 +38,26 @@ export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
   const showLibraryAction = useCallback(
     () => setShowLibrary(!showLibrary),
     [showLibrary]
+  );
+
+  const openBoardAction = useCallback(
+    (_e: any, args: { id: string; label: string; isFullSize: boolean }) => {
+      userDb.browsers
+        .where(args)
+        .toArray()
+        .then((res) => {
+          const boardToAdd = {
+            browsers: res,
+            ...args,
+          };
+
+          dispatch(addBoard(boardToAdd));
+          dispatch(setActiveBoard(args.id));
+          setShowLibrary(false);
+        })
+        .catch(console.log);
+    },
+    []
   );
 
   useEffect(() => {
@@ -59,6 +84,11 @@ export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
     window.bonb.listener.showLibrary(showLibraryAction);
     return () => window.bonb.off.showLibrary();
   }, [showLibraryAction]);
+
+  useEffect(() => {
+    window.bonb.listener.openBoard(openBoardAction);
+    return () => window.bonb.off.openBoard();
+  }, [openBoardAction]);
 
   return (
     <>

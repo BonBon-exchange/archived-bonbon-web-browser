@@ -23,20 +23,7 @@ export const Library: React.FC<LibraryProps> = ({ closeLibrary }) => {
   const dispatch = useAppDispatch();
 
   const openBoard = (b: { id: string; label: string; isFullSize: boolean }) => {
-    userDb.browsers
-      .where({ boardId: b.id })
-      .toArray()
-      .then((res) => {
-        const board = {
-          browsers: res,
-          ...b,
-        };
-
-        dispatch(addBoard(board as BoardType));
-        dispatch(setActiveBoard(b.id));
-        closeLibrary();
-      })
-      .catch(console.log);
+    window.bonb.board.open(b);
   };
 
   useEffect(() => {

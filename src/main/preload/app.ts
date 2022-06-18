@@ -11,12 +11,20 @@ contextBridge.exposeInMainWorld('bonb', {
       ipcRenderer.send('inspectElement', point);
     },
   },
+  board: {
+    open: (board: { id: string; label: string; isFullSize: boolean }) => {
+      ipcRenderer.send('open-board', board);
+    },
+  },
   listener: {
     newWindow: (action: (event: IpcRendererEvent, ...args: any[]) => void) => {
       ipcRenderer.on('new-window', action);
     },
     loadBoard: (action: (event: IpcRendererEvent, ...args: any[]) => void) => {
       ipcRenderer.on('load-board', action);
+    },
+    openBoard: (action: (event: IpcRendererEvent, ...args: any[]) => void) => {
+      ipcRenderer.on('open-board', action);
     },
     showLibrary: (
       action: (event: IpcRendererEvent, ...args: any[]) => void
@@ -30,6 +38,9 @@ contextBridge.exposeInMainWorld('bonb', {
     },
     loadBoard: () => {
       ipcRenderer.removeAllListeners('load-board');
+    },
+    openBoard: () => {
+      ipcRenderer.removeAllListeners('open-board');
     },
     showLibrary: () => {
       ipcRenderer.removeAllListeners('show-library');

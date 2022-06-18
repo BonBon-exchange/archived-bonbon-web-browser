@@ -53,7 +53,6 @@ export const useStoreHelpers = () => {
   };
 
   const loadBoard = (params: { id: string }) => {
-    console.log('loadBoard', params);
     const boardExist = boards.find((b) => b.id === params.id);
     if (boardExist) {
       dispatch(setActiveBoard(params.id));
