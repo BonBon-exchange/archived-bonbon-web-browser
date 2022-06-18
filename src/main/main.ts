@@ -22,8 +22,6 @@ import {
   ipcMain,
   nativeTheme,
 } from 'electron';
-import { autoUpdater } from 'electron-updater';
-import log from 'electron-log';
 import { machineIdSync } from 'node-machine-id';
 import contextMenu from 'electron-context-menu';
 
@@ -41,14 +39,6 @@ Nucleus.setProps(
   },
   true
 );
-
-export default class AppUpdater {
-  constructor() {
-    log.transports.file.level = 'info';
-    autoUpdater.logger = log;
-    autoUpdater.checkForUpdatesAndNotify();
-  }
-}
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -81,7 +71,8 @@ const machineId = machineIdSync();
 
 const views = {};
 
-const createBrowserView = () => {
+const createBrowserView = (sizes: [width: number, height: number]) => {
+  const [width, height] = sizes;
   const view = new BrowserView({
     webPreferences: {
       webviewTag: true,
@@ -91,9 +82,10 @@ const createBrowserView = () => {
     },
   });
 
-  view.setBounds({ x: 0, y: 30, width: 1024, height: 728 });
+  view.setBounds({ x: 0, y: 30, width, height: height - 30 });
   view.setAutoResize({ width: true, height: true });
   view.webContents.loadURL(resolveHtmlPath('index.html'));
+  if (!app.isPackaged) view.webContents.toggleDevTools();
   return view;
 };
 
@@ -124,20 +116,10 @@ const createWindow = async () => {
   });
 
   mainWindow.loadURL(resolveHtmlPath('titleBar.html'));
-  // mainWindow.show();
-  const view = new BrowserView({
-    webPreferences: {
-      webviewTag: true,
-      preload: app.isPackaged
-        ? path.join(__dirname, 'preload.js')
-        : path.join(__dirname, '../../.erb/dll/preload.js'),
-    },
-  });
+  // const sizes = mainWindow?.getSize();
+  // const view = createBrowserView(sizes);
 
-  mainWindow.setBrowserView(view);
-  view.setBounds({ x: 0, y: 30, width: 1024, height: 728 });
-  view.setAutoResize({ width: true, height: true });
-  view.webContents.loadURL(resolveHtmlPath('index.html'));
+  // mainWindow.setBrowserView(view);
 
   ipcMain.handle('dark-mode:toggle', () => {
     if (nativeTheme.shouldUseDarkColors) {
@@ -177,17 +159,17 @@ const createWindow = async () => {
     return { action: 'deny' };
   });
 
-  // Remove this if your app does not use auto updates
-  // eslint-disable-next-line
-  new AppUpdater();
-
   makeEvents(mainWindow);
 
   ipcMain.on('tab-select', (_event, args) => {
-    const viewToShow = views[args.tabId]
+    const sizes = mainWindow?.getSize();
+    const viewToShow: BrowserView = views[args.tabId]
       ? views[args.tabId]
-      : createBrowserView();
+      : createBrowserView(sizes);
     views[args.tabId] = viewToShow;
+    viewToShow.webContents.on('dom-ready', () =>
+      viewToShow.webContents.send('load-board', { boardId: args.tabId })
+    );
     mainWindow?.setBrowserView(viewToShow);
   });
 

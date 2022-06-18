@@ -1,9 +1,13 @@
 /* eslint-disable import/prefer-default-export */
 import { v4 } from 'uuid';
 
-import { useAppDispatch } from 'renderer/store/hooks';
+import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
 
-import { addBrowser } from 'renderer/store/reducers/Addaps';
+import {
+  addBrowser,
+  addBoard,
+  setActiveBoard,
+} from 'renderer/store/reducers/Addaps';
 import {
   scrollToBrowser,
   getCoordinateWithNoCollision,
@@ -12,6 +16,7 @@ import { useBoard } from './useBoard';
 
 export const useStoreHelpers = () => {
   const dispatch = useAppDispatch();
+  const { boards } = useAppSelector((state) => state.addaps);
   const board = useBoard();
 
   const makeAndAddBrowser = (params: { url?: string }): void => {
@@ -34,9 +39,36 @@ export const useStoreHelpers = () => {
     }
   };
 
+  const makeAndAddBoard = (params: { id?: string }) => {
+    const id = params.id || v4();
+    const newBoard = {
+      id,
+      label: `Board ${boards.length + 1}`,
+      browsers: [],
+      isFullSize: false,
+    };
+
+    dispatch(addBoard(newBoard));
+    window.bonb.analytics.event('add_board');
+  };
+
+  const loadBoard = (params: { id: string }) => {
+    console.log('loadBoard', params);
+    const boardExist = boards.find((b) => b.id === params.id);
+    if (boardExist) {
+      dispatch(setActiveBoard(params.id));
+    } else {
+      makeAndAddBoard(params);
+    }
+  };
+
   return {
     browser: {
       add: makeAndAddBrowser,
+    },
+    board: {
+      add: makeAndAddBoard,
+      load: loadBoard,
     },
   };
 };

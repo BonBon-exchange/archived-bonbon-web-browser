@@ -47,6 +47,22 @@ export const Addaps: React.FC = () => {
     window.bonb.analytics.event('load_app');
   }, []);
 
+  useEffect(() => {
+    window.document.querySelector('body').className = window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    ).matches
+      ? 'dark-theme'
+      : 'light-theme';
+
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addEventListener('change', (e) => {
+        const colorScheme = e.matches ? 'dark-theme' : 'light-theme';
+        window.document.querySelector('body').className = colorScheme;
+        window.bonb.analytics.event('toogle_darkmode', { theme: colorScheme });
+      });
+  }, []);
+
   return (
     <>
       {/* <TopBar setShowLibrary={setShowLibrary} /> */}

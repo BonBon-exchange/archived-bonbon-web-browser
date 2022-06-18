@@ -2,9 +2,9 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-use-before-define */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { v4 } from 'uuid';
-import TextField from '@mui/material/TextField';
+// import TextField from '@mui/material/TextField';
 import AddIcon from '@mui/icons-material/Add';
 import clsx from 'clsx';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -26,7 +26,7 @@ export const TopBar: React.FC<TopBarProps> = ({ setShowLibrary }) => {
 
   const dispatch = useAppDispatch();
 
-  const pushTab = () => {
+  const pushTab = useCallback(() => {
     const id = v4();
     const newTab = {
       id,
@@ -34,9 +34,9 @@ export const TopBar: React.FC<TopBarProps> = ({ setShowLibrary }) => {
     };
 
     dispatch(addTab(newTab));
-
+    window.bonb.tabs.select(id);
     window.bonb.analytics.event('add_board');
-  };
+  }, [dispatch, tabs.length]);
 
   // const tabOnKeyPress = (e: KeyboardEvent, boardId: string) => {
   //   if (e.code === 'Enter' || e.code === 'NumpadEnter') {
@@ -69,6 +69,14 @@ export const TopBar: React.FC<TopBarProps> = ({ setShowLibrary }) => {
         window.bonb.analytics.event('toogle_darkmode', { theme: colorScheme });
       });
   }, []);
+
+  useEffect(() => {
+    switchBoard(activeTab);
+  }, []);
+
+  useEffect(() => {
+    if (tabs.length === 0) pushTab();
+  }, [tabs, pushTab]);
 
   return (
     <div id="TopBar__container">

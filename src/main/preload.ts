@@ -15,10 +15,16 @@ contextBridge.exposeInMainWorld('bonb', {
     newWindow: (action: (event: IpcRendererEvent, ...args: any[]) => void) => {
       ipcRenderer.on('new-window', action);
     },
+    loadBoard: (action: (event: IpcRendererEvent, ...args: any[]) => void) => {
+      ipcRenderer.on('load-board', action);
+    },
   },
   off: {
     newWindow: () => {
       ipcRenderer.removeAllListeners('new-window');
+    },
+    loadBoard: () => {
+      ipcRenderer.removeAllListeners('load-board');
     },
   },
   tabs: {

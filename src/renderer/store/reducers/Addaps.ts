@@ -80,6 +80,7 @@ export const addapsSlice = createSlice({
     },
     addBoard: (state, action: PayloadAction<BoardType>) => {
       state.boards.push(action.payload);
+      state.activeBoard = action.payload.id;
     },
     setActiveBoard: (state, action: PayloadAction<string>) => {
       state.activeBoard = action.payload;

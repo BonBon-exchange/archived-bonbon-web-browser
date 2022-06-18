@@ -9,9 +9,11 @@ declare global {
       };
       listener: {
         newWindow: (action: unknown) => void;
+        loadBoard: (action: unknown) => void;
       };
       off: {
         newWindow: () => void;
+        loadBoard: () => void;
       };
       tabs: {
         select: (tabId: string) => void;
