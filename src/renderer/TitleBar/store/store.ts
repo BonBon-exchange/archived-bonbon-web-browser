@@ -11,21 +11,18 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import addapsReducer from './reducers/Addaps';
 import tabsReducer from './reducers/Tabs';
 
 const persistConfig = {
-  key: 'root',
+  key: 'titleBar',
   version: 1,
   storage,
 };
 
-const persistedAddaps = persistReducer(persistConfig, addapsReducer);
 const persistedTabs = persistReducer(persistConfig, tabsReducer);
 
 export const store = configureStore({
   reducer: {
-    addaps: persistedAddaps,
     tabs: persistedTabs,
   },
   devTools: process.env.NODE_ENV !== 'production',

@@ -10,15 +10,18 @@ import { Board } from 'renderer/App/components/Board';
 import { LeftBar } from 'renderer/App/components/LeftBar';
 import { ContextMenu } from 'renderer/App/components/ContextMenu';
 import { Library } from 'renderer/App/components/Library';
+import { useStoreHelpers } from 'renderer/App/hooks/useStoreHelpers';
 
 import { ContextMenuProps } from 'renderer/App/components/ContextMenu/Types';
+import { AddapsProps } from './Types';
 
 import './style.css';
 import 'renderer/style/dark.css';
 import 'renderer/style/light.css';
 
-export const Addaps: React.FC = () => {
+export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
   useGlobalEvents();
+  const { board } = useStoreHelpers();
   const [showContextMenu, setShowContextMenu] = useState<boolean>(false);
   const [showLibrary, setShowLibrary] = useState<boolean>(false);
   const [contextMenuProps, setContextMenuProps] = useState<ContextMenuProps>({
@@ -44,8 +47,8 @@ export const Addaps: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    window.bonb.analytics.event('load_app');
-  }, []);
+    if (boardId) board.load({ id: boardId });
+  }, [board, boardId]);
 
   return (
     <>

@@ -5,7 +5,7 @@ import { useCallback, useEffect } from 'react';
 import { useStoreHelpers } from 'renderer/App/hooks/useStoreHelpers';
 
 export const useGlobalEvents = () => {
-  const { browser, board } = useStoreHelpers();
+  const { browser } = useStoreHelpers();
 
   const keyDownListener = useCallback(
     (e: { ctrlKey: boolean; key: string }) => {
@@ -36,11 +36,6 @@ export const useGlobalEvents = () => {
     [browser]
   );
 
-  const loadBoardAction = useCallback(
-    (_e: any, args: { id: string }) => board.load(args),
-    [board]
-  );
-
   const matchMediaListener = (e) => {
     const colorScheme = e.matches ? 'dark-theme' : 'light-theme';
     window.document.querySelector('body').className = colorScheme;
@@ -51,11 +46,6 @@ export const useGlobalEvents = () => {
     window.bonb.listener.newWindow(newWindowAction);
     return () => window.bonb.off.newWindow();
   }, [newWindowAction]);
-
-  useEffect(() => {
-    window.bonb.listener.loadBoard(loadBoardAction);
-    return () => window.bonb.off.loadBoard();
-  }, [loadBoardAction]);
 
   useEffect(() => {
     window.addEventListener('keydown', keyDownListener, false);
