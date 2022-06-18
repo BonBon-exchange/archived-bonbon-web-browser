@@ -1,0 +1,12 @@
+#ContextMenu__container {
+  position: fixed;
+  background-color: rgb(196, 196, 196);
+  color: black;
+  z-index: 10000;
+}
+
+#ContextMenu__container ul {
+  list-style: none;
+  margin: 0;
+  padding: 10px;
+}

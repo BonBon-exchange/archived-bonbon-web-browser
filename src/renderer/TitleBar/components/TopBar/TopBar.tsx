@@ -4,7 +4,7 @@
 /* eslint-disable no-use-before-define */
 import React, { useState, useEffect, useCallback } from 'react';
 import { v4 } from 'uuid';
-// import TextField from '@mui/material/TextField';
+import TextField from '@mui/material/TextField';
 import AddIcon from '@mui/icons-material/Add';
 import clsx from 'clsx';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -13,7 +13,12 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 import { useAppDispatch, useAppSelector } from 'renderer/TitleBar/store/hooks';
-import { addTab, setActiveTab } from 'renderer/TitleBar/store/reducers/Tabs';
+import {
+  addTab,
+  setActiveTab,
+  setIsRenaming,
+  renameTab,
+} from 'renderer/TitleBar/store/reducers/Tabs';
 
 import { TopBarProps } from './Types';
 
@@ -22,7 +27,7 @@ import './style.scss';
 export const TopBar: React.FC<TopBarProps> = ({ setShowLibrary }) => {
   const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const [isDarkMode, setIsDarkMode] = useState<boolean>(dark);
-  const { tabs, activeTab } = useAppSelector((state) => state.tabs);
+  const { tabs, activeTab, isRenaming } = useAppSelector((state) => state.tabs);
 
   const dispatch = useAppDispatch();
 
@@ -38,20 +43,25 @@ export const TopBar: React.FC<TopBarProps> = ({ setShowLibrary }) => {
     window.bonb.analytics.event('add_board');
   }, [dispatch, tabs.length]);
 
-  // const tabOnKeyPress = (e: KeyboardEvent, boardId: string) => {
-  //   if (e.code === 'Enter' || e.code === 'NumpadEnter') {
-  //     dispatch(setIsRenamingBoard(null));
-  //     dispatch(renameBoard({ boardId, label: e.target?.value }));
-  //   }
-  // };
+  const tabOnKeyPress = (e: KeyboardEvent, id: string) => {
+    if (e.code === 'Enter' || e.code === 'NumpadEnter') {
+      dispatch(setIsRenaming(null));
+      dispatch(renameTab({ id, label: e.target?.value }));
+    }
+  };
 
   const switchBoard = (tabId: string) => {
-    // if (!isRenamingBoard) {
-    dispatch(setActiveTab(tabId));
-    window.bonb.tabs.select(tabId);
-    window.bonb.analytics.event('switch_board');
-    // }
+    if (!isRenaming) {
+      dispatch(setActiveTab(tabId));
+      window.bonb.tabs.select(tabId);
+      window.bonb.analytics.event('switch_board');
+    }
   };
+
+  const dblclickEventListener = useCallback(
+    (tab: Element) => dispatch(setIsRenaming(tab.getAttribute('data-tabid'))),
+    [dispatch]
+  );
 
   useEffect(() => {
     window.document.querySelector('body').className = window.matchMedia(
@@ -69,6 +79,16 @@ export const TopBar: React.FC<TopBarProps> = ({ setShowLibrary }) => {
         window.bonb.analytics.event('toogle_darkmode', { theme: colorScheme });
       });
   }, []);
+
+  useEffect(() => {
+    document.querySelectorAll('.TopBar__tab').forEach((tab) => {
+      tab.addEventListener('dblclick', (e) => dblclickEventListener(tab));
+    });
+    return () =>
+      document.querySelectorAll('.TopBar__tab').forEach((tab) => {
+        tab.removeEventListener('dblclick', (e) => dblclickEventListener(tab));
+      });
+  }, [dblclickEventListener]);
 
   useEffect(() => {
     switchBoard(activeTab);
@@ -90,20 +110,18 @@ export const TopBar: React.FC<TopBarProps> = ({ setShowLibrary }) => {
               })}
               key={t.id}
               onClick={() => switchBoard(t.id)}
-              data-boardid={t.id}
+              data-tabid={t.id}
             >
-              {/* {isRenamingBoard === b.id ? (
+              {isRenaming === t.id ? (
                 <TextField
                   label="Board name"
-                  defaultValue={b.label}
+                  defaultValue={t.label}
                   variant="standard"
-                  onKeyPress={(e) => tabOnKeyPress(e, b.id)}
+                  onKeyPress={(e) => tabOnKeyPress(e, t.id)}
                 />
               ) : (
-                b.label
-              )} */}
-
-              {t.label}
+                t.label
+              )}
             </div>
           );
         })}

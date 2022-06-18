@@ -19,9 +19,9 @@ webview {
 
 .Browser__is-full-size {
   position: fixed !important;
-  top: 30px !important;
+  top: 0px !important;
   width: calc(100% - 50px) !important;
-  height: calc(100% - 30px) !important;
+  height: 100% !important;
   transform: none !important;
   left: 50px !important;
 }
