@@ -18,6 +18,7 @@ import { renameBoard } from 'renderer/App/store/reducers/Board';
 import { useAppDispatch } from 'renderer/App/store/hooks';
 
 import { ContextMenuProps } from 'renderer/App/components/ContextMenu/Types';
+import { BrowserProps } from 'renderer/App/components/Browser/Types';
 import { AddapsProps } from './Types';
 
 import './style.css';
@@ -47,7 +48,7 @@ export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
         label: boardState.label,
         isFullSize: boardState.isFullSize,
       });
-      boardState.browsers.forEach((browser) => {
+      boardState.browsers.forEach((browser: BrowserProps) => {
         userDb.browsers.put({ boardId: boardState.id, ...browser });
       });
     }

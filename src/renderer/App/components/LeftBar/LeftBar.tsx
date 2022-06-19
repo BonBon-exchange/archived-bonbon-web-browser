@@ -6,6 +6,7 @@ import React from 'react';
 
 import { scrollToBrowser } from 'renderer/App/helpers/d2';
 import { useBoard } from 'renderer/App/hooks/useBoard';
+import { BrowserProps } from 'renderer/App/components/Browser/Types';
 
 import './style.scss';
 
@@ -19,7 +20,7 @@ export const LeftBar: React.FC = () => {
 
   return (
     <div className="LeftBar__browserFavContainer">
-      {board?.browsers.map((b) => {
+      {board?.browsers.map((b: BrowserProps) => {
         return (
           <div
             className="LeftBar__browserFav"
