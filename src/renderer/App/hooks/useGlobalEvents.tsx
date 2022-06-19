@@ -1,3 +1,4 @@
+/* eslint-disable spaced-comment */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable import/prefer-default-export */
 import { useCallback, useEffect } from 'react';
@@ -36,8 +37,9 @@ export const useGlobalEvents = () => {
     [browser]
   );
 
-  const matchMediaListener = (e) => {
+  const matchMediaListener = (e: { matches: boolean }) => {
     const colorScheme = e.matches ? 'dark-theme' : 'light-theme';
+    //@ts-ignore
     window.document.querySelector('body').className = colorScheme;
     window.app.analytics.event('toogle_darkmode', { theme: colorScheme });
   };
@@ -58,6 +60,7 @@ export const useGlobalEvents = () => {
   }, []);
 
   useEffect(() => {
+    //@ts-ignore
     window.document.querySelector('body').className = window.matchMedia(
       '(prefers-color-scheme: dark)'
     ).matches

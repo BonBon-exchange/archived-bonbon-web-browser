@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/prefer-default-export */
@@ -45,11 +46,15 @@ export const TopBar: React.FC = () => {
     [dispatch]
   );
 
-  const tabOnKeyPress = (e: KeyboardEvent, id: string) => {
+  const tabOnKeyPress = (
+    e: React.KeyboardEvent<HTMLDivElement>,
+    id: string
+  ) => {
     if (e.code === 'Enter' || e.code === 'NumpadEnter') {
+      const target = e.target as HTMLInputElement;
       dispatch(setIsRenaming(null));
-      dispatch(renameTab({ id, label: e.target?.value }));
-      window.titleBar.tabs.rename({ tabId: id, label: e.target?.value });
+      dispatch(renameTab({ id, label: target?.value }));
+      window.titleBar.tabs.rename({ tabId: id, label: target?.value });
     }
   };
 
@@ -75,7 +80,7 @@ export const TopBar: React.FC = () => {
   const openTabListener = useCallback(
     (_e: any, args: { id?: string; label?: string }) => {
       if (tabs?.find((t) => t.id === args?.id)) {
-        switchBoard(args.id);
+        if (args.id) switchBoard(args.id);
       } else {
         pushTab(args);
       }
@@ -118,6 +123,7 @@ export const TopBar: React.FC = () => {
   );
 
   useEffect(() => {
+    // @ts-ignore
     window.document.querySelector('body').className = window.matchMedia(
       '(prefers-color-scheme: dark)'
     ).matches
@@ -129,6 +135,7 @@ export const TopBar: React.FC = () => {
       .addEventListener('change', (e) => {
         const colorScheme = e.matches ? 'dark-theme' : 'light-theme';
         setIsDarkMode(e.matches);
+        // @ts-ignore
         window.document.querySelector('body').className = colorScheme;
         window.titleBar.analytics.event('toogle_darkmode', {
           theme: colorScheme,

@@ -19,7 +19,9 @@ import { bringBrowserToTheFront } from 'renderer/App/helpers/d2';
 import { useStoreHelpers } from './useStoreHelpers';
 
 export const useBrowserEvents = (browserId: string) => {
-  const container = document.querySelector(`#Browser__${browserId}`);
+  const container = document.querySelector(
+    `#Browser__${browserId}`
+  ) as HTMLElement;
   const webview = container?.querySelector('webview');
 
   const dispatch = useAppDispatch();

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { configureStore } from '@reduxjs/toolkit';
 import {
   persistStore,
@@ -13,6 +14,7 @@ import storage from 'redux-persist/lib/storage';
 
 import boardReducer from './reducers/Board';
 
+// @ts-ignore
 export const store = configureStore({
   reducer: {
     board: boardReducer,
@@ -23,6 +25,7 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
+// @ts-ignore
 export const getPersistedStoreAndPersistor = (id: string) => {
   const persistConfig = {
     key: id,
