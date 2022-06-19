@@ -69,8 +69,8 @@ const installExtensions = async () => {
 
 const machineId = machineIdSync();
 
-const views = {};
-let selectedView = null;
+const views: Record<string, BrowserView> = {};
+let selectedView: BrowserView;
 
 const createBrowserView = (sizes: [width: number, height: number]) => {
   const [width, height] = sizes;
@@ -110,6 +110,7 @@ const createWindow = async () => {
     icon: getAssetPath('icon.png'),
     titleBarStyle: 'hidden',
     titleBarOverlay: true,
+    // frame: false,
     webPreferences: {
       webviewTag: false,
       preload: app.isPackaged
@@ -240,9 +241,9 @@ app.on('web-contents-created', (_event, contents) => {
     webPreferences.nodeIntegration = false;
   });
 
-  contents.on('new-window', (e, url) => {
-    e.preventDefault();
-    mainWindow?.webContents.send('new-window', { url });
+  contents.setWindowOpenHandler((details) => {
+    selectedView.webContents.send('new-window', { url: details.url });
+    return { action: 'deny' };
   });
 
   contextMenu({
@@ -251,7 +252,7 @@ app.on('web-contents-created', (_event, contents) => {
         label: 'Close',
         visible: params.y <= 30,
         click: () => {
-          mainWindow.webContents.send('close-tab', {
+          mainWindow?.webContents.send('close-tab', {
             x: params.x,
             y: params.y,
           });
@@ -261,7 +262,7 @@ app.on('web-contents-created', (_event, contents) => {
         label: 'Rename',
         visible: params.y <= 30,
         click: () => {
-          mainWindow.webContents.send('rename-tab', {
+          mainWindow?.webContents.send('rename-tab', {
             x: params.x,
             y: params.y,
           });
@@ -271,7 +272,7 @@ app.on('web-contents-created', (_event, contents) => {
         label: 'Save',
         visible: params.y <= 30,
         click: () => {
-          mainWindow.webContents.send('save-board', {
+          mainWindow?.webContents.send('save-board', {
             x: params.x,
             y: params.y,
           });
