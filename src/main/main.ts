@@ -86,6 +86,7 @@ const createBrowserView = (sizes: [width: number, height: number]) => {
   view.setBounds({ x: 0, y: 30, width, height: height - 30 });
   view.setAutoResize({ width: true, height: true });
   view.webContents.loadURL(resolveHtmlPath('index.html'));
+
   if (!app.isPackaged) view.webContents.toggleDevTools();
   return view;
 };

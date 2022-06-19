@@ -4,17 +4,15 @@ Bonb, claim back your data ownership.
 
 Built with Electron, React, TypeScript, Redux.
 
----
+We don't collect any personal data or browsing history. We do send some events to GA in order to understand how users are using BonBon Browser. Those events do not contain any information regarding the user or his material.
+
+Instead, the browsing history is locally stored and encrypted.
 
 ### Try BonBon today
-
-Work in progress, it's just the beginning.
 
 Download BonBon for Windows: [BonBon 0.12.0 for Windows](https://github.com/danielfebrero/bonbon-web-browser/releases/download/0.12.0/BonBon.Setup.0.12.0.exe)
 
 Download BonBon for macOS: [BonBon 0.10.0 for macOS](https://github.com/danielfebrero/bonbon-web-browser/releases/download/v0.10.0/Bonb-0.10.0.dmg)
-
----
 
 ### Features
 
@@ -33,6 +31,8 @@ In progress:
 - permission handler
 
 - insecure web handler
+
+- notifications
 
 - whatsapp, messenger and telegram integration
 
