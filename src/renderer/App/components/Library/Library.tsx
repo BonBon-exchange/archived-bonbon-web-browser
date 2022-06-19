@@ -12,6 +12,7 @@ import { LibraryProps } from './Types';
 
 import './style.css';
 
+// eslint-disable-next-line react/prop-types
 export const Library: React.FC<LibraryProps> = ({ closeLibrary }) => {
   const [boardsState, setBoardsState] = useState<
     { id: string; label: string; isFullSize: boolean }[]

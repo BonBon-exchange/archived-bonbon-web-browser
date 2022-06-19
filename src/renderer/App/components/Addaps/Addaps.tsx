@@ -78,6 +78,7 @@ export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
 
   useEffect(() => {
     if (boardId) board.load({ id: boardId });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [boardId]);
 
   useEffect(() => {
