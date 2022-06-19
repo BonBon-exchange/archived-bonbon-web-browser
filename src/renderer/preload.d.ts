@@ -21,6 +21,7 @@ declare global {
         openTab: (action: unknown) => void;
         closeTab: (action: unknown) => void;
         purge: (action: unknown) => void;
+        renameTab: (action: unknown) => void;
       };
       off: {
         newWindow: () => void;
@@ -29,6 +30,7 @@ declare global {
         openTab: () => void;
         closeTab: () => void;
         purge: () => void;
+        renameTab: () => void;
       };
       tabs: {
         select: (tabId: string) => void;

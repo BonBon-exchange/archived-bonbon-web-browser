@@ -91,7 +91,18 @@ export const TopBar: React.FC = () => {
         window.bonb.tabs.purge(tabId);
       }
     },
-    [dispatch, activeTab]
+    [dispatch]
+  );
+
+  const renameTabListener = useCallback(
+    (_e: any, args: { x: number; y: number }) => {
+      const el = document.elementFromPoint(args.x, args.y);
+      const tabId = el?.getAttribute('data-tabid');
+      if (tabId) {
+        dispatch(setIsRenaming(tabId));
+      }
+    },
+    [dispatch]
   );
 
   useEffect(() => {
@@ -134,6 +145,11 @@ export const TopBar: React.FC = () => {
     window.bonb.listener.closeTab(closeTabListener);
     return () => window.bonb.off.closeTab();
   }, [closeTabListener]);
+
+  useEffect(() => {
+    window.bonb.listener.renameTab(renameTabListener);
+    return () => window.bonb.off.renameTab();
+  }, [renameTabListener]);
 
   useEffect(() => {
     if (tabs.length === 0) pushTab({});

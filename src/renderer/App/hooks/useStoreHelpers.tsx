@@ -44,11 +44,23 @@ export const useStoreHelpers = () => {
   };
 
   const makeAndAddBoard = (params: { id?: string }) => {
+    const browserId = v4();
+    const newBrowser = {
+      id: browserId,
+      url: 'https://www.google.com',
+      top: 120,
+      left: 120,
+      height: 800,
+      width: 600,
+      firstRendering: true,
+      favicon: '',
+      title: '',
+    };
     const id = params.id || v4();
     const newBoard = {
       id,
       label: `Board ${boards.length + 1}`,
-      browsers: [],
+      browsers: [newBrowser],
       isFullSize: false,
     };
 
@@ -75,7 +87,6 @@ export const useStoreHelpers = () => {
                   ...bds[0],
                 };
                 dispatch(addBoard(boardToAdd));
-                dispatch(setActiveBoard(params.id));
               });
           } else {
             makeAndAddBoard(params);
