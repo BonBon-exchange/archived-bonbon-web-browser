@@ -32,8 +32,9 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
 
   const closeBrowser = useCallback(
     (renameTarget: EventTarget | null) => {
-      const browserId = renameTarget?.getAttribute('data-browserid');
-      dispatch(removeBrowser(browserId));
+      const htmlTarget = renameTarget as HTMLElement;
+      const browserId = htmlTarget?.getAttribute('data-browserid');
+      if (browserId) dispatch(removeBrowser(browserId));
     },
     [dispatch]
   );
@@ -43,8 +44,11 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
   }, [dispatch]);
 
   useEffect(() => {
-    container.current.style.top = `${y}px`;
-    container.current.style.left = `${x}px`;
+    if (container.current) {
+      const containerHtml = container.current as HTMLElement;
+      containerHtml.style.top = `${y}px`;
+      containerHtml.style.left = `${x}px`;
+    }
   }, [x, y]);
 
   useEffect(() => {

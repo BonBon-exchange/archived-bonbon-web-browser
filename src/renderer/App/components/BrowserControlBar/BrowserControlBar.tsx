@@ -27,14 +27,15 @@ export const BrowserControlBar: React.FC<BrowserControlBarProps> = ({
 
   const urlInputOnKeyPress: KeyboardEventHandler = (e) => {
     if (e.code === 'Enter' || e.code === 'NumpadEnter') {
-      document
+      const target = e.target as HTMLInputElement;
+      const webview = document
         .querySelector(`#Browser__${browserId}`)
-        ?.querySelector('webview')
-        ?.loadURL(e.target?.value);
+        ?.querySelector('webview') as Electron.WebviewTag;
+      webview?.loadURL(target?.value);
 
       dispatch(
         updateBrowserUrl({
-          url: e.target?.value,
+          url: target?.value,
           browserId,
         })
       );

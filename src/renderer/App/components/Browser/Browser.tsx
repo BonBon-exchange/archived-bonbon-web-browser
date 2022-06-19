@@ -46,7 +46,9 @@ export const Browser: React.FC<BrowserProps> = ({
   const container = useRef<HTMLDivElement>(null);
   const [isFullSize, setIsFullSize] = useState<boolean>(false);
 
-  const webview = container.current?.querySelector('webview');
+  const webview = container.current?.querySelector(
+    'webview'
+  ) as Electron.WebviewTag;
 
   const disablePointerEventsForOthers = () => {
     const containers = document.querySelectorAll('.Browser__webview-container');

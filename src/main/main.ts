@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable promise/catch-or-return */
 /* eslint-disable promise/no-callback-in-promise */
 /* eslint-disable consistent-return */
@@ -72,8 +73,9 @@ const machineId = machineIdSync();
 const views: Record<string, BrowserView> = {};
 let selectedView: BrowserView;
 
-const createBrowserView = (sizes: [width: number, height: number]) => {
-  const [width, height] = sizes;
+const createBrowserView = (sizes: number[] | undefined) => {
+  const width = sizes && sizes[0] ? sizes[0] : 0;
+  const height = sizes && sizes[1] ? sizes[1] : 0;
   const view = new BrowserView({
     webPreferences: {
       webviewTag: true,
@@ -160,7 +162,7 @@ const createWindow = async () => {
     return { action: 'deny' };
   });
 
-  makeEvents(mainWindow);
+  makeEvents();
 
   ipcMain.on('tab-select', (_event, args) => {
     const sizes = mainWindow?.getSize();
@@ -237,6 +239,7 @@ app.on('web-contents-created', (_event, contents) => {
     const pathToPreloadScipt = app.isPackaged
       ? path.join(__dirname, '../../../assets/webview-preload.js')
       : path.join(__dirname, '../../assets/webview-preload.js');
+    // @ts-ignore
     webPreferences.preloadURL = `file://${pathToPreloadScipt}`;
     webPreferences.nodeIntegration = false;
   });

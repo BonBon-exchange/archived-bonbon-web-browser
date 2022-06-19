@@ -63,12 +63,13 @@ export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
   useEffect(() => {
     window.addEventListener('contextmenu', (e) => {
       e.preventDefault();
+      const target = e.target as HTMLElement;
       setContextMenuProps({
         x: e.x,
         y: e.y,
-        targetId: e.target?.id,
-        targetClass: e.target?.className,
-        target: e.target,
+        targetId: target?.id,
+        targetClass: target?.className,
+        target,
       });
       setShowContextMenu(true);
     });

@@ -26,7 +26,10 @@ const makePayload = (eventName: string, params?: Record<string, unknown>) => {
   };
 };
 
-export const event = (eventName: string, params?: Record<string, unknown>) => {
+export const event = (
+  eventName: string,
+  params?: { [key: string]: string | number | boolean } | undefined
+) => {
   const payload = makePayload(eventName, params);
   axios
     .post(
