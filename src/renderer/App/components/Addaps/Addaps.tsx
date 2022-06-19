@@ -21,8 +21,6 @@ import { ContextMenuProps } from 'renderer/App/components/ContextMenu/Types';
 import { AddapsProps } from './Types';
 
 import './style.css';
-import 'renderer/style/dark.css';
-import 'renderer/style/light.css';
 
 export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
   useGlobalEvents();

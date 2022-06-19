@@ -47,7 +47,7 @@ const configuration: webpack.Configuration = {
   target: ['web', 'electron-renderer'],
 
   entry: {
-    main: [
+    app: [
       `webpack-dev-server/client?http://localhost:${port}/dist`,
       'webpack/hot/only-dev-server',
       path.join(webpackPaths.srcRendererPath, 'App/index.tsx'),
@@ -137,7 +137,7 @@ const configuration: webpack.Configuration = {
     new HtmlWebpackPlugin({
       filename: path.join('index.html'),
       template: path.join(webpackPaths.srcRendererPath, 'index.ejs'),
-      chunks: ['main'],
+      chunks: ['app'],
       minify: {
         collapseWhitespace: true,
         removeAttributeQuotes: true,

@@ -6,8 +6,8 @@ import { TopBar } from 'renderer/TitleBar/components/TopBar';
 import { store, persistor } from 'renderer/TitleBar/store/store';
 
 import './TitleBar.scss';
-import 'renderer/style/dark.css';
-import 'renderer/style/light.css';
+import 'renderer/TitleBar/style/dark.css';
+import 'renderer/TitleBar/style/light.css';
 
 export const TitleBar: React.FC = () => {
   return (

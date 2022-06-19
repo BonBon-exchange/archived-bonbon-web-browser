@@ -78,7 +78,7 @@ const createBrowserView = (sizes: [width: number, height: number]) => {
     webPreferences: {
       webviewTag: true,
       preload: app.isPackaged
-        ? path.join(__dirname, 'app.preload.js')
+        ? path.join(__dirname, 'appPreload.js')
         : path.join(__dirname, '../../.erb/dll/app.preload.js'),
     },
   });
@@ -114,7 +114,7 @@ const createWindow = async () => {
     webPreferences: {
       webviewTag: false,
       preload: app.isPackaged
-        ? path.join(__dirname, 'titleBar.preload.js')
+        ? path.join(__dirname, 'titleBarPreload.js')
         : path.join(__dirname, '../../.erb/dll/titleBar.preload.js'),
     },
   });
