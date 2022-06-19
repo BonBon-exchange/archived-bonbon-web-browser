@@ -145,11 +145,11 @@ export const TopBar: React.FC = () => {
 
   useEffect(() => {
     document.querySelectorAll('.TopBar__tab').forEach((tab) => {
-      tab.addEventListener('dblclick', (e) => dblclickEventListener(tab));
+      tab.addEventListener('dblclick', () => dblclickEventListener(tab));
     });
     return () =>
       document.querySelectorAll('.TopBar__tab').forEach((tab) => {
-        tab.removeEventListener('dblclick', (e) => dblclickEventListener(tab));
+        tab.removeEventListener('dblclick', () => dblclickEventListener(tab));
       });
   }, [dblclickEventListener]);
 
