@@ -31,7 +31,8 @@ const configuration: webpack.Configuration = {
 
   entry: {
     main: path.join(webpackPaths.srcMainPath, 'main.ts'),
-    preload: path.join(webpackPaths.srcMainPath, 'preload.ts'),
+    appPreload: path.join(webpackPaths.srcMainPath, 'preload/app.ts'),
+    titleBarPreload: path.join(webpackPaths.srcMainPath, 'preload/titleBar.ts'),
   },
 
   output: {

@@ -1,0 +1,14 @@
+.Board__container {
+  display: flex;
+  height: 300vh;
+  width: calc(100% - 50px);
+  top: 0px;
+  left: 50px;
+  position: absolute;
+  background: linear-gradient(
+    200.96deg,
+    #fedc2a -29.09%,
+    #dd5789 51.77%,
+    #7a2c9e 129.35%
+  );
+}

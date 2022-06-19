@@ -16,13 +16,12 @@ import Nucleus from 'nucleus-nodejs';
 import {
   app,
   BrowserWindow,
+  BrowserView,
   shell,
   session,
   ipcMain,
   nativeTheme,
 } from 'electron';
-import { autoUpdater } from 'electron-updater';
-import log from 'electron-log';
 import { machineIdSync } from 'node-machine-id';
 import contextMenu from 'electron-context-menu';
 
@@ -40,14 +39,6 @@ Nucleus.setProps(
   },
   true
 );
-
-export default class AppUpdater {
-  constructor() {
-    log.transports.file.level = 'info';
-    autoUpdater.logger = log;
-    autoUpdater.checkForUpdatesAndNotify();
-  }
-}
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -78,6 +69,27 @@ const installExtensions = async () => {
 
 const machineId = machineIdSync();
 
+const views: Record<string, BrowserView> = {};
+let selectedView: BrowserView;
+
+const createBrowserView = (sizes: [width: number, height: number]) => {
+  const [width, height] = sizes;
+  const view = new BrowserView({
+    webPreferences: {
+      webviewTag: true,
+      preload: app.isPackaged
+        ? path.join(__dirname, 'appPreload.js')
+        : path.join(__dirname, '../../.erb/dll/app.preload.js'),
+    },
+  });
+
+  view.setBounds({ x: 0, y: 30, width, height: height - 30 });
+  view.setAutoResize({ width: true, height: true });
+  view.webContents.loadURL(resolveHtmlPath('index.html'));
+  if (!app.isPackaged) view.webContents.toggleDevTools();
+  return view;
+};
+
 const createWindow = async () => {
   if (isDebug) {
     await installExtensions();
@@ -96,15 +108,18 @@ const createWindow = async () => {
     width: 1024,
     height: 728,
     icon: getAssetPath('icon.png'),
+    titleBarStyle: 'hidden',
+    titleBarOverlay: true,
+    // frame: false,
     webPreferences: {
-      webviewTag: true,
+      webviewTag: false,
       preload: app.isPackaged
-        ? path.join(__dirname, 'preload.js')
-        : path.join(__dirname, '../../.erb/dll/preload.js'),
+        ? path.join(__dirname, 'titleBarPreload.js')
+        : path.join(__dirname, '../../.erb/dll/titleBar.preload.js'),
     },
   });
 
-  mainWindow.loadURL(resolveHtmlPath('index.html'));
+  mainWindow.loadURL(resolveHtmlPath('titleBar.html'));
 
   ipcMain.handle('dark-mode:toggle', () => {
     if (nativeTheme.shouldUseDarkColors) {
@@ -144,11 +159,56 @@ const createWindow = async () => {
     return { action: 'deny' };
   });
 
-  // Remove this if your app does not use auto updates
-  // eslint-disable-next-line
-  new AppUpdater();
-
   makeEvents(mainWindow);
+
+  ipcMain.on('tab-select', (_event, args) => {
+    const sizes = mainWindow?.getSize();
+    const viewToShow: BrowserView = views[args.tabId]
+      ? views[args.tabId]
+      : createBrowserView(sizes);
+    views[args.tabId] = viewToShow;
+    viewToShow.webContents.on('dom-ready', () =>
+      viewToShow.webContents.send('load-board', { boardId: args.tabId })
+    );
+    mainWindow?.setBrowserView(viewToShow);
+    selectedView = viewToShow;
+  });
+
+  ipcMain.on('open-board', (_event, args) => {
+    mainWindow?.webContents.send('open-tab', args);
+
+    const sizes = mainWindow?.getSize();
+    const viewToShow: BrowserView = views[args.boardId]
+      ? views[args.boardId]
+      : createBrowserView(sizes);
+    views[args.boardId] = viewToShow;
+    viewToShow.webContents.on('dom-ready', () => {
+      viewToShow.webContents.send('load-board', { boardId: args.id });
+      viewToShow.webContents.send('open-board', args);
+    });
+    mainWindow?.setBrowserView(viewToShow);
+    selectedView = viewToShow;
+  });
+
+  ipcMain.on('show-library', () => {
+    selectedView.webContents.send('show-library');
+  });
+
+  ipcMain.on('tab-purge', (_event, args) => {
+    const view = views[args.tabId];
+    if (view) view.webContents.send('purge');
+    delete views[args.tabId];
+  });
+
+  ipcMain.on('save-tab', (_event, args) => {
+    const view = views[args.tabId];
+    if (view) view.webContents.send('save-board');
+  });
+
+  ipcMain.on('rename-tab', (_event, args) => {
+    const view = views[args.tabId];
+    if (view) view.webContents.send('rename-board', { label: args.label });
+  });
 
   mainWindow.webContents.executeJavaScript(
     `localStorage.setItem("machineId", "${machineId}"); localStorage.setItem("appIsPackaged", "${app.isPackaged}");`,
@@ -176,19 +236,51 @@ app.on('web-contents-created', (_event, contents) => {
     const pathToPreloadScipt = app.isPackaged
       ? path.join(__dirname, '../../../assets/webview-preload.js')
       : path.join(__dirname, '../../assets/webview-preload.js');
-    // Strip away preload scripts if unused or verify their location is legitimate
-    // console.log(webPreferences.preload, webPreferences.preloadURL);
     webPreferences.preloadURL = `file://${pathToPreloadScipt}`;
-    // Disable Node.js integration
     webPreferences.nodeIntegration = false;
   });
 
-  contents.on('new-window', (e, url) => {
-    e.preventDefault();
-    mainWindow?.webContents.send('new-window', { url });
+  contents.setWindowOpenHandler((details) => {
+    selectedView.webContents.send('new-window', { url: details.url });
+    return { action: 'deny' };
   });
 
   contextMenu({
+    prepend: (_defaultActions, params, _browserWindow) => [
+      {
+        label: 'Close',
+        visible: params.y <= 30,
+        click: () => {
+          mainWindow?.webContents.send('close-tab', {
+            x: params.x,
+            y: params.y,
+          });
+        },
+      },
+      {
+        label: 'Rename',
+        visible: params.y <= 30,
+        click: () => {
+          mainWindow?.webContents.send('rename-tab', {
+            x: params.x,
+            y: params.y,
+          });
+        },
+      },
+      {
+        label: 'Save',
+        visible: params.y <= 30,
+        click: () => {
+          mainWindow?.webContents.send('save-board', {
+            x: params.x,
+            y: params.y,
+          });
+        },
+      },
+      {
+        type: 'separator',
+      },
+    ],
     window: contents,
     showInspectElement: true,
     showSearchWithGoogle: false,

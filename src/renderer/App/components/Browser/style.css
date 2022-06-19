@@ -1,0 +1,27 @@
+webview {
+  display: flex;
+  width: 100%;
+  background-color: white;
+}
+
+.Browser__container {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.Browser__webview-container {
+  display: flex;
+  flex-grow: 1;
+}
+
+.Browser__is-full-size {
+  position: fixed !important;
+  top: 0px !important;
+  width: calc(100% - 50px) !important;
+  height: 100% !important;
+  transform: none !important;
+  left: 50px !important;
+}

@@ -1,0 +1,12 @@
+#ButtonAddBrowser {
+  position: fixed;
+  top: 25px;
+  left: 13px;
+  z-index: 1000;
+  height: 18px;
+  color: var(--color-icon-primary);
+}
+
+#ButtonAddBrowser:hover {
+  height: 20px;
+}
