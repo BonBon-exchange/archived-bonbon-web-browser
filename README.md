@@ -24,11 +24,9 @@ Completed:
 
 - encrypted browsing history
 
+- darkmode
+
 In progress:
-
-- new UX
-
-- dark mode
 
 - adblock
 
