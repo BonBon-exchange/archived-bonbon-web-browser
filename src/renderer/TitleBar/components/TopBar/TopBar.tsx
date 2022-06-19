@@ -49,6 +49,7 @@ export const TopBar: React.FC = () => {
     if (e.code === 'Enter' || e.code === 'NumpadEnter') {
       dispatch(setIsRenaming(null));
       dispatch(renameTab({ id, label: e.target?.value }));
+      window.bonb.tabs.rename({ tabId: id, label: e.target?.value });
     }
   };
 
@@ -105,6 +106,17 @@ export const TopBar: React.FC = () => {
     [dispatch]
   );
 
+  const saveBoardListener = useCallback(
+    (_e: any, args: { x: number; y: number }) => {
+      const el = document.elementFromPoint(args.x, args.y);
+      const tabId = el?.getAttribute('data-tabid');
+      if (tabId) {
+        window.bonb.tabs.save(tabId);
+      }
+    },
+    []
+  );
+
   useEffect(() => {
     window.document.querySelector('body').className = window.matchMedia(
       '(prefers-color-scheme: dark)'
@@ -150,6 +162,11 @@ export const TopBar: React.FC = () => {
     window.bonb.listener.renameTab(renameTabListener);
     return () => window.bonb.off.renameTab();
   }, [renameTabListener]);
+
+  useEffect(() => {
+    window.bonb.listener.saveBoard(saveBoardListener);
+    return () => window.bonb.off.saveBoard();
+  }, [saveBoardListener]);
 
   useEffect(() => {
     if (tabs.length === 0) pushTab({});

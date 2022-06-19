@@ -199,6 +199,16 @@ const createWindow = async () => {
     delete views[args.tabId];
   });
 
+  ipcMain.on('save-tab', (_event, args) => {
+    const view = views[args.tabId];
+    if (view) view.webContents.send('save-board');
+  });
+
+  ipcMain.on('rename-tab', (_event, args) => {
+    const view = views[args.tabId];
+    if (view) view.webContents.send('rename-board', { label: args.label });
+  });
+
   mainWindow.webContents.executeJavaScript(
     `localStorage.setItem("machineId", "${machineId}"); localStorage.setItem("appIsPackaged", "${app.isPackaged}");`,
     true
@@ -226,10 +236,7 @@ app.on('web-contents-created', (_event, contents) => {
     const pathToPreloadScipt = app.isPackaged
       ? path.join(__dirname, '../../../assets/webview-preload.js')
       : path.join(__dirname, '../../assets/webview-preload.js');
-    // Strip away preload scripts if unused or verify their location is legitimate
-    // console.log(webPreferences.preload, webPreferences.preloadURL);
     webPreferences.preloadURL = `file://${pathToPreloadScipt}`;
-    // Disable Node.js integration
     webPreferences.nodeIntegration = false;
   });
 
@@ -255,6 +262,16 @@ app.on('web-contents-created', (_event, contents) => {
         visible: params.y <= 30,
         click: () => {
           mainWindow.webContents.send('rename-tab', {
+            x: params.x,
+            y: params.y,
+          });
+        },
+      },
+      {
+        label: 'Save',
+        visible: params.y <= 30,
+        click: () => {
+          mainWindow.webContents.send('save-board', {
             x: params.x,
             y: params.y,
           });

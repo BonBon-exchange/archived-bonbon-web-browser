@@ -18,6 +18,12 @@ contextBridge.exposeInMainWorld('bonb', {
     purge: (tabId: string) => {
       ipcRenderer.send('tab-purge', { tabId });
     },
+    save: (tabId: string) => {
+      ipcRenderer.send('save-tab', { tabId });
+    },
+    rename: ({ tabId, label }: { id: string; label: string }) => {
+      ipcRenderer.send('rename-tab', { tabId, label });
+    },
   },
   listener: {
     openTab: (action: (event: IpcRendererEvent, ...args: any[]) => void) => {
@@ -29,6 +35,9 @@ contextBridge.exposeInMainWorld('bonb', {
     closeTab: (action: (event: IpcRendererEvent, ...args: any[]) => void) => {
       ipcRenderer.on('close-tab', action);
     },
+    saveBoard: (action: (event: IpcRendererEvent, ...args: any[]) => void) => {
+      ipcRenderer.on('save-board', action);
+    },
   },
   off: {
     openTab: () => {
@@ -39,6 +48,9 @@ contextBridge.exposeInMainWorld('bonb', {
     },
     closeTab: () => {
       ipcRenderer.removeAllListeners('close-tab');
+    },
+    saveBoard: () => {
+      ipcRenderer.removeAllListeners('save-board');
     },
   },
   screens: {

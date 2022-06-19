@@ -6,8 +6,6 @@ import { useRef, useEffect, useState, useCallback } from 'react';
 
 import { useAppDispatch, useAppSelector } from 'renderer/App/store/hooks';
 import {
-  setIsRenamingBoard,
-  removeBoard,
   removeBrowser,
   removeAllBrowsers,
 } from 'renderer/App/store/reducers/Addaps';
@@ -32,22 +30,6 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
   const dispatch = useAppDispatch();
   const { boards } = useAppSelector((state) => state.addaps);
   const [menuItems, setMenuItems] = useState<Record<string, () => void>>({});
-
-  const renameBoard = useCallback(
-    (renameTarget: EventTarget | null) => {
-      const boardId = renameTarget?.getAttribute('data-boardid');
-      dispatch(setIsRenamingBoard(boardId));
-    },
-    [dispatch]
-  );
-
-  const closeBoard = useCallback(
-    (renameTarget: EventTarget | null) => {
-      const boardId = renameTarget?.getAttribute('data-boardid');
-      dispatch(removeBoard({ boardId }));
-    },
-    [dispatch]
-  );
 
   const saveBoard = useCallback(
     (renameTarget: EventTarget | null) => {
@@ -92,16 +74,6 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
         });
         break;
 
-      case 'TopBar__tab':
-      case 'TopBar__tab bold':
-        setMenuItems({
-          'Inspect element': () => inspectElement(x, y),
-          Rename: () => renameBoard(target),
-          Save: () => saveBoard(target),
-          Close: () => closeBoard(target),
-        });
-        break;
-
       case 'LeftBar__browserFavImg':
         setMenuItems({
           'Inspect element': () => inspectElement(x, y),
@@ -110,18 +82,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
         });
         break;
     }
-  }, [
-    targetClass,
-    targetId,
-    x,
-    y,
-    target,
-    renameBoard,
-    closeBoard,
-    closeBrowser,
-    closeAllBrowsers,
-    saveBoard,
-  ]);
+  }, [targetClass, targetId, x, y, target, closeBrowser, closeAllBrowsers]);
 
   return (
     <div id="ContextMenu__container" ref={container}>

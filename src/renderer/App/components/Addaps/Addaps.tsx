@@ -12,6 +12,10 @@ import { LeftBar } from 'renderer/App/components/LeftBar';
 import { ContextMenu } from 'renderer/App/components/ContextMenu';
 import { Library } from 'renderer/App/components/Library';
 import { useStoreHelpers } from 'renderer/App/hooks/useStoreHelpers';
+import { useBoard } from 'renderer/App/hooks/useBoard';
+import { userDb } from 'renderer/App/db/userDb';
+import { renameBoard } from 'renderer/App/store/reducers/Addaps';
+import { useAppDispatch } from 'renderer/App/store/hooks';
 
 import { ContextMenuProps } from 'renderer/App/components/ContextMenu/Types';
 import { AddapsProps } from './Types';
@@ -23,6 +27,8 @@ import 'renderer/style/light.css';
 export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
   useGlobalEvents();
   const { board } = useStoreHelpers();
+  const dispatch = useAppDispatch();
+  const boardState = useBoard();
   const [showContextMenu, setShowContextMenu] = useState<boolean>(false);
   const [showLibrary, setShowLibrary] = useState<boolean>(false);
   const [contextMenuProps, setContextMenuProps] = useState<ContextMenuProps>({
@@ -34,6 +40,29 @@ export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
   const showLibraryAction = useCallback(
     () => setShowLibrary(!showLibrary),
     [showLibrary]
+  );
+
+  const saveBoardAction = useCallback(
+    (_e: any, _args: any) => {
+      if (boardState) {
+        userDb.boards.put({
+          id: boardState.id,
+          label: boardState.label,
+          isFullSize: boardState.isFullSize,
+        });
+        boardState.browsers.forEach((browser) => {
+          userDb.browsers.put({ boardId: boardState.id, ...browser });
+        });
+      }
+    },
+    [boardState]
+  );
+
+  const renameBoardAction = useCallback(
+    (_e: any, args: any) => {
+      dispatch(renameBoard({ boardId, label: args.label }));
+    },
+    [boardId, dispatch]
   );
 
   useEffect(() => {
@@ -61,9 +90,18 @@ export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
     return () => window.bonb.off.showLibrary();
   }, [showLibraryAction]);
 
+  useEffect(() => {
+    window.bonb.listener.saveBoard(saveBoardAction);
+    return () => window.bonb.off.saveBoard();
+  }, [saveBoardAction]);
+
+  useEffect(() => {
+    window.bonb.listener.renameBoard(renameBoardAction);
+    return () => window.bonb.off.renameBoard();
+  }, [renameBoardAction]);
+
   return (
     <>
-      {/* <TopBar setShowLibrary={setShowLibrary} /> */}
       <LeftBar />
       <Board />
       {showContextMenu && <ContextMenu {...contextMenuProps} />}

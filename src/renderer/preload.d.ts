@@ -22,6 +22,8 @@ declare global {
         closeTab: (action: unknown) => void;
         purge: (action: unknown) => void;
         renameTab: (action: unknown) => void;
+        saveBoard: (action: unknown) => void;
+        renameBoard: (action: unknown) => void;
       };
       off: {
         newWindow: () => void;
@@ -31,11 +33,15 @@ declare global {
         closeTab: () => void;
         purge: () => void;
         renameTab: () => void;
+        saveBoard: () => void;
+        renameBoard: () => void;
       };
       tabs: {
         select: (tabId: string) => void;
         openBoard: (boardId: string) => void;
         purge: (tabId: string) => void;
+        save: (tabId: string) => void;
+        rename: ({ tabId, label }: { tabId: string; label: string }) => void;
       };
       screens: {
         library: () => void;

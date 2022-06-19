@@ -31,6 +31,14 @@ contextBridge.exposeInMainWorld('bonb', {
     ) => {
       ipcRenderer.on('show-library', action);
     },
+    saveBoard: (action: (event: IpcRendererEvent, ...args: any[]) => void) => {
+      ipcRenderer.on('save-board', action);
+    },
+    renameBoard: (
+      action: (event: IpcRendererEvent, ...args: any[]) => void
+    ) => {
+      ipcRenderer.on('rename-board', action);
+    },
   },
   off: {
     newWindow: () => {
@@ -44,6 +52,12 @@ contextBridge.exposeInMainWorld('bonb', {
     },
     purge: () => {
       ipcRenderer.removeAllListeners('purge');
+    },
+    saveBoard: () => {
+      ipcRenderer.removeAllListeners('save-board');
+    },
+    renameBoard: () => {
+      ipcRenderer.removeAllListeners('rename-board');
     },
   },
 });
