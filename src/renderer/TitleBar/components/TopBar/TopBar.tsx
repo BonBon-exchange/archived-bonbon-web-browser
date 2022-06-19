@@ -18,6 +18,7 @@ import {
   setActiveTab,
   setIsRenaming,
   renameTab,
+  removeTab,
 } from 'renderer/TitleBar/store/reducers/Tabs';
 
 import './style.scss';
@@ -51,13 +52,15 @@ export const TopBar: React.FC = () => {
     }
   };
 
-  const switchBoard = (tabId: string) => {
-    if (!isRenaming) {
-      dispatch(setActiveTab(tabId));
-      window.bonb.tabs.select(tabId);
-      window.bonb.analytics.event('switch_board');
-    }
-  };
+  const switchBoard = useCallback(
+    (tabId: string) => {
+      if (!isRenaming) {
+        window.bonb.tabs.select(tabId);
+        window.bonb.analytics.event('switch_board');
+      }
+    },
+    [isRenaming]
+  );
 
   const dblclickEventListener = useCallback(
     (tab: Element) => dispatch(setIsRenaming(tab.getAttribute('data-tabid'))),
@@ -70,9 +73,25 @@ export const TopBar: React.FC = () => {
 
   const openTabListener = useCallback(
     (_e: any, args: { id?: string; label?: string }) => {
-      pushTab(args);
+      if (tabs?.find((t) => t.id === args?.id)) {
+        switchBoard(args.id);
+      } else {
+        pushTab(args);
+      }
     },
-    [pushTab]
+    [pushTab, switchBoard, tabs]
+  );
+
+  const closeTabListener = useCallback(
+    (_e: any, args: { x: number; y: number }) => {
+      const el = document.elementFromPoint(args.x, args.y);
+      const tabId = el?.getAttribute('data-tabid');
+      if (tabId) {
+        dispatch(removeTab(tabId));
+        window.bonb.tabs.purge(tabId);
+      }
+    },
+    [dispatch, activeTab]
   );
 
   useEffect(() => {
@@ -104,12 +123,17 @@ export const TopBar: React.FC = () => {
 
   useEffect(() => {
     switchBoard(activeTab);
-  }, []);
+  }, [switchBoard, activeTab]);
 
   useEffect(() => {
     window.bonb.listener.openTab(openTabListener);
     return () => window.bonb.off.openTab();
   }, [openTabListener]);
+
+  useEffect(() => {
+    window.bonb.listener.closeTab(closeTabListener);
+    return () => window.bonb.off.closeTab();
+  }, [closeTabListener]);
 
   useEffect(() => {
     if (tabs.length === 0) pushTab({});
@@ -126,7 +150,7 @@ export const TopBar: React.FC = () => {
                 bold: activeTab === t.id,
               })}
               key={t.id}
-              onClick={() => switchBoard(t.id)}
+              onClick={() => dispatch(setActiveTab(t.id))}
               data-tabid={t.id}
             >
               {isRenaming === t.id ? (

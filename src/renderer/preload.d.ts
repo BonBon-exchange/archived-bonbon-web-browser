@@ -17,20 +17,23 @@ declare global {
       listener: {
         newWindow: (action: unknown) => void;
         loadBoard: (action: unknown) => void;
-        openBoard: (action: unknown) => void;
         showLibrary: (action: unknown) => void;
         openTab: (action: unknown) => void;
+        closeTab: (action: unknown) => void;
+        purge: (action: unknown) => void;
       };
       off: {
         newWindow: () => void;
         loadBoard: () => void;
-        openBoard: () => void;
         showLibrary: () => void;
         openTab: () => void;
+        closeTab: () => void;
+        purge: () => void;
       };
       tabs: {
         select: (tabId: string) => void;
         openBoard: (boardId: string) => void;
+        purge: (tabId: string) => void;
       };
       screens: {
         library: () => void;

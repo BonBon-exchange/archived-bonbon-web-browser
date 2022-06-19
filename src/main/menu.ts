@@ -1,10 +1,4 @@
-import {
-  app,
-  Menu,
-  shell,
-  BrowserWindow,
-  MenuItemConstructorOptions,
-} from 'electron';
+import { app, Menu, BrowserWindow, MenuItemConstructorOptions } from 'electron';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
   selector?: string;
@@ -44,6 +38,15 @@ export default class MenuBuilder {
       Menu.buildFromTemplate([
         {
           label: 'Inspect element',
+          click: () => {
+            this.mainWindow.webContents.inspectElement(x, y);
+          },
+        },
+        {
+          type: 'separator',
+        },
+        {
+          label: 'Close',
           click: () => {
             this.mainWindow.webContents.inspectElement(x, y);
           },

@@ -19,10 +19,21 @@ export function App() {
     setIsLoadedBoard(true);
   }, []);
 
+  const purgeAction = useCallback((_e: any, _args) => {
+    if (persisted.current?.persistor) {
+      persisted.current?.persistor.purge();
+    }
+  }, []);
+
   useEffect(() => {
     window.bonb.listener.loadBoard(loadBoardAction);
     return () => window.bonb.off.loadBoard();
   }, [loadBoardAction]);
+
+  useEffect(() => {
+    window.bonb.listener.purge(purgeAction);
+    return () => window.bonb.off.purge();
+  }, [purgeAction]);
 
   useEffect(() => {
     window.bonb.analytics.event('load_app');

@@ -1,3 +1,6 @@
+/* eslint-disable promise/no-nesting */
+/* eslint-disable promise/always-return */
+/* eslint-disable promise/catch-or-return */
 /* eslint-disable import/prefer-default-export */
 import { v4 } from 'uuid';
 
@@ -13,6 +16,7 @@ import {
   getCoordinateWithNoCollision,
 } from 'renderer/App/helpers/d2';
 import { useBoard } from './useBoard';
+import { userDb } from '../db/userDb';
 
 export const useStoreHelpers = () => {
   const dispatch = useAppDispatch();
@@ -57,7 +61,26 @@ export const useStoreHelpers = () => {
     if (boardExist) {
       dispatch(setActiveBoard(params.id));
     } else {
-      makeAndAddBoard(params);
+      userDb.boards
+        .where(params)
+        .toArray()
+        .then((bds) => {
+          if (bds.length > 0) {
+            userDb.browsers
+              .where({ boardId: params.id })
+              .toArray()
+              .then((res) => {
+                const boardToAdd = {
+                  browsers: res,
+                  ...bds[0],
+                };
+                dispatch(addBoard(boardToAdd));
+                dispatch(setActiveBoard(params.id));
+              });
+          } else {
+            makeAndAddBoard(params);
+          }
+        });
     }
   };
 

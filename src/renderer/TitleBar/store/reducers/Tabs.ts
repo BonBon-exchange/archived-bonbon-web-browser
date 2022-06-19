@@ -40,10 +40,16 @@ export const tabsSlice = createSlice({
       const tabIndex = state.tabs.findIndex((t) => t.id === action.payload.id);
       state.tabs[tabIndex].label = action.payload.label;
     },
+    removeTab: (state, action: PayloadAction<string>) => {
+      const tabIndex = state.tabs.findIndex((t) => t.id === action.payload);
+      if (tabIndex > -1) state.tabs.splice(tabIndex, 1);
+      if (state.activeTab === action.payload && state.tabs.length > 0)
+        state.activeTab = state.tabs[0].id;
+    },
   },
 });
 
-export const { addTab, setActiveTab, setIsRenaming, renameTab } =
+export const { addTab, setActiveTab, setIsRenaming, renameTab, removeTab } =
   tabsSlice.actions;
 
 export default tabsSlice.reducer;

@@ -193,13 +193,19 @@ const createWindow = async () => {
     selectedView.webContents.send('show-library');
   });
 
+  ipcMain.on('tab-purge', (_event, args) => {
+    const view = views[args.tabId];
+    if (view) view.webContents.send('purge');
+    delete views[args.tabId];
+  });
+
   mainWindow.webContents.executeJavaScript(
     `localStorage.setItem("machineId", "${machineId}"); localStorage.setItem("appIsPackaged", "${app.isPackaged}");`,
     true
   );
 
   event('open_app');
-  mainWindow.webContents.closeDevTools();
+  // mainWindow.webContents.openDevTools({ mode: 'detach' });
 };
 
 /**
@@ -233,6 +239,31 @@ app.on('web-contents-created', (_event, contents) => {
   });
 
   contextMenu({
+    prepend: (defaultActions, params, browserWindow) => [
+      {
+        label: 'Close',
+        visible: params.y <= 30,
+        click: () => {
+          mainWindow.webContents.send('close-tab', {
+            x: params.x,
+            y: params.y,
+          });
+        },
+      },
+      {
+        label: 'Rename',
+        visible: params.y <= 30,
+        click: () => {
+          mainWindow.webContents.send('rename-tab', {
+            x: params.x,
+            y: params.y,
+          });
+        },
+      },
+      {
+        type: 'separator',
+      },
+    ],
     window: contents,
     showInspectElement: true,
     showSearchWithGoogle: false,

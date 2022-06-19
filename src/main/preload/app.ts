@@ -23,8 +23,8 @@ contextBridge.exposeInMainWorld('bonb', {
     loadBoard: (action: (event: IpcRendererEvent, ...args: any[]) => void) => {
       ipcRenderer.on('load-board', action);
     },
-    openBoard: (action: (event: IpcRendererEvent, ...args: any[]) => void) => {
-      ipcRenderer.on('open-board', action);
+    purge: (action: (event: IpcRendererEvent, ...args: any[]) => void) => {
+      ipcRenderer.on('purge', action);
     },
     showLibrary: (
       action: (event: IpcRendererEvent, ...args: any[]) => void
@@ -39,11 +39,11 @@ contextBridge.exposeInMainWorld('bonb', {
     loadBoard: () => {
       ipcRenderer.removeAllListeners('load-board');
     },
-    openBoard: () => {
-      ipcRenderer.removeAllListeners('open-board');
-    },
     showLibrary: () => {
       ipcRenderer.removeAllListeners('show-library');
+    },
+    purge: () => {
+      ipcRenderer.removeAllListeners('purge');
     },
   },
 });
