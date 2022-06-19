@@ -119,17 +119,17 @@ export const Browser: React.FC<BrowserProps> = ({
 
   const goBack = () => {
     webview?.goBack();
-    window.bonb.analytics.event('browser_go_back');
+    window.app.analytics.event('browser_go_back');
   };
 
   const goForward = () => {
     webview?.goForward();
-    window.bonb.analytics.event('browser_go_forward');
+    window.app.analytics.event('browser_go_forward');
   };
 
   const reload = () => {
     webview?.reload();
-    window.bonb.analytics.event('browser_reload');
+    window.app.analytics.event('browser_reload');
   };
 
   const goHome = () => {
@@ -154,7 +154,7 @@ export const Browser: React.FC<BrowserProps> = ({
   }, [id]);
 
   useEffect(() => {
-    window.bonb.analytics.event('browser_navigate');
+    window.app.analytics.event('browser_navigate');
     const encrypted = CryptoJS.AES.encrypt(
       url,
       localStorage.getItem('machineId') || 'bonb'

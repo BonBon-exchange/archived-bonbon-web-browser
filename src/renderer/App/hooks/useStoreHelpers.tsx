@@ -39,7 +39,7 @@ export const useStoreHelpers = () => {
       };
       dispatch(addBrowser(newBrowser));
       setTimeout(() => scrollToBrowser(document, browserId), 300);
-      window.bonb.analytics.event('add_browser');
+      window.app.analytics.event('add_browser');
     }
   };
 
@@ -65,7 +65,7 @@ export const useStoreHelpers = () => {
     };
 
     dispatch(addBoard(newBoard));
-    window.bonb.analytics.event('add_board');
+    window.app.analytics.event('add_board');
   };
 
   const loadBoard = (params: { id: string }) => {

@@ -216,7 +216,6 @@ const createWindow = async () => {
   );
 
   event('open_app');
-  // mainWindow.webContents.openDevTools({ mode: 'detach' });
 };
 
 /**
@@ -247,7 +246,7 @@ app.on('web-contents-created', (_event, contents) => {
   });
 
   contextMenu({
-    prepend: (defaultActions, params, browserWindow) => [
+    prepend: (_defaultActions, params, _browserWindow) => [
       {
         label: 'Close',
         visible: params.y <= 30,

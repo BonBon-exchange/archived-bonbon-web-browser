@@ -27,17 +27,17 @@ export function App() {
   }, [boardId]);
 
   useEffect(() => {
-    window.bonb.listener.loadBoard(loadBoardAction);
-    return () => window.bonb.off.loadBoard();
+    window.app.listener.loadBoard(loadBoardAction);
+    return () => window.app.off.loadBoard();
   }, [loadBoardAction]);
 
   useEffect(() => {
-    window.bonb.listener.purge(purgeAction);
-    return () => window.bonb.off.purge();
+    window.app.listener.purge(purgeAction);
+    return () => window.app.off.purge();
   }, [purgeAction]);
 
   useEffect(() => {
-    window.bonb.analytics.event('load_app');
+    window.app.analytics.event('load_app');
   }, []);
 
   return isLoadedBoard ? (

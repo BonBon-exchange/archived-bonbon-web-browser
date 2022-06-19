@@ -86,18 +86,18 @@ export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
   }, [board, boardId]);
 
   useEffect(() => {
-    window.bonb.listener.showLibrary(showLibraryAction);
-    return () => window.bonb.off.showLibrary();
+    window.app.listener.showLibrary(showLibraryAction);
+    return () => window.app.off.showLibrary();
   }, [showLibraryAction]);
 
   useEffect(() => {
-    window.bonb.listener.saveBoard(saveBoardAction);
-    return () => window.bonb.off.saveBoard();
+    window.app.listener.saveBoard(saveBoardAction);
+    return () => window.app.off.saveBoard();
   }, [saveBoardAction]);
 
   useEffect(() => {
-    window.bonb.listener.renameBoard(renameBoardAction);
-    return () => window.bonb.off.renameBoard();
+    window.app.listener.renameBoard(renameBoardAction);
+    return () => window.app.off.renameBoard();
   }, [renameBoardAction]);
 
   return (

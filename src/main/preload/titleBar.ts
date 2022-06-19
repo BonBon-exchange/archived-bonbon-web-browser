@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
-contextBridge.exposeInMainWorld('bonb', {
+contextBridge.exposeInMainWorld('titleBar', {
   analytics: {
     event: (eventName: string, params: Record<string, string>) => {
       ipcRenderer.send('analytics', { eventName, params });
@@ -21,7 +21,7 @@ contextBridge.exposeInMainWorld('bonb', {
     save: (tabId: string) => {
       ipcRenderer.send('save-tab', { tabId });
     },
-    rename: ({ tabId, label }: { id: string; label: string }) => {
+    rename: ({ tabId, label }: { tabId: string; label: string }) => {
       ipcRenderer.send('rename-tab', { tabId, label });
     },
   },

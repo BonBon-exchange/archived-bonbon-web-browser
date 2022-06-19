@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
-contextBridge.exposeInMainWorld('bonb', {
+contextBridge.exposeInMainWorld('app', {
   analytics: {
     event: (eventName: string, params: Record<string, string>) => {
       ipcRenderer.send('analytics', { eventName, params });

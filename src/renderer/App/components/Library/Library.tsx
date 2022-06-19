@@ -23,7 +23,7 @@ export const Library: React.FC<LibraryProps> = ({ closeLibrary }) => {
   const dispatch = useAppDispatch();
 
   const openBoard = (b: { id: string; label: string; isFullSize: boolean }) => {
-    window.bonb.board.open(b);
+    window.app.board.open(b);
   };
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export const Library: React.FC<LibraryProps> = ({ closeLibrary }) => {
   }, []);
 
   useEffect(() => {
-    window.bonb.analytics.event('open_library');
+    window.app.analytics.event('open_library');
   }, []);
 
   return (

@@ -14,7 +14,7 @@ export const LeftBar: React.FC = () => {
 
   const clickOnFavicon = (browserId: string) => {
     scrollToBrowser(document, browserId);
-    window.bonb.analytics.event('switch_browser');
+    window.app.analytics.event('switch_browser');
   };
 
   return (

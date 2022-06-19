@@ -16,7 +16,7 @@ import { ContextMenuProps } from './Types';
 import './style.css';
 
 const inspectElement = (x: number, y: number) => {
-  window.bonb.tools.inspectElement({ x, y });
+  window.app.tools.inspectElement({ x, y });
 };
 
 export const ContextMenu: React.FC<ContextMenuProps> = ({

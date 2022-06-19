@@ -39,8 +39,8 @@ export const TopBar: React.FC = () => {
       };
 
       dispatch(addTab(newTab));
-      window.bonb.tabs.select(id);
-      window.bonb.analytics.event('add_board');
+      window.titleBar.tabs.select(id);
+      window.titleBar.analytics.event('add_board');
     },
     [dispatch, tabs.length]
   );
@@ -49,15 +49,15 @@ export const TopBar: React.FC = () => {
     if (e.code === 'Enter' || e.code === 'NumpadEnter') {
       dispatch(setIsRenaming(null));
       dispatch(renameTab({ id, label: e.target?.value }));
-      window.bonb.tabs.rename({ tabId: id, label: e.target?.value });
+      window.titleBar.tabs.rename({ tabId: id, label: e.target?.value });
     }
   };
 
   const switchBoard = useCallback(
     (tabId: string) => {
       if (!isRenaming) {
-        window.bonb.tabs.select(tabId);
-        window.bonb.analytics.event('switch_board');
+        window.titleBar.tabs.select(tabId);
+        window.titleBar.analytics.event('switch_board');
       }
     },
     [isRenaming]
@@ -69,7 +69,7 @@ export const TopBar: React.FC = () => {
   );
 
   const showLibrary = () => {
-    window.bonb.screens.library();
+    window.titleBar.screens.library();
   };
 
   const openTabListener = useCallback(
@@ -89,7 +89,7 @@ export const TopBar: React.FC = () => {
       const tabId = el?.getAttribute('data-tabid');
       if (tabId) {
         dispatch(removeTab(tabId));
-        window.bonb.tabs.purge(tabId);
+        window.titleBar.tabs.purge(tabId);
       }
     },
     [dispatch]
@@ -111,7 +111,7 @@ export const TopBar: React.FC = () => {
       const el = document.elementFromPoint(args.x, args.y);
       const tabId = el?.getAttribute('data-tabid');
       if (tabId) {
-        window.bonb.tabs.save(tabId);
+        window.titleBar.tabs.save(tabId);
       }
     },
     []
@@ -130,7 +130,9 @@ export const TopBar: React.FC = () => {
         const colorScheme = e.matches ? 'dark-theme' : 'light-theme';
         setIsDarkMode(e.matches);
         window.document.querySelector('body').className = colorScheme;
-        window.bonb.analytics.event('toogle_darkmode', { theme: colorScheme });
+        window.titleBar.analytics.event('toogle_darkmode', {
+          theme: colorScheme,
+        });
       });
   }, []);
 
@@ -149,23 +151,23 @@ export const TopBar: React.FC = () => {
   }, [switchBoard, activeTab]);
 
   useEffect(() => {
-    window.bonb.listener.openTab(openTabListener);
-    return () => window.bonb.off.openTab();
+    window.titleBar.listener.openTab(openTabListener);
+    return () => window.titleBar.off.openTab();
   }, [openTabListener]);
 
   useEffect(() => {
-    window.bonb.listener.closeTab(closeTabListener);
-    return () => window.bonb.off.closeTab();
+    window.titleBar.listener.closeTab(closeTabListener);
+    return () => window.titleBar.off.closeTab();
   }, [closeTabListener]);
 
   useEffect(() => {
-    window.bonb.listener.renameTab(renameTabListener);
-    return () => window.bonb.off.renameTab();
+    window.titleBar.listener.renameTab(renameTabListener);
+    return () => window.titleBar.off.renameTab();
   }, [renameTabListener]);
 
   useEffect(() => {
-    window.bonb.listener.saveBoard(saveBoardListener);
-    return () => window.bonb.off.saveBoard();
+    window.titleBar.listener.saveBoard(saveBoardListener);
+    return () => window.titleBar.off.saveBoard();
   }, [saveBoardListener]);
 
   useEffect(() => {

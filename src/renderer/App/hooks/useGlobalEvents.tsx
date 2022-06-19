@@ -39,12 +39,12 @@ export const useGlobalEvents = () => {
   const matchMediaListener = (e) => {
     const colorScheme = e.matches ? 'dark-theme' : 'light-theme';
     window.document.querySelector('body').className = colorScheme;
-    window.bonb.analytics.event('toogle_darkmode', { theme: colorScheme });
+    window.app.analytics.event('toogle_darkmode', { theme: colorScheme });
   };
 
   useEffect(() => {
-    window.bonb.listener.newWindow(newWindowAction);
-    return () => window.bonb.off.newWindow();
+    window.app.listener.newWindow(newWindowAction);
+    return () => window.app.off.newWindow();
   }, [newWindowAction]);
 
   useEffect(() => {
