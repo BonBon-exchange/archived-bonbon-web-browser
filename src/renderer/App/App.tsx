@@ -19,11 +19,12 @@ export function App() {
     setIsLoadedBoard(true);
   }, []);
 
-  const purgeAction = useCallback((_e: any, _args) => {
+  const purgeAction = useCallback(() => {
     if (persisted.current?.persistor) {
       persisted.current?.persistor.purge();
+      localStorage.removeItem(`persist:${boardId}`);
     }
-  }, []);
+  }, [boardId]);
 
   useEffect(() => {
     window.bonb.listener.loadBoard(loadBoardAction);
