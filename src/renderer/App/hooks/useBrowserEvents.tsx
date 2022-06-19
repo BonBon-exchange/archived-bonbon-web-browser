@@ -14,7 +14,7 @@ import {
   updateBrowserFav,
   updateBrowserTitle,
   setActiveBrowser,
-} from 'renderer/App/store/reducers/Addaps';
+} from 'renderer/App/store/reducers/Board';
 import { bringBrowserToTheFront } from 'renderer/App/helpers/d2';
 import { useStoreHelpers } from './useStoreHelpers';
 

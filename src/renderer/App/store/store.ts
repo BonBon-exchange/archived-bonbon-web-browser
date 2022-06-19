@@ -11,11 +11,11 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import addapsReducer from './reducers/Addaps';
+import boardReducer from './reducers/Board';
 
 export const store = configureStore({
   reducer: {
-    addaps: addapsReducer,
+    board: boardReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
 });
@@ -29,10 +29,10 @@ export const getPersistedStoreAndPersistor = (id: string) => {
     version: 1,
     storage,
   };
-  const persistedAddaps = persistReducer(persistConfig, addapsReducer);
+  const persistedBoard = persistReducer(persistConfig, boardReducer);
   const persistedStore = configureStore({
     reducer: {
-      addaps: persistedAddaps,
+      board: persistedBoard,
     },
     devTools: process.env.NODE_ENV !== 'production',
     middleware: (getDefaultMiddleware) =>

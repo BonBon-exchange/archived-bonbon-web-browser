@@ -2,15 +2,12 @@
 /* eslint-disable promise/always-return */
 /* eslint-disable promise/catch-or-return */
 /* eslint-disable import/prefer-default-export */
+import { useCallback } from 'react';
 import { v4 } from 'uuid';
 
-import { useAppDispatch, useAppSelector } from 'renderer/App/store/hooks';
+import { useAppDispatch } from 'renderer/App/store/hooks';
 
-import {
-  addBrowser,
-  addBoard,
-  setActiveBoard,
-} from 'renderer/App/store/reducers/Addaps';
+import { addBrowser, setBoard } from 'renderer/App/store/reducers/Board';
 import {
   scrollToBrowser,
   getCoordinateWithNoCollision,
@@ -18,9 +15,8 @@ import {
 import { useBoard } from './useBoard';
 import { userDb } from '../db/userDb';
 
-export const useStoreHelpers = () => {
+export const useStoreHelpers = (helpersParams?: { boardId?: string }) => {
   const dispatch = useAppDispatch();
-  const { boards } = useAppSelector((state) => state.addaps);
   const board = useBoard();
 
   const makeAndAddBrowser = (params: { url?: string }): void => {
@@ -29,7 +25,7 @@ export const useStoreHelpers = () => {
       const { x, y } = getCoordinateWithNoCollision(document, board, 800, 600);
       const newBrowser = {
         id: browserId,
-        url: params.url || 'https://www.google.fr',
+        url: params.url || 'https://www.google.com',
         top: y,
         left: x,
         height: 800,
@@ -43,36 +39,38 @@ export const useStoreHelpers = () => {
     }
   };
 
-  const makeAndAddBoard = (params: { id?: string }) => {
-    const browserId = v4();
-    const newBrowser = {
-      id: browserId,
-      url: 'https://www.google.com',
-      top: 120,
-      left: 120,
-      height: 800,
-      width: 600,
-      firstRendering: true,
-      favicon: '',
-      title: '',
-    };
-    const id = params.id || v4();
-    const newBoard = {
-      id,
-      label: `Board ${boards.length + 1}`,
-      browsers: [newBrowser],
-      isFullSize: false,
-    };
+  const createBoard = useCallback(
+    (params: { id?: string }) => {
+      const browserId = v4();
+      const newBrowser = {
+        id: browserId,
+        url: 'https://www.google.com',
+        top: 120,
+        left: 120,
+        height: 800,
+        width: 600,
+        firstRendering: true,
+        favicon: '',
+        title: '',
+      };
+      const id = params.id || v4();
+      const newBoard = {
+        id,
+        label: `New board`,
+        browsers: [newBrowser],
+        isFullSize: false,
+      };
 
-    dispatch(addBoard(newBoard));
-    window.app.analytics.event('add_board');
-  };
+      dispatch(setBoard(newBoard));
+      window.app.analytics.event('add_board');
+    },
+    [dispatch]
+  );
 
-  const loadBoard = (params: { id: string }) => {
-    const boardExist = boards.find((b) => b.id === params.id);
-    if (boardExist) {
-      dispatch(setActiveBoard(params.id));
-    } else {
+  const loadBoard = useCallback(
+    (params: { id: string }) => {
+      window.app.analytics.event('load_board');
+      if (board.id === helpersParams?.boardId) return;
       userDb.boards
         .where(params)
         .toArray()
@@ -86,21 +84,22 @@ export const useStoreHelpers = () => {
                   browsers: res,
                   ...bds[0],
                 };
-                dispatch(addBoard(boardToAdd));
+                dispatch(setBoard(boardToAdd));
               });
           } else {
-            makeAndAddBoard(params);
+            createBoard(params);
           }
         });
-    }
-  };
+    },
+    [createBoard, dispatch, board.id, helpersParams?.boardId]
+  );
 
   return {
     browser: {
       add: makeAndAddBrowser,
     },
     board: {
-      add: makeAndAddBoard,
+      create: createBoard,
       load: loadBoard,
     },
   };

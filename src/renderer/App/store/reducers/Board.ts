@@ -44,7 +44,7 @@ const newBrowser = {
 const boardId = v4();
 const newBoard = {
   id: boardId,
-  label: 'Board 1',
+  label: 'New board',
   browsers: [newBrowser],
   activeBrowser: browserId,
   isFullSize: false,

@@ -14,7 +14,7 @@ import { Library } from 'renderer/App/components/Library';
 import { useStoreHelpers } from 'renderer/App/hooks/useStoreHelpers';
 import { useBoard } from 'renderer/App/hooks/useBoard';
 import { userDb } from 'renderer/App/db/userDb';
-import { renameBoard } from 'renderer/App/store/reducers/Addaps';
+import { renameBoard } from 'renderer/App/store/reducers/Board';
 import { useAppDispatch } from 'renderer/App/store/hooks';
 
 import { ContextMenuProps } from 'renderer/App/components/ContextMenu/Types';
@@ -26,7 +26,7 @@ import 'renderer/style/light.css';
 
 export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
   useGlobalEvents();
-  const { board } = useStoreHelpers();
+  const { board } = useStoreHelpers({ boardId });
   const dispatch = useAppDispatch();
   const boardState = useBoard();
   const [showContextMenu, setShowContextMenu] = useState<boolean>(false);
@@ -42,27 +42,24 @@ export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
     [showLibrary]
   );
 
-  const saveBoardAction = useCallback(
-    (_e: any, _args: any) => {
-      if (boardState) {
-        userDb.boards.put({
-          id: boardState.id,
-          label: boardState.label,
-          isFullSize: boardState.isFullSize,
-        });
-        boardState.browsers.forEach((browser) => {
-          userDb.browsers.put({ boardId: boardState.id, ...browser });
-        });
-      }
-    },
-    [boardState]
-  );
+  const saveBoardAction = useCallback(() => {
+    if (boardState) {
+      userDb.boards.put({
+        id: boardState.id,
+        label: boardState.label,
+        isFullSize: boardState.isFullSize,
+      });
+      boardState.browsers.forEach((browser) => {
+        userDb.browsers.put({ boardId: boardState.id, ...browser });
+      });
+    }
+  }, [boardState]);
 
   const renameBoardAction = useCallback(
     (_e: any, args: any) => {
-      dispatch(renameBoard({ boardId, label: args.label }));
+      dispatch(renameBoard(args.label));
     },
-    [boardId, dispatch]
+    [dispatch]
   );
 
   useEffect(() => {
@@ -83,7 +80,7 @@ export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
 
   useEffect(() => {
     if (boardId) board.load({ id: boardId });
-  }, [board, boardId]);
+  }, [boardId]);
 
   useEffect(() => {
     window.app.listener.showLibrary(showLibraryAction);

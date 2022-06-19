@@ -20,7 +20,7 @@ declare global {
         purge: (action: unknown) => void;
         showLibrary: (action: unknown) => void;
         saveBoard: (action: unknown) => void;
-        renameTab: (action: unknown) => void;
+        renameBoard: (action: unknown) => void;
       };
       off: {
         newWindow: () => void;
@@ -28,7 +28,7 @@ declare global {
         showLibrary: () => void;
         purge: () => void;
         saveBoard: () => void;
-        renameTab: () => void;
+        renameBoard: () => void;
       };
     };
     darkMode: {

@@ -16,7 +16,7 @@ import {
   updateBrowser,
   toggleBoardFullSize,
   setActiveBrowser,
-} from 'renderer/App/store/reducers/Addaps';
+} from 'renderer/App/store/reducers/Board';
 import { bringBrowserToTheFront } from 'renderer/App/helpers/d2';
 import { dataDb } from 'renderer/App/db/dataDb';
 import { useBoard } from 'renderer/App/hooks/useBoard';
@@ -105,7 +105,7 @@ export const Browser: React.FC<BrowserProps> = ({
   };
 
   const closeBrowser = () => {
-    dispatch(removeBrowser({ browserId: id }));
+    dispatch(removeBrowser(id));
   };
 
   const toggleFullsizeBrowser = () => {

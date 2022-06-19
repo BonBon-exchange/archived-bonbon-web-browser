@@ -4,14 +4,10 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/prefer-default-export */
 import { useEffect, useState } from 'react';
-// import { Rnd } from 'react-rnd';
 import CloseIcon from '@mui/icons-material/Close';
 
 import { userDb } from 'renderer/App/db/userDb';
-import { addBoard, setActiveBoard } from 'renderer/App/store/reducers/Addaps';
-import { useAppDispatch } from 'renderer/App/store/hooks';
 
-import { BoardType } from 'renderer/App/components/Board/Types';
 import { LibraryProps } from './Types';
 
 import './style.css';
@@ -20,7 +16,6 @@ export const Library: React.FC<LibraryProps> = ({ closeLibrary }) => {
   const [boardsState, setBoardsState] = useState<
     { id: string; label: string; isFullSize: boolean }[]
   >([]);
-  const dispatch = useAppDispatch();
 
   const openBoard = (b: { id: string; label: string; isFullSize: boolean }) => {
     window.app.board.open(b);

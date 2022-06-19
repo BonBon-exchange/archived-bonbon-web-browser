@@ -35,14 +35,14 @@ export const TopBar: React.FC = () => {
       const id = params.id || v4();
       const newTab = {
         id,
-        label: params.label || `Board ${tabs.length + 1}`,
+        label: params.label || `New board`,
       };
 
       dispatch(addTab(newTab));
       window.titleBar.tabs.select(id);
       window.titleBar.analytics.event('add_board');
     },
-    [dispatch, tabs.length]
+    [dispatch]
   );
 
   const tabOnKeyPress = (e: KeyboardEvent, id: string) => {
