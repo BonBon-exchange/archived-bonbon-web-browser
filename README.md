@@ -8,13 +8,13 @@ We don't collect any personal data or browsing history. We do send some events t
 
 Instead, the browsing history is locally stored and encrypted.
 
-### Try BonBon today
+## Try BonBon today
 
 Download BonBon for Windows: [BonBon 0.12.0 for Windows](https://github.com/danielfebrero/bonbon-web-browser/releases/download/0.12.0/BonBon.Setup.0.12.0.exe)
 
 Download BonBon for macOS: [BonBon 0.10.0 for macOS](https://github.com/danielfebrero/bonbon-web-browser/releases/download/v0.10.0/Bonb-0.10.0.dmg)
 
-### Features
+## Features
 
 Completed:
 
