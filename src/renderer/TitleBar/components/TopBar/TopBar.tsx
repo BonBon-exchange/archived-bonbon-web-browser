@@ -7,7 +7,7 @@ import { v4 } from 'uuid';
 import TextField from '@mui/material/TextField';
 import AddIcon from '@mui/icons-material/Add';
 import clsx from 'clsx';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import SettingsIcon from '@mui/icons-material/Settings';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
@@ -217,7 +217,7 @@ export const TopBar: React.FC = () => {
           <BookmarksIcon onClick={showLibrary} />
         </div>
         <div className="TopBar__menu-item">
-          <AccountCircleIcon />
+          <SettingsIcon />
         </div>
       </div>
     </div>
