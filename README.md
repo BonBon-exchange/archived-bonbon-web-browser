@@ -10,7 +10,7 @@ Built with Electron, React, TypeScript, Redux.
 
 Work in progress, it's just the beginning.
 
-Download BonBon for Windows: [BonBon 0.11.0 for Windows](https://github.com/danielfebrero/bonbon-web-browser/releases/download/0.11.0/Bonb.Setup.0.11.0.exe)
+Download BonBon for Windows: [BonBon 0.12.0 for Windows](https://github.com/danielfebrero/bonbon-web-browser/releases/download/0.12.0/BonBon.Setup.0.12.0.exe)
 
 Download BonBon for macOS: [BonBon 0.10.0 for macOS](https://github.com/danielfebrero/bonbon-web-browser/releases/download/v0.10.0/Bonb-0.10.0.dmg)
 
