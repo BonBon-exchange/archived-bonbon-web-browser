@@ -14,6 +14,10 @@ Download BonBon for Windows: [BonBon Browser 0.13.0 for Windows](https://github.
 
 Download BonBon for macOS: [BonBon Browser 0.10.0 for macOS](https://github.com/danielfebrero/bonbon-web-browser/releases/download/v0.10.0/Bonb-0.10.0.dmg)
 
+### Notes for Windows
+
+The application is not signed (there is no company yet behind it), and has been avaialble since June 10th, 2022. That's why Windows consider the app as dangerous.
+
 ## Features
 
 Completed:
@@ -47,6 +51,30 @@ In progress:
 - auto update
 
 - app signing
+
+## Run locally or make a release
+
+```bash
+git clone https://github.com/danielfebrero/bonbon-web-browser.git
+cd bonbon-web-browser
+npm install
+```
+
+To run it in dev mode:
+
+```
+npm start
+```
+
+To make a release:
+
+```
+npm run package
+```
+
+Then find the release in bonbon-web-browser/release/build
+
+## Screenshots
 
 ![Desktop](https://github.com/danielfebrero/bonbon-web-browser/blob/master/images/desktop3.PNG)
 
