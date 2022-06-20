@@ -46,6 +46,6 @@ In progress:
 
 - app signing
 
-![Desktop](https://github.com/danielfebrero/bonbon-web-browser/blob/master/images/desktop1.PNG)
+![Desktop](https://github.com/danielfebrero/bonbon-web-browser/blob/master/images/desktop3.PNG)
 
-![Desktop2](https://github.com/danielfebrero/bonbon-web-browser/blob/master/images/desktop2.PNG)
+![Desktop2](https://github.com/danielfebrero/bonbon-web-browser/blob/master/images/desktop4.PNG)
