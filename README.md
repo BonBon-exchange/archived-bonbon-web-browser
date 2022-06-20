@@ -18,6 +18,10 @@ Download BonBon for macOS: [BonBon Browser 0.10.0 for macOS](https://github.com/
 
 The application is not signed (there is no company yet behind it), and has been avaialble since June 10th, 2022. That's why Windows consider the app as dangerous.
 
+### Notes for Linux
+
+While it has not been tested on Linux, it should works. Please refer to how to run locally or to make a release further in this Readme.
+
 ## Features
 
 Completed:
