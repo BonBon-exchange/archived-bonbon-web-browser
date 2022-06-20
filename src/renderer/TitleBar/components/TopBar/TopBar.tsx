@@ -77,6 +77,10 @@ export const TopBar: React.FC = () => {
     window.titleBar.screens.library();
   };
 
+  const showSettings = () => {
+    window.titleBar.screens.settings();
+  };
+
   const openTabListener = useCallback(
     (_e: any, args: { id?: string; label?: string }) => {
       if (tabs?.find((t) => t.id === args?.id)) {
@@ -224,7 +228,7 @@ export const TopBar: React.FC = () => {
           <BookmarksIcon onClick={showLibrary} />
         </div>
         <div className="TopBar__menu-item">
-          <SettingsIcon />
+          <SettingsIcon onClick={showSettings} />
         </div>
       </div>
     </div>

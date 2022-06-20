@@ -19,6 +19,7 @@ declare global {
         loadBoard: (action: unknown) => void;
         purge: (action: unknown) => void;
         showLibrary: (action: unknown) => void;
+        showSettings: (action: unknown) => void;
         saveBoard: (action: unknown) => void;
         renameBoard: (action: unknown) => void;
         closeWebview: (action: unknown) => void;
@@ -28,6 +29,7 @@ declare global {
         newWindow: () => void;
         loadBoard: () => void;
         showLibrary: () => void;
+        showSettings: () => void;
         purge: () => void;
         saveBoard: () => void;
         renameBoard: () => void;

@@ -9,6 +9,7 @@ import { useGlobalEvents } from 'renderer/App/hooks/useGlobalEvents';
 import { Board } from 'renderer/App/components/Board';
 import { LeftBar } from 'renderer/App/components/LeftBar';
 import { Library } from 'renderer/App/components/Library';
+import { Settings } from 'renderer/App/components/Settings';
 import { Popup } from 'renderer/App/components/Popup';
 import { useStoreHelpers } from 'renderer/App/hooks/useStoreHelpers';
 import { useBoard } from 'renderer/App/hooks/useBoard';
@@ -33,6 +34,12 @@ export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
   const showLibraryAction = useCallback(() => {
     setPopupChildren(<Library />);
     setPopupTitle('Library');
+    setShowPopup(!showPopup);
+  }, [showPopup]);
+
+  const showSettingsAction = useCallback(() => {
+    setPopupChildren(<Settings />);
+    setPopupTitle('Settings');
     setShowPopup(!showPopup);
   }, [showPopup]);
 
@@ -65,6 +72,11 @@ export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
     window.app.listener.showLibrary(showLibraryAction);
     return () => window.app.off.showLibrary();
   }, [showLibraryAction]);
+
+  useEffect(() => {
+    window.app.listener.showSettings(showSettingsAction);
+    return () => window.app.off.showSettings();
+  }, [showSettingsAction]);
 
   useEffect(() => {
     window.app.listener.saveBoard(saveBoardAction);

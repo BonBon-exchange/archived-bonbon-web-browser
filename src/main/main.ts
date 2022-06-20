@@ -197,6 +197,10 @@ const createWindow = async () => {
     selectedView.webContents.send('show-library');
   });
 
+  ipcMain.on('show-settings', () => {
+    selectedView.webContents.send('show-settings');
+  });
+
   ipcMain.on('tab-purge', (_event, args) => {
     const view = views[args.tabId];
     if (view) view.webContents.send('purge');

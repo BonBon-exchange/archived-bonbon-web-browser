@@ -31,6 +31,11 @@ contextBridge.exposeInMainWorld('app', {
     ) => {
       ipcRenderer.on('show-library', action);
     },
+    showSettings: (
+      action: (event: IpcRendererEvent, ...args: any[]) => void
+    ) => {
+      ipcRenderer.on('show-settings', action);
+    },
     saveBoard: (action: (event: IpcRendererEvent, ...args: any[]) => void) => {
       ipcRenderer.on('save-board', action);
     },
@@ -59,6 +64,9 @@ contextBridge.exposeInMainWorld('app', {
     },
     showLibrary: () => {
       ipcRenderer.removeAllListeners('show-library');
+    },
+    showSettings: () => {
+      ipcRenderer.removeAllListeners('show-settings');
     },
     purge: () => {
       ipcRenderer.removeAllListeners('purge');

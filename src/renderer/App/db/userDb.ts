@@ -16,11 +16,17 @@ export class UserDB extends Dexie {
     number
   >;
 
+  settings!: Table<{
+    key: string;
+    val: unknown;
+  }>;
+
   constructor() {
     super('user');
-    this.version(2).stores({
+    this.version(4).stores({
       boards: 'id, label, isFullSize',
       browsers: 'id, boardId, url, width, height, top, left',
+      settings: 'key, val',
     });
     navigator.storage.persist();
   }

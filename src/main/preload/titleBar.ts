@@ -57,6 +57,9 @@ contextBridge.exposeInMainWorld('titleBar', {
     library: () => {
       ipcRenderer.send('show-library');
     },
+    settings: () => {
+      ipcRenderer.send('show-settings');
+    },
   },
 });
 

@@ -27,6 +27,7 @@ declare global {
       };
       screens: {
         library: () => void;
+        settings: () => void;
       };
     };
   }
