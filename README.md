@@ -28,6 +28,10 @@ In progress:
 
 - adblock
 
+- incognito mode
+
+- optionally separate sessions per tabs (per board), useful for being connected to different accounts (many reddit, many facebook...) at the same time
+
 - permission handler
 
 - insecure web handler
