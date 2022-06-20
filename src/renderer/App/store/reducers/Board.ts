@@ -61,7 +61,7 @@ export const boardSlice = createSlice({
     setBoard: (state, action: PayloadAction<BoardType>) => {
       state.board = action.payload;
     },
-    toggleBoardFullSize: (state, _action: PayloadAction) => {
+    toggleBoardFullSize: (state) => {
       state.board.isFullSize = !state.board.isFullSize;
     },
     setActiveBrowser: (state, action: PayloadAction<string>) => {
@@ -119,7 +119,7 @@ export const boardSlice = createSlice({
         state.board.browsers.splice(browserIndex, 1);
       }
     },
-    removeAllBrowsers: (state, _action: PayloadAction) => {
+    removeAllBrowsers: (state) => {
       state.board.browsers = [];
     },
   },

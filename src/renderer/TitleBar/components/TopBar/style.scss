@@ -6,6 +6,7 @@
   background-color: var(--color-background-tertiary);
   color: var(--color-text-primary);
   z-index: 1000;
+  -webkit-app-region: drag;
 }
 
 #TopBar__tabs-container {
@@ -26,6 +27,7 @@
     margin-left: 3px;
     margin-right: 3px;
     height: 20px;
+    -webkit-app-region: no-drag;
 
     input {
       color: black;
@@ -41,6 +43,7 @@
 #TopBar__menu-container {
   display: flex;
   padding-right: 150px;
+  -webkit-app-region: no-drag;
 }
 
 .TopBar__menu-item {
@@ -62,6 +65,7 @@
   justify-content: center;
   display: flex;
   align-items: center;
+  -webkit-app-region: no-drag;
 
   svg {
     color: var(--color-icon-primary);
