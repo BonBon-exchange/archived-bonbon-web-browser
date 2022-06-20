@@ -2,13 +2,14 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-use-before-define */
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import ReactTooltip from 'react-tooltip';
 
 import { useGlobalEvents } from 'renderer/App/hooks/useGlobalEvents';
 import { Board } from 'renderer/App/components/Board';
 import { LeftBar } from 'renderer/App/components/LeftBar';
 import { Library } from 'renderer/App/components/Library';
+import { Popup } from 'renderer/App/components/Popup';
 import { useStoreHelpers } from 'renderer/App/hooks/useStoreHelpers';
 import { useBoard } from 'renderer/App/hooks/useBoard';
 import { userDb } from 'renderer/App/db/userDb';
@@ -25,12 +26,15 @@ export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
   const { board } = useStoreHelpers({ boardId });
   const dispatch = useAppDispatch();
   const boardState = useBoard();
-  const [showLibrary, setShowLibrary] = useState<boolean>(false);
+  const [showPopup, setShowPopup] = useState<boolean>(false);
+  const [popupTitle, setPopupTitle] = useState<string>('');
+  const [popupChildren, setPopupChildren] = useState<JSX.Element>();
 
-  const showLibraryAction = useCallback(
-    () => setShowLibrary(!showLibrary),
-    [showLibrary]
-  );
+  const showLibraryAction = useCallback(() => {
+    setPopupChildren(<Library />);
+    setPopupTitle('Library');
+    setShowPopup(!showPopup);
+  }, [showPopup]);
 
   const saveBoardAction = useCallback(() => {
     if (boardState) {
@@ -76,8 +80,12 @@ export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
     <>
       <LeftBar />
       <Board />
-      {showLibrary && <Library closeLibrary={() => setShowLibrary(false)} />}
       <ReactTooltip />
+      {showPopup && (
+        <Popup title={popupTitle} closePopup={() => setShowPopup(false)}>
+          {popupChildren}
+        </Popup>
+      )}
     </>
   );
 };

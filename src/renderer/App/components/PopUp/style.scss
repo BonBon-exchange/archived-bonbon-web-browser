@@ -1,0 +1,30 @@
+#Popup__container {
+  z-index: 2000;
+  height: 300px;
+  width: 300px;
+  top: calc(50% - 150px) !important;
+  left: calc(50% - 150px) !important;
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid #d7d7d7;
+  display: flex;
+  padding: 20px;
+  position: fixed !important;
+}
+
+#Popup__close-icon {
+  position: absolute;
+  padding: 10px;
+  right: 0;
+  top: 0;
+
+  svg {
+    height: 16px;
+    width: 16px;
+  }
+}
+
+#Popup__title {
+  font-size: 18px;
+  font-weight: bold;
+}

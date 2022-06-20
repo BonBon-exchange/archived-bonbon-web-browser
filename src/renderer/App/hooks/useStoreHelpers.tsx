@@ -12,8 +12,8 @@ import {
   scrollToBrowser,
   getCoordinateWithNoCollision,
 } from 'renderer/App/helpers/d2';
+import { userDb } from 'renderer/App/db/userDb';
 import { useBoard } from './useBoard';
-import { userDb } from '../db/userDb';
 
 export const useStoreHelpers = (helpersParams?: { boardId?: string }) => {
   const dispatch = useAppDispatch();
@@ -35,7 +35,6 @@ export const useStoreHelpers = (helpersParams?: { boardId?: string }) => {
       };
       dispatch(addBrowser(newBrowser));
       setTimeout(() => scrollToBrowser(document, browserId), 300);
-      window.app.analytics.event('add_browser');
     }
   };
 

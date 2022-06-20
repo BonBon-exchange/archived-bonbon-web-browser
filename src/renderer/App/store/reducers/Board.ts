@@ -63,12 +63,14 @@ export const boardSlice = createSlice({
     },
     toggleBoardFullSize: (state) => {
       state.board.isFullSize = !state.board.isFullSize;
+      window.app.analytics.event(`toggle_fullsize_${!state.board.isFullSize}`);
     },
     setActiveBrowser: (state, action: PayloadAction<string>) => {
       state.board.activeBrowser = action.payload;
     },
     addBrowser: (state, action: PayloadAction<BrowserProps>) => {
       state.board.browsers.push(action.payload);
+      window.app.analytics.event('add_browser');
     },
     updateBrowser: (state, action: PayloadAction<UpdateBrowserType>) => {
       const browserIndex = state.board.browsers.findIndex(
@@ -110,6 +112,7 @@ export const boardSlice = createSlice({
     },
     renameBoard: (state, action: PayloadAction<string>) => {
       state.board.label = action.payload;
+      window.app.analytics.event('rename_board');
     },
     removeBrowser: (state, action: PayloadAction<string>) => {
       const browserIndex = state.board.browsers.findIndex(
@@ -118,9 +121,11 @@ export const boardSlice = createSlice({
       if (browserIndex > -1) {
         state.board.browsers.splice(browserIndex, 1);
       }
+      window.app.analytics.event('close_browser');
     },
     removeAllBrowsers: (state) => {
       state.board.browsers = [];
+      window.app.analytics.event('close_all_browser');
     },
   },
 });

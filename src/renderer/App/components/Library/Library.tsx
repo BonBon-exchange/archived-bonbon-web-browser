@@ -4,16 +4,13 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/prefer-default-export */
 import { useEffect, useState } from 'react';
-import CloseIcon from '@mui/icons-material/Close';
 
 import { userDb } from 'renderer/App/db/userDb';
-
-import { LibraryProps } from './Types';
 
 import './style.css';
 
 // eslint-disable-next-line react/prop-types
-export const Library: React.FC<LibraryProps> = ({ closeLibrary }) => {
+export const Library: React.FC = () => {
   const [boardsState, setBoardsState] = useState<
     { id: string; label: string; isFullSize: boolean }[]
   >([]);
@@ -36,23 +33,16 @@ export const Library: React.FC<LibraryProps> = ({ closeLibrary }) => {
   }, []);
 
   return (
-    <div id="Library__container">
-      <div id="Library__close-icon" onClick={closeLibrary}>
-        <CloseIcon />
-      </div>
-
-      <div id="Library__title">Boards</div>
-      <div id="Library__items">
-        <ul>
-          {boardsState.map((b) => {
-            return (
-              <li key={b.id} onClick={() => openBoard(b)}>
-                {b.label}
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+    <div id="Library__items">
+      <ul>
+        {boardsState.map((b) => {
+          return (
+            <li key={b.id} onClick={() => openBoard(b)}>
+              {b.label}
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 };
