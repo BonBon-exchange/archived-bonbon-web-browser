@@ -80,7 +80,7 @@ Then find the release in bonbon-web-browser/release/build
 
 ## Screenshots
 
-![Desktop](https://media.giphy.com/media/gbSdr8VkxappmBCoJq/giphy.gif)
+![Desktop](https://s8.gifyu.com/images/BonBon---20-June-2022.gif)
 
 ![Desktop](https://github.com/danielfebrero/bonbon-web-browser/blob/master/images/desktop3.PNG)
 
