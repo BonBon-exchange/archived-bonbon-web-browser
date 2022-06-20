@@ -1,7 +1,12 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/prefer-default-export */
-import React, { KeyboardEventHandler, useEffect, useState } from 'react';
+import React, {
+  FocusEventHandler,
+  KeyboardEventHandler,
+  useEffect,
+  useState,
+} from 'react';
 import TextField from '@mui/material/TextField';
 import CachedIcon from '@mui/icons-material/Cached';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -10,6 +15,7 @@ import HomeIcon from '@mui/icons-material/Home';
 
 import { updateBrowserUrl } from 'renderer/App/store/reducers/Board';
 import { useAppDispatch } from 'renderer/App/store/hooks';
+import { isValidHttpUrl, makeSearchUrl } from 'renderer/App/helpers/web';
 import { BrowserControlBarProps } from './Types';
 
 import './style.css';
@@ -24,22 +30,33 @@ export const BrowserControlBar: React.FC<BrowserControlBarProps> = ({
 }) => {
   const [urlInputValue, setUrlInputValue] = useState<string>(url);
   const dispatch = useAppDispatch();
+  const container = document.querySelector(`#Browser__${browserId}`);
 
   const urlInputOnKeyPress: KeyboardEventHandler = (e) => {
     if (e.code === 'Enter' || e.code === 'NumpadEnter') {
       const target = e.target as HTMLInputElement;
-      const webview = document
-        .querySelector(`#Browser__${browserId}`)
-        ?.querySelector('webview') as Electron.WebviewTag;
-      webview?.loadURL(target?.value);
+      const webview = container?.querySelector(
+        'webview'
+      ) as Electron.WebviewTag;
+
+      const newUrl = isValidHttpUrl(target?.value)
+        ? target?.value
+        : makeSearchUrl(target?.value);
+
+      webview?.loadURL(newUrl);
 
       dispatch(
         updateBrowserUrl({
-          url: target?.value,
+          url: newUrl,
           browserId,
         })
       );
     }
+  };
+
+  const onFocusInput: FocusEventHandler = (e) => {
+    const target = e.target as HTMLInputElement;
+    target.select();
   };
 
   useEffect(() => {
@@ -67,6 +84,7 @@ export const BrowserControlBar: React.FC<BrowserControlBarProps> = ({
         value={urlInputValue}
         className="BrowserControlBar_url-input"
         onKeyPress={urlInputOnKeyPress}
+        onFocus={onFocusInput}
         onChange={(e) => setUrlInputValue(e.target.value)}
       />
     </div>
