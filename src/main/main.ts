@@ -251,6 +251,26 @@ app.on('web-contents-created', (_event, contents) => {
 
   contextMenu({
     prepend: (_defaultActions, params, _browserWindow) => [
+      // App context menu below
+      {
+        label: 'Close',
+        visible: params.y > 30 && params.x < 50,
+        click: () => {
+          selectedView?.webContents.send('close-webview', {
+            x: params.x,
+            y: params.y,
+          });
+        },
+      },
+      {
+        label: 'Close all',
+        visible: params.y > 30 && params.x < 50,
+        click: () => {
+          selectedView?.webContents.send('close-all-webview');
+        },
+      },
+
+      // TitleBar context menu below
       {
         label: 'Close',
         visible: params.y <= 30,

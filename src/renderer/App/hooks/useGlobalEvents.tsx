@@ -4,9 +4,15 @@
 import { useCallback, useEffect } from 'react';
 
 import { useStoreHelpers } from 'renderer/App/hooks/useStoreHelpers';
+import {
+  removeBrowser,
+  removeAllBrowsers,
+} from 'renderer/App/store/reducers/Board';
+import { useAppDispatch } from 'renderer/App/store/hooks';
 
 export const useGlobalEvents = () => {
   const { browser } = useStoreHelpers();
+  const dispatch = useAppDispatch();
 
   const keyDownListener = useCallback(
     (e: { ctrlKey: boolean; key: string }) => {
@@ -37,6 +43,21 @@ export const useGlobalEvents = () => {
     [browser]
   );
 
+  const closeWebviewAction = useCallback(
+    (_e: any, args: { x: number; y: number }) => {
+      const el = document.elementFromPoint(args.x, args.y);
+      const browserId = el?.getAttribute('data-browserid');
+      if (browserId) {
+        dispatch(removeBrowser(browserId));
+      }
+    },
+    [dispatch]
+  );
+
+  const closeAllWebviewAction = useCallback(() => {
+    dispatch(removeAllBrowsers());
+  }, [dispatch]);
+
   const matchMediaListener = (e: { matches: boolean }) => {
     const colorScheme = e.matches ? 'dark-theme' : 'light-theme';
     //@ts-ignore
@@ -48,6 +69,16 @@ export const useGlobalEvents = () => {
     window.app.listener.newWindow(newWindowAction);
     return () => window.app.off.newWindow();
   }, [newWindowAction]);
+
+  useEffect(() => {
+    window.app.listener.closeWebview(closeWebviewAction);
+    return () => window.app.off.closeWebview();
+  }, [closeWebviewAction]);
+
+  useEffect(() => {
+    window.app.listener.closeAllWebview(closeAllWebviewAction);
+    return () => window.app.off.closeAllWebview();
+  }, [closeAllWebviewAction]);
 
   useEffect(() => {
     window.addEventListener('keydown', keyDownListener, false);

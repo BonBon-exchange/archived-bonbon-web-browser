@@ -6,10 +6,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import ReactTooltip from 'react-tooltip';
 
 import { useGlobalEvents } from 'renderer/App/hooks/useGlobalEvents';
-// import { TopBar } from 'renderer/components/TopBar';
 import { Board } from 'renderer/App/components/Board';
 import { LeftBar } from 'renderer/App/components/LeftBar';
-import { ContextMenu } from 'renderer/App/components/ContextMenu';
 import { Library } from 'renderer/App/components/Library';
 import { useStoreHelpers } from 'renderer/App/hooks/useStoreHelpers';
 import { useBoard } from 'renderer/App/hooks/useBoard';
@@ -17,7 +15,6 @@ import { userDb } from 'renderer/App/db/userDb';
 import { renameBoard } from 'renderer/App/store/reducers/Board';
 import { useAppDispatch } from 'renderer/App/store/hooks';
 
-import { ContextMenuProps } from 'renderer/App/components/ContextMenu/Types';
 import { BrowserProps } from 'renderer/App/components/Browser/Types';
 import { AddapsProps } from './Types';
 
@@ -28,13 +25,7 @@ export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
   const { board } = useStoreHelpers({ boardId });
   const dispatch = useAppDispatch();
   const boardState = useBoard();
-  const [showContextMenu, setShowContextMenu] = useState<boolean>(false);
   const [showLibrary, setShowLibrary] = useState<boolean>(false);
-  const [contextMenuProps, setContextMenuProps] = useState<ContextMenuProps>({
-    x: 0,
-    y: 0,
-    target: null,
-  });
 
   const showLibraryAction = useCallback(
     () => setShowLibrary(!showLibrary),
@@ -62,23 +53,6 @@ export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
   );
 
   useEffect(() => {
-    window.addEventListener('contextmenu', (e) => {
-      e.preventDefault();
-      const target = e.target as HTMLElement;
-      setContextMenuProps({
-        x: e.x,
-        y: e.y,
-        targetId: target?.id,
-        targetClass: target?.className,
-        target,
-      });
-      setShowContextMenu(true);
-    });
-
-    window.addEventListener('click', () => setShowContextMenu(false));
-  }, []);
-
-  useEffect(() => {
     if (boardId) board.load({ id: boardId });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [boardId]);
@@ -102,7 +76,6 @@ export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
     <>
       <LeftBar />
       <Board />
-      {showContextMenu && <ContextMenu {...contextMenuProps} />}
       {showLibrary && <Library closeLibrary={() => setShowLibrary(false)} />}
       <ReactTooltip />
     </>

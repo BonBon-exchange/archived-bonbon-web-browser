@@ -21,6 +21,8 @@ declare global {
         showLibrary: (action: unknown) => void;
         saveBoard: (action: unknown) => void;
         renameBoard: (action: unknown) => void;
+        closeWebview: (action: unknown) => void;
+        closeAllWebview: (action: unknown) => void;
       };
       off: {
         newWindow: () => void;
@@ -29,6 +31,8 @@ declare global {
         purge: () => void;
         saveBoard: () => void;
         renameBoard: () => void;
+        closeWebview: () => void;
+        closeAllWebview: () => void;
       };
     };
     darkMode: {

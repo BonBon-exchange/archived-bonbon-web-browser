@@ -39,6 +39,16 @@ contextBridge.exposeInMainWorld('app', {
     ) => {
       ipcRenderer.on('rename-board', action);
     },
+    closeWebview: (
+      action: (event: IpcRendererEvent, ...args: any[]) => void
+    ) => {
+      ipcRenderer.on('close-webview', action);
+    },
+    closeAllWebview: (
+      action: (event: IpcRendererEvent, ...args: any[]) => void
+    ) => {
+      ipcRenderer.on('close-all-webview', action);
+    },
   },
   off: {
     newWindow: () => {
@@ -58,6 +68,12 @@ contextBridge.exposeInMainWorld('app', {
     },
     renameBoard: () => {
       ipcRenderer.removeAllListeners('rename-board');
+    },
+    closeWebview: () => {
+      ipcRenderer.removeAllListeners('close-webview');
+    },
+    closeAllWebview: () => {
+      ipcRenderer.removeAllListeners('close-all-webview');
     },
   },
 });

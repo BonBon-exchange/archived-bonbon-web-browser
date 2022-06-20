@@ -32,6 +32,8 @@ In progress:
 
 - optionally separate sessions per tabs (per board), useful for being connected to different accounts (many reddit, many facebook...) at the same time
 
+- personalize your search engine and homepage
+
 - permission handler
 
 - insecure web handler
