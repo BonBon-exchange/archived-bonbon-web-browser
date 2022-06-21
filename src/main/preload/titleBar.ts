@@ -1,4 +1,7 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
+import { injectBrowserAction } from 'electron-chrome-extensions/dist/browser-action';
+
+injectBrowserAction();
 
 contextBridge.exposeInMainWorld('titleBar', {
   analytics: {

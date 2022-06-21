@@ -76,3 +76,8 @@
 #TopBar__addBoard svg:hover {
   height: 20px;
 }
+
+browser-action-list {
+  -webkit-app-region: no-drag;
+  margin-right: 20px;
+}

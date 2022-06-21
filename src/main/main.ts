@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable promise/no-nesting */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable promise/catch-or-return */
 /* eslint-disable promise/no-callback-in-promise */
@@ -24,6 +26,7 @@ import {
 } from 'electron';
 import { machineIdSync } from 'node-machine-id';
 import contextMenu from 'electron-context-menu';
+import { ElectronChromeExtensions } from 'electron-chrome-extensions';
 
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
@@ -57,7 +60,7 @@ if (isDebug) {
 const installExtensions = async () => {
   const installer = require('electron-devtools-installer');
   const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-  const extensions = ['REACT_DEVELOPER_TOOLS'];
+  const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
 
   return installer
     .default(
@@ -71,12 +74,14 @@ const machineId = machineIdSync();
 
 const views: Record<string, BrowserView> = {};
 let selectedView: BrowserView;
+let extensions: ElectronChromeExtensions;
 
 const createBrowserView = (sizes: number[] | undefined) => {
   const width = sizes && sizes[0] ? sizes[0] : 0;
   const height = sizes && sizes[1] ? sizes[1] : 0;
   const view = new BrowserView({
     webPreferences: {
+      partition: 'persist:user-partition',
       webviewTag: true,
       preload: app.isPackaged
         ? path.join(__dirname, 'appPreload.js')
@@ -114,6 +119,7 @@ const createWindow = async () => {
     titleBarOverlay: true,
     // frame: false,
     webPreferences: {
+      partition: 'persist:user-partition',
       webviewTag: false,
       preload: app.isPackaged
         ? path.join(__dirname, 'titleBarPreload.js')
@@ -246,9 +252,13 @@ app.on('web-contents-created', (_event, contents) => {
     webPreferences.nodeIntegration = false;
   });
 
-  contents.setWindowOpenHandler((details) => {
-    selectedView.webContents.send('new-window', { url: details.url });
-    return { action: 'deny' };
+  contents.on('did-attach-webview', (_daw, webContents) => {
+    if (mainWindow) extensions.addTab(webContents, mainWindow);
+
+    //   webContents.session.webRequest.onBeforeRequest((details, callback) => {
+    //     console.log(details);
+    //     callback({ cancel: false });
+    //   });
   });
 
   contextMenu({
@@ -318,7 +328,32 @@ app
   .whenReady()
   .then(() => {
     Nucleus.appStarted();
-    createWindow();
+    extensions = new ElectronChromeExtensions({
+      session: session.fromPartition('persist:user-partition'),
+    });
+    createWindow().then(() => {
+      session
+        .fromPartition('persist:user-partition')
+        .setPermissionRequestHandler((webContents, permission, callback) => {
+          const url = webContents.getURL();
+          console.log(url, permission);
+          url === 'http://localhost:1212/index.html'
+            ? callback(true)
+            : callback(false);
+        });
+
+      if (!app.isPackaged)
+        mainWindow?.webContents.openDevTools({ mode: 'detach' });
+    });
+
+    const extensionPath = app.isPackaged
+      ? path.join(__dirname, '../../../assets/extensions/ublockorigin')
+      : path.join(__dirname, '../../assets/extensions/ublockorigin');
+
+    session
+      .fromPartition('persist:user-partition')
+      .loadExtension(extensionPath);
+
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.
