@@ -2,9 +2,11 @@
   "description": "BonBon Web Browser",
   "keywords": [
     "browser",
-    "electron"
+    "electron",
+    "typescript",
+    "react"
   ],
-  "version": "0.13.0",
+  "version": "0.14.0",
   "homepage": "https://github.com/danielfebrero/bonbon-web-browser#readme",
   "bugs": {
     "url": "https://github.com/danielfebrero/bonbon-web-browser/issues"
