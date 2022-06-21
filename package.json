@@ -249,7 +249,8 @@
       "output": "release/build"
     },
     "extraResources": [
-      "./assets/**"
+      "./assets/**",
+      "./node_modules/electron-chrome-extensions/dist/**"
     ],
     "publish": {
       "provider": "github",

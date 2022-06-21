@@ -122,7 +122,6 @@ const createWindow = async () => {
     // frame: false,
     webPreferences: {
       partition: 'persist:user-partition',
-      webviewTag: false,
       preload: app.isPackaged
         ? path.join(__dirname, 'titleBarPreload.js')
         : path.join(__dirname, '../../.erb/dll/titleBar.preload.js'),
@@ -338,7 +337,22 @@ app
     Nucleus.appStarted();
     extensions = new ElectronChromeExtensions({
       session: session.fromPartition('persist:user-partition'),
+      modulePath: app.isPackaged
+        ? path.join(
+            __dirname,
+            '../../../node_modules/electron-chrome-extensions'
+          )
+        : undefined,
     });
+
+    // const extensionPreload = app.isPackaged
+    //   ? path.join(__dirname, './extensionsPreload.js')
+    //   : path.join(__dirname, '../../.erb/dll/extensions.preload.js');
+
+    // session
+    //   .fromPartition('persist:user-partition')
+    //   .setPreloads([extensionPreload]);
+
     createWindow().then(() => {
       session
         .fromPartition('persist:user-partition')
