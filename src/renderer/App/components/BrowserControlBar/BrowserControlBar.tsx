@@ -39,11 +39,24 @@ export const BrowserControlBar: React.FC<BrowserControlBarProps> = ({
         'webview'
       ) as Electron.WebviewTag;
 
-      const newUrl = isValidHttpUrl(target?.value)
-        ? target?.value
-        : makeSearchUrl(target?.value);
+      const re =
+        /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
 
-      webview?.loadURL(newUrl);
+      const addHttps =
+        !isValidHttpUrl(target?.value) &&
+        isValidHttpUrl(`https://${target?.value}`) &&
+        `https://${target?.value}`.match(re);
+
+      let newUrl;
+      if (addHttps) {
+        newUrl = `https://${target?.value}`;
+      } else {
+        newUrl = isValidHttpUrl(target?.value)
+          ? target?.value
+          : makeSearchUrl(target?.value);
+      }
+
+      webview?.loadURL(newUrl).catch(console.log);
 
       dispatch(
         updateBrowserUrl({

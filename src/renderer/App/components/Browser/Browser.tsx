@@ -135,7 +135,7 @@ export const Browser: React.FC<BrowserProps> = ({
   };
 
   const goHome = () => {
-    webview?.loadURL('https://www.google.fr');
+    webview?.loadURL('https://www.google.fr').catch(console.log);
     dispatch(
       updateBrowserUrl({
         url: 'https://www.google.fr',
