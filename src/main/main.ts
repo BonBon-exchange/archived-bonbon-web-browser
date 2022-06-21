@@ -156,12 +156,6 @@ const createWindow = async () => {
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
 
-  // Open urls in the user's browser
-  mainWindow.webContents.setWindowOpenHandler((edata) => {
-    shell.openExternal(edata.url);
-    return { action: 'deny' };
-  });
-
   makeEvents();
 
   ipcMain.on('tab-select', (_event, args) => {
@@ -239,6 +233,11 @@ app.on('window-all-closed', () => {
 });
 
 app.on('web-contents-created', (_event, contents) => {
+  contents.on('new-window', (e, url) => {
+    e.preventDefault();
+    selectedView.webContents.send('new-window', { url });
+  });
+
   contents.on('will-attach-webview', (_wawevent, webPreferences, _params) => {
     const pathToPreloadScipt = app.isPackaged
       ? path.join(__dirname, '../../../assets/webview-preload.js')
@@ -328,7 +327,7 @@ app
     });
 
     session
-      .fromPartition('user-partition')
+      .fromPartition('persist:user-partition')
       .setPermissionRequestHandler((webContents, permission, callback) => {
         const url = webContents.getURL();
         console.log(url, permission);
