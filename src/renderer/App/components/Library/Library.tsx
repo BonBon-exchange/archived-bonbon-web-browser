@@ -9,7 +9,6 @@ import { userDb } from 'renderer/App/db/userDb';
 
 import './style.css';
 
-// eslint-disable-next-line react/prop-types
 export const Library: React.FC = () => {
   const [boardsState, setBoardsState] = useState<
     { id: string; label: string; isFullSize: boolean }[]
@@ -26,10 +25,6 @@ export const Library: React.FC = () => {
         setBoardsState(res);
       })
       .catch(console.log);
-  }, []);
-
-  useEffect(() => {
-    window.app.analytics.event('open_library');
   }, []);
 
   return (

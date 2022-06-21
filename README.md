@@ -4,7 +4,7 @@ Claim back your data ownership.
 
 Built with Electron, React, TypeScript, Redux. The browser is faster than it sounds, it's worth to try it.
 
-We don't collect any personal data or browsing history. We do send some events to GA in order to understand how users are using BonBon Browser. Those events do not contain any information regarding the user or his material.
+We don't collect any personal data or browsing history. We do send some events to Nucleus.sh in order to understand how users are using BonBon Browser. Those events are no more than "open_app", "add_browser", "switch_board"... and will be removed when I will be more confident that the UX is good.
 
 Instead, the browsing history is locally stored and encrypted.
 

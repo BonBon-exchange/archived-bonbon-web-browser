@@ -35,12 +35,14 @@ export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
     setPopupChildren(<Library />);
     setPopupTitle('Library');
     setShowPopup(!showPopup);
+    window.app.analytics.event('open_library');
   }, [showPopup]);
 
   const showSettingsAction = useCallback(() => {
     setPopupChildren(<Settings />);
     setPopupTitle('Settings');
     setShowPopup(!showPopup);
+    window.app.analytics.event('open_settings');
   }, [showPopup]);
 
   const saveBoardAction = useCallback(() => {
