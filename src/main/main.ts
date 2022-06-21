@@ -18,7 +18,6 @@ import {
   app,
   BrowserWindow,
   BrowserView,
-  shell,
   session,
   ipcMain,
   nativeTheme,
