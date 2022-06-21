@@ -62,7 +62,7 @@ export const useGlobalEvents = () => {
     const colorScheme = e.matches ? 'dark-theme' : 'light-theme';
     //@ts-ignore
     window.document.querySelector('body').className = colorScheme;
-    window.app.analytics.event('toogle_darkmode', { theme: colorScheme });
+    window.app.analytics.event('toggle_darkmode', { theme: colorScheme });
   };
 
   useEffect(() => {

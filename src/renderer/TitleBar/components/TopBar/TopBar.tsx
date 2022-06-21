@@ -141,9 +141,6 @@ export const TopBar: React.FC = () => {
         setIsDarkMode(e.matches);
         // @ts-ignore
         window.document.querySelector('body').className = colorScheme;
-        window.titleBar.analytics.event('toogle_darkmode', {
-          theme: colorScheme,
-        });
       });
   }, []);
 
