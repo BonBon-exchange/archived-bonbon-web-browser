@@ -16,6 +16,11 @@ contextBridge.exposeInMainWorld('app', {
       ipcRenderer.send('open-board', board);
     },
   },
+  browser: {
+    select: (webContentsId: string) => {
+      ipcRenderer.send('select-browser', webContentsId);
+    },
+  },
   listener: {
     newWindow: (action: (event: IpcRendererEvent, ...args: any[]) => void) => {
       ipcRenderer.on('new-window', action);

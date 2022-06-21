@@ -23,6 +23,7 @@ import {
   session,
   ipcMain,
   nativeTheme,
+  WebContents,
 } from 'electron';
 import { machineIdSync } from 'node-machine-id';
 import contextMenu from 'electron-context-menu';
@@ -75,6 +76,7 @@ const machineId = machineIdSync();
 const views: Record<string, BrowserView> = {};
 let selectedView: BrowserView;
 let extensions: ElectronChromeExtensions;
+const browsers: Record<string, WebContents> = {};
 
 const createBrowserView = (sizes: number[] | undefined) => {
   const width = sizes && sizes[0] ? sizes[0] : 0;
@@ -216,6 +218,11 @@ const createWindow = async () => {
     if (view) view.webContents.send('rename-board', { label: args.label });
   });
 
+  ipcMain.on('select-browser', (_event, webContentsId) => {
+    console.log('select browser', webContentsId);
+    if (browsers[webContentsId]) extensions.selectTab(browsers[webContentsId]);
+  });
+
   mainWindow.webContents.executeJavaScript(
     `localStorage.setItem("machineId", "${machineId}"); localStorage.setItem("appIsPackaged", "${app.isPackaged}");`,
     true
@@ -253,12 +260,13 @@ app.on('web-contents-created', (_event, contents) => {
   });
 
   contents.on('did-attach-webview', (_daw, webContents) => {
+    browsers[webContents.id] = webContents;
+    webContents.addListener('did-start-loading', () => {
+      webContents.send('created-webcontents', {
+        webContentsId: webContents.id,
+      });
+    });
     if (mainWindow) extensions.addTab(webContents, mainWindow);
-
-    //   webContents.session.webRequest.onBeforeRequest((details, callback) => {
-    //     console.log(details);
-    //     callback({ cancel: false });
-    //   });
   });
 
   contextMenu({

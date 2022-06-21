@@ -6,6 +6,10 @@ const keyDownListener = (e) => {
   }
 };
 
+ipcRenderer.on('created-webcontents', (e, args) => {
+  ipcRenderer.sendToHost('created-webcontents', args);
+});
+
 document.addEventListener(
   'DOMContentLoaded',
   () => {
