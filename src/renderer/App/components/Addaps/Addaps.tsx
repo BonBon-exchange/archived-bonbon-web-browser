@@ -55,6 +55,7 @@ export const Addaps: React.FC<AddapsProps> = ({ boardId }) => {
       boardState.browsers.forEach((browser: BrowserProps) => {
         userDb.browsers.put({ boardId: boardState.id, ...browser });
       });
+      window.app.analytics.event('save_board');
     }
   }, [boardState]);
 
