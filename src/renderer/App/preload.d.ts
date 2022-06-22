@@ -14,6 +14,9 @@ declare global {
           isFullSize: boolean;
         }) => void;
       };
+      browser: {
+        select: (webContentsId: string) => void;
+      };
       listener: {
         newWindow: (action: unknown) => void;
         loadBoard: (action: unknown) => void;

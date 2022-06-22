@@ -14,6 +14,7 @@ import {
   updateBrowserFav,
   updateBrowserTitle,
   setActiveBrowser,
+  updateBrowser,
 } from 'renderer/App/store/reducers/Board';
 import { bringBrowserToTheFront } from 'renderer/App/helpers/d2';
 import { useStoreHelpers } from './useStoreHelpers';
@@ -28,7 +29,7 @@ export const useBrowserEvents = (browserId: string) => {
   const { browser } = useStoreHelpers();
 
   const ipcMessageListener = useCallback(
-    (e: Event, _args: unknown[]) => {
+    (e: Event) => {
       const event = e as IpcMessageEvent;
       if (event.channel === 'clickOnPage') {
         bringBrowserToTheFront(document, container);
@@ -36,6 +37,14 @@ export const useBrowserEvents = (browserId: string) => {
       }
       if (event.channel === 'ctrl+t') {
         browser.add({});
+      }
+      if (event.channel === 'created-webcontents') {
+        dispatch(
+          updateBrowser({
+            browserId,
+            params: { webContentsId: e.args[0].webContentsId },
+          })
+        );
       }
     },
     [browserId, container, dispatch, browser]
@@ -78,8 +87,9 @@ export const useBrowserEvents = (browserId: string) => {
   );
 
   const containerClickListener = useCallback(() => {
+    bringBrowserToTheFront(document, container);
     dispatch(setActiveBrowser(browserId));
-  }, [browserId, dispatch]);
+  }, [browserId, dispatch, container]);
 
   useEffect(() => {
     webview?.addEventListener('load-commit', loadCommitListener);

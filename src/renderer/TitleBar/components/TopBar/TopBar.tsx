@@ -213,6 +213,7 @@ export const TopBar: React.FC = () => {
           <AddIcon />
         </div>
       </div>
+      <browser-action-list></browser-action-list>
       <div id="TopBar__menu-container">
         <div className="TopBar__menu-item">
           {isDarkMode ? (

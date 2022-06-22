@@ -32,9 +32,11 @@ Completed:
 
 - darkmode
 
-In progress:
+- chrome extension support (partial, for advanced users)
 
-- adblock
+- uBlockOrigin by default (working, but incomplete)
+
+In progress:
 
 - incognito mode
 
@@ -50,7 +52,9 @@ In progress:
 
 - whatsapp, messenger and telegram integration
 
-- chrome extensions minimal compatibility
+- install extensions from Chrome store
+
+- support extensions actions (new tab, window, popup...)
 
 - auto update
 

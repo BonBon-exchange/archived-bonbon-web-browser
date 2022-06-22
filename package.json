@@ -109,6 +109,7 @@
     "clsx": "^1.1.1",
     "crypto-js": "^4.1.1",
     "dexie": "^3.2.2",
+    "electron-chrome-extensions": "^3.9.0",
     "electron-context-menu": "^3.2.0",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.7",
@@ -248,7 +249,8 @@
       "output": "release/build"
     },
     "extraResources": [
-      "./assets/**"
+      "./assets/**",
+      "./node_modules/electron-chrome-extensions/dist/**"
     ],
     "publish": {
       "provider": "github",

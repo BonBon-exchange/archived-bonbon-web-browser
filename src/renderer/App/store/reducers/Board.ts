@@ -67,6 +67,10 @@ export const boardSlice = createSlice({
     },
     setActiveBrowser: (state, action: PayloadAction<string>) => {
       state.board.activeBrowser = action.payload;
+      const wcId = state.board.browsers.find(
+        (b) => b.id === action.payload
+      )?.webContentsId;
+      if (wcId) window.app.browser.select(wcId);
     },
     addBrowser: (state, action: PayloadAction<BrowserProps>) => {
       state.board.browsers.push(action.payload);

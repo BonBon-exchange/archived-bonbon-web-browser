@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable promise/no-nesting */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable promise/catch-or-return */
 /* eslint-disable promise/no-callback-in-promise */
@@ -21,9 +23,11 @@ import {
   session,
   ipcMain,
   nativeTheme,
+  WebContents,
 } from 'electron';
 import { machineIdSync } from 'node-machine-id';
 import contextMenu from 'electron-context-menu';
+import { ElectronChromeExtensions } from 'electron-chrome-extensions';
 
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
@@ -57,7 +61,7 @@ if (isDebug) {
 const installExtensions = async () => {
   const installer = require('electron-devtools-installer');
   const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-  const extensions = ['REACT_DEVELOPER_TOOLS'];
+  const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
 
   return installer
     .default(
@@ -71,12 +75,15 @@ const machineId = machineIdSync();
 
 const views: Record<string, BrowserView> = {};
 let selectedView: BrowserView;
+let extensions: ElectronChromeExtensions;
+const browsers: Record<string, WebContents> = {};
 
 const createBrowserView = (sizes: number[] | undefined) => {
   const width = sizes && sizes[0] ? sizes[0] : 0;
   const height = sizes && sizes[1] ? sizes[1] : 0;
   const view = new BrowserView({
     webPreferences: {
+      partition: 'persist:user-partition',
       webviewTag: true,
       preload: app.isPackaged
         ? path.join(__dirname, 'appPreload.js')
@@ -114,7 +121,7 @@ const createWindow = async () => {
     titleBarOverlay: true,
     // frame: false,
     webPreferences: {
-      webviewTag: false,
+      partition: 'persist:user-partition',
       preload: app.isPackaged
         ? path.join(__dirname, 'titleBarPreload.js')
         : path.join(__dirname, '../../.erb/dll/titleBar.preload.js'),
@@ -210,6 +217,10 @@ const createWindow = async () => {
     if (view) view.webContents.send('rename-board', { label: args.label });
   });
 
+  ipcMain.on('select-browser', (_event, webContentsId) => {
+    if (browsers[webContentsId]) extensions.selectTab(browsers[webContentsId]);
+  });
+
   mainWindow.webContents.executeJavaScript(
     `localStorage.setItem("machineId", "${machineId}"); localStorage.setItem("appIsPackaged", "${app.isPackaged}");`,
     true
@@ -246,9 +257,14 @@ app.on('web-contents-created', (_event, contents) => {
     webPreferences.nodeIntegration = false;
   });
 
-  contents.setWindowOpenHandler((details) => {
-    selectedView.webContents.send('new-window', { url: details.url });
-    return { action: 'deny' };
+  contents.on('did-attach-webview', (_daw, webContents) => {
+    browsers[webContents.id] = webContents;
+    webContents.addListener('did-start-loading', () => {
+      webContents.send('created-webcontents', {
+        webContentsId: webContents.id,
+      });
+    });
+    if (mainWindow) extensions.addTab(webContents, mainWindow);
   });
 
   contextMenu({
@@ -318,7 +334,39 @@ app
   .whenReady()
   .then(() => {
     Nucleus.appStarted();
-    createWindow();
+    extensions = new ElectronChromeExtensions({
+      session: session.fromPartition('persist:user-partition'),
+      modulePath: app.isPackaged
+        ? path.join(
+            __dirname,
+            '../../../node_modules/electron-chrome-extensions'
+          )
+        : undefined,
+    });
+
+    createWindow().then(() => {
+      session
+        .fromPartition('persist:user-partition')
+        .setPermissionRequestHandler((webContents, permission, callback) => {
+          const url = webContents.getURL();
+          console.log(url, permission);
+          url === 'http://localhost:1212/index.html'
+            ? callback(true)
+            : callback(false);
+        });
+
+      if (!app.isPackaged)
+        mainWindow?.webContents.openDevTools({ mode: 'detach' });
+    });
+
+    const extensionPath = app.isPackaged
+      ? path.join(__dirname, '../../../assets/extensions/ublockorigin')
+      : path.join(__dirname, '../../assets/extensions/ublockorigin');
+
+    session
+      .fromPartition('persist:user-partition')
+      .loadExtension(extensionPath);
+
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.
