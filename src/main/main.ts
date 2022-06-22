@@ -78,7 +78,8 @@ let selectedView: BrowserView;
 let extensions: ElectronChromeExtensions;
 const browsers: Record<string, WebContents> = {};
 
-const createBrowserView = (sizes: number[] | undefined) => {
+const createBrowserView = () => {
+  const sizes = mainWindow?.getSize();
   const width = sizes && sizes[0] ? sizes[0] : 0;
   const height = sizes && sizes[1] ? sizes[1] : 0;
   const view = new BrowserView({
@@ -98,6 +99,7 @@ const createBrowserView = (sizes: number[] | undefined) => {
   view.webContents.loadURL(resolveHtmlPath('index.html'));
 
   if (!app.isPackaged) view.webContents.toggleDevTools();
+  if (mainWindow) extensions.addTab(view.webContents, mainWindow);
   return view;
 };
 
@@ -167,10 +169,9 @@ const createWindow = async () => {
   makeEvents();
 
   ipcMain.on('tab-select', (_event, args) => {
-    const sizes = mainWindow?.getSize();
     const viewToShow: BrowserView = views[args.tabId]
       ? views[args.tabId]
-      : createBrowserView(sizes);
+      : createBrowserView();
     views[args.tabId] = viewToShow;
     viewToShow.webContents.on('dom-ready', () =>
       viewToShow.webContents.send('load-board', { boardId: args.tabId })
@@ -182,10 +183,9 @@ const createWindow = async () => {
   ipcMain.on('open-board', (_event, args) => {
     mainWindow?.webContents.send('open-tab', args);
 
-    const sizes = mainWindow?.getSize();
     const viewToShow: BrowserView = views[args.boardId]
       ? views[args.boardId]
-      : createBrowserView(sizes);
+      : createBrowserView();
     views[args.boardId] = viewToShow;
     viewToShow.webContents.on('dom-ready', () => {
       viewToShow.webContents.send('load-board', { boardId: args.id });
@@ -355,20 +355,18 @@ app
           else reject(new Error('mainWindow is null'));
         });
       },
-      selectTab(tab, browserWindow) {
-        // Optionally implemented for chrome.tabs.update support
-        // console.log('select tab', tab, browserWindow);
-      },
       removeTab(tab, browserWindow) {
         // Optionally implemented for chrome.tabs.remove support
         // console.log('remove tab', tab, browserWindow);
       },
       createWindow(details) {
-        // Optionally implemented for chrome.windows.create support
-        // console.log('create window', details);
+        return new Promise((resolve, reject) => {
+          reject(new Error('createWindow es not implemented yet.'));
+        });
       },
       removeWindow(details) {
         // console.log('remove window', details);
+        return new Error('removeWindow is not implemented yet.');
       },
       assignTabDetails(details, tab) {
         // console.log('assign details', details, tab);
@@ -385,6 +383,11 @@ app
             ? callback(true)
             : callback(false);
         });
+
+      if (mainWindow) {
+        extensions.addTab(mainWindow.webContents, mainWindow);
+        extensions.selectTab(mainWindow.webContents);
+      }
 
       if (!app.isPackaged)
         mainWindow?.webContents.openDevTools({ mode: 'detach' });
