@@ -107,6 +107,7 @@ export const Browser: React.FC<BrowserProps> = ({
   };
 
   const closeBrowser = () => {
+    window.app.browser.selectBrowserView();
     dispatch(removeBrowser(id));
   };
 

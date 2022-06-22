@@ -20,6 +20,9 @@ contextBridge.exposeInMainWorld('app', {
     select: (webContentsId: string) => {
       ipcRenderer.send('select-browser', webContentsId);
     },
+    selectBrowserView: () => {
+      ipcRenderer.send('select-browserView');
+    },
   },
   listener: {
     newWindow: (action: (event: IpcRendererEvent, ...args: any[]) => void) => {

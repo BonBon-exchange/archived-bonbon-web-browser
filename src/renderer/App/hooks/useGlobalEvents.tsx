@@ -48,6 +48,7 @@ export const useGlobalEvents = () => {
       const el = document.elementFromPoint(args.x, args.y);
       const browserId = el?.getAttribute('data-browserid');
       if (browserId) {
+        window.app.browser.selectBrowserView();
         dispatch(removeBrowser(browserId));
       }
     },
@@ -55,6 +56,7 @@ export const useGlobalEvents = () => {
   );
 
   const closeAllWebviewAction = useCallback(() => {
+    window.app.browser.selectBrowserView();
     dispatch(removeAllBrowsers());
   }, [dispatch]);
 

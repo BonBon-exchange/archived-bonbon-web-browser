@@ -16,6 +16,7 @@ declare global {
       };
       browser: {
         select: (webContentsId: string) => void;
+        selectBrowserView: () => void;
       };
       listener: {
         newWindow: (action: unknown) => void;

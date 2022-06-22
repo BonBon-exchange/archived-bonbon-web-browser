@@ -223,6 +223,10 @@ const createWindow = async () => {
     if (browsers[webContentsId]) extensions.selectTab(browsers[webContentsId]);
   });
 
+  ipcMain.on('select-browserView', () => {
+    extensions.selectTab(selectedView.webContents);
+  });
+
   mainWindow.webContents.executeJavaScript(
     `localStorage.setItem("machineId", "${machineId}"); localStorage.setItem("appIsPackaged", "${app.isPackaged}");`,
     true
@@ -344,6 +348,31 @@ app
             '../../../node_modules/electron-chrome-extensions'
           )
         : undefined,
+      createTab(details) {
+        return new Promise((resolve, reject) => {
+          selectedView.webContents.send('new-window', { url: details.url });
+          if (mainWindow) resolve([selectedView.webContents, mainWindow]);
+          else reject(new Error('mainWindow is null'));
+        });
+      },
+      selectTab(tab, browserWindow) {
+        // Optionally implemented for chrome.tabs.update support
+        // console.log('select tab', tab, browserWindow);
+      },
+      removeTab(tab, browserWindow) {
+        // Optionally implemented for chrome.tabs.remove support
+        // console.log('remove tab', tab, browserWindow);
+      },
+      createWindow(details) {
+        // Optionally implemented for chrome.windows.create support
+        // console.log('create window', details);
+      },
+      removeWindow(details) {
+        // console.log('remove window', details);
+      },
+      assignTabDetails(details, tab) {
+        // console.log('assign details', details, tab);
+      },
     });
 
     createWindow().then(() => {
