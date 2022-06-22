@@ -84,7 +84,7 @@ export const injectBrowserAction = () => {
       try {
         browserAction.getState(partition);
       } catch (e) {
-        console.log('ipcOn dani', e, partition, window, window.browserAction);
+        console.log(e);
       }
     }
   });
