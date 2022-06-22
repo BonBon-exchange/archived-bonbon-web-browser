@@ -34,9 +34,9 @@ Completed:
 
 - darkmode
 
-- chrome extension support (partial, for advanced users)
+- chrome extension support (for advanced users)
 
-- uBlockOrigin by default (working, but incomplete)
+- uBlockOrigin by default
 
 In progress:
 
