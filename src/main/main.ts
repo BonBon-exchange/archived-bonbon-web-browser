@@ -218,7 +218,6 @@ const createWindow = async () => {
   });
 
   ipcMain.on('select-browser', (_event, webContentsId) => {
-    console.log('select browser', webContentsId);
     if (browsers[webContentsId]) extensions.selectTab(browsers[webContentsId]);
   });
 
@@ -344,14 +343,6 @@ app
           )
         : undefined,
     });
-
-    // const extensionPreload = app.isPackaged
-    //   ? path.join(__dirname, './extensionsPreload.js')
-    //   : path.join(__dirname, '../../.erb/dll/extensions.preload.js');
-
-    // session
-    //   .fromPartition('persist:user-partition')
-    //   .setPreloads([extensionPreload]);
 
     createWindow().then(() => {
       session
