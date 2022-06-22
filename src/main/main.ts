@@ -358,6 +358,7 @@ app
       removeTab(tab, browserWindow) {
         // Optionally implemented for chrome.tabs.remove support
         // console.log('remove tab', tab, browserWindow);
+        return new Error('removeTab is not implemented yet.');
       },
       createWindow(details) {
         return new Promise((resolve, reject) => {
@@ -370,6 +371,7 @@ app
       },
       assignTabDetails(details, tab) {
         // console.log('assign details', details, tab);
+        return new Error('assignTabDetails is not implemented yet.');
       },
     });
 
