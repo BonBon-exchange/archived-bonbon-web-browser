@@ -1,3 +1,5 @@
+[![Github All Releases](https://img.shields.io/github/downloads/danielfebrero/bonbon-web-browser/total.svg)]()
+
 # BonBon Web Browser
 
 Claim back your data ownership.
