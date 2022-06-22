@@ -34,8 +34,10 @@ import { resolveHtmlPath } from './util';
 import { makeEvents } from './ipcMainEvents';
 import { event } from './analytics';
 
+const machineId = machineIdSync();
+
 Nucleus.init('62aaf235a3310eb923a238e2');
-Nucleus.setUserId(machineIdSync());
+Nucleus.setUserId(machineId);
 Nucleus.setProps(
   {
     version: app.getVersion(),
@@ -71,8 +73,6 @@ const installExtensions = async () => {
     .catch(console.log);
 };
 
-const machineId = machineIdSync();
-
 const views: Record<string, BrowserView> = {};
 let selectedView: BrowserView;
 let extensions: ElectronChromeExtensions;
@@ -84,7 +84,9 @@ const createBrowserView = (sizes: number[] | undefined) => {
   const view = new BrowserView({
     webPreferences: {
       partition: 'persist:user-partition',
+      sandbox: true,
       webviewTag: true,
+      safeDialogs: true,
       preload: app.isPackaged
         ? path.join(__dirname, 'appPreload.js')
         : path.join(__dirname, '../../.erb/dll/app.preload.js'),
@@ -119,9 +121,9 @@ const createWindow = async () => {
     icon: getAssetPath('icon.png'),
     titleBarStyle: 'hidden',
     titleBarOverlay: true,
-    // frame: false,
     webPreferences: {
       partition: 'persist:user-partition',
+      sandbox: true,
       preload: app.isPackaged
         ? path.join(__dirname, 'titleBarPreload.js')
         : path.join(__dirname, '../../.erb/dll/titleBar.preload.js'),
