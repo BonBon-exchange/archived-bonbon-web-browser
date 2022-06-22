@@ -406,13 +406,5 @@ app
       // dock icon is clicked and there are no other windows open.
       if (mainWindow === null) createWindow();
     });
-
-    session
-      .fromPartition('persist:user-partition')
-      .setPermissionRequestHandler((webContents, permission, callback) => {
-        const url = webContents.getURL();
-        console.log(url, permission);
-        callback(false);
-      });
   })
   .catch(console.log);
