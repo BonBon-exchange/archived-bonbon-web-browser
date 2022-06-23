@@ -103,6 +103,7 @@ const createBrowserView = () => {
 
   if (!app.isPackaged) view.webContents.toggleDevTools();
   if (mainWindow) extensions.addTab(view.webContents, mainWindow);
+  view.webContents.focus();
   return view;
 };
 
@@ -166,6 +167,10 @@ const createWindow = async () => {
     mainWindow = null;
   });
 
+  mainWindow.on('focus', () => {
+    if (selectedView) selectedView.webContents.focus();
+  });
+
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
 
@@ -215,9 +220,12 @@ const createWindow = async () => {
     const view = views[args.tabId];
     if (view) view.webContents.send('purge');
     delete views[args.tabId];
-    if (Object.keys(views).length === 0) {
+    const viewsKeys = Object.keys(views);
+    if (viewsKeys.length === 0) {
       event('close_app');
       app.quit();
+    } else {
+      selectedView = views[viewsKeys[viewsKeys.length - 1]];
     }
   });
 
@@ -254,8 +262,8 @@ const createWindow = async () => {
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even
   // after all windows have been closed
-  event('close_app');
   if (process.platform !== 'darwin') {
+    event('close_app');
     app.quit();
   }
 });

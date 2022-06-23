@@ -1,12 +1,16 @@
 const { ipcRenderer } = require('electron');
 
 const keyDownListener = (e) => {
-  if (e.ctrlKey && e.key === 't') {
+  if (e.ctrlKey && !e.shiftKey && e.key === 't') {
     ipcRenderer.sendToHost('ctrl+t');
   }
 
-  if (e.ctrlKey && e.key === 'w') {
+  if (e.ctrlKey && !e.shiftKey && e.key === 'w') {
     ipcRenderer.sendToHost('ctrl+w');
+  }
+
+  if (e.ctrlKey && e.shiftKey && e.key === 'W') {
+    ipcRenderer.sendToHost('ctrl+shift+W');
   }
 };
 

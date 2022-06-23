@@ -17,13 +17,16 @@ export const useGlobalEvents = () => {
   const boardState = useBoard();
 
   const keyDownListener = useCallback(
-    (e: { ctrlKey: boolean; key: string }) => {
-      if (e.ctrlKey && e.key === 't') {
+    (e: { ctrlKey: boolean; shiftKey: boolean; key: string }) => {
+      if (e.ctrlKey && !e.shiftKey && e.key === 't') {
         browser.add({});
       }
-      if (e.ctrlKey && e.key === 'w') {
+      if (e.ctrlKey && !e.shiftKey && e.key === 'w') {
         if (boardState.activeBrowser) browser.close(boardState.activeBrowser);
         else board.close();
+      }
+      if (e.ctrlKey && e.shiftKey && e.key === 'W') {
+        board.close();
       }
     },
     [browser, boardState.activeBrowser, board]

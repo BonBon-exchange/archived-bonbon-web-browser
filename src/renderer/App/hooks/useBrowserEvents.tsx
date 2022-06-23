@@ -26,7 +26,7 @@ export const useBrowserEvents = (browserId: string) => {
   const webview = container?.querySelector('webview');
 
   const dispatch = useAppDispatch();
-  const { browser } = useStoreHelpers();
+  const { browser, board } = useStoreHelpers();
 
   const ipcMessageListener = useCallback(
     (e: Event & { args: any }) => {
@@ -41,6 +41,9 @@ export const useBrowserEvents = (browserId: string) => {
       if (event.channel === 'ctrl+w') {
         browser.close(browserId);
       }
+      if (event.channel === 'ctrl+shift+W') {
+        board.close();
+      }
       if (event.channel === 'created-webcontents') {
         dispatch(
           updateBrowser({
@@ -50,7 +53,7 @@ export const useBrowserEvents = (browserId: string) => {
         );
       }
     },
-    [browserId, container, dispatch, browser]
+    [browserId, container, dispatch, browser, board]
   );
 
   const loadCommitListener = useCallback(
