@@ -288,7 +288,7 @@ app.on('web-contents-created', (_event, contents) => {
 
   contents.on('did-attach-webview', (_daw, webContents) => {
     browsers[webContents.id] = webContents;
-    webContents.addListener('did-start-loading', () => {
+    webContents.addListener('dom-ready', () => {
       webContents.send('created-webcontents', {
         webContentsId: webContents.id,
       });
