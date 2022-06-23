@@ -396,21 +396,26 @@ app
         mainWindow?.webContents.openDevTools({ mode: 'detach' });
     });
 
-    const extensionsPath = app.isPackaged
+    const forcedExtensionsPath = app.isPackaged
       ? path.join(__dirname, '../../../assets/extensions')
       : path.join(__dirname, '../../assets/extensions');
 
-    const extensionsInDir = fs
-      .readdirSync(extensionsPath, { withFileTypes: true })
-      .filter((item: any) => item.isDirectory())
-      .map((item: any) => item.name);
+    const userExtensionsPath = path.join(app.getPath('userData'), 'extensions');
 
-    console.log(extensionsInDir);
+    const loadExtensions = (folderPath: string) => {
+      fs.readdirSync(folderPath, { withFileTypes: true })
+        .filter((item: any) => item.isDirectory())
+        .map((item: any) => item.name)
+        .forEach((dir) => {
+          const extPath = path.join(folderPath, dir);
+          session
+            .fromPartition('persist:user-partition')
+            .loadExtension(extPath);
+        });
+    };
 
-    extensionsInDir.forEach((dir) => {
-      const extPath = path.join(extensionsPath, dir);
-      session.fromPartition('persist:user-partition').loadExtension(extPath);
-    });
+    loadExtensions(forcedExtensionsPath);
+    loadExtensions(userExtensionsPath);
 
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
