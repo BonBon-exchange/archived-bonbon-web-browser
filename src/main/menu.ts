@@ -153,7 +153,6 @@ export default class MenuBuilder {
         submenu: [
           {
             label: '&Close',
-            accelerator: 'Ctrl+W',
             click: () => {
               this.mainWindow.close();
             },
@@ -165,7 +164,6 @@ export default class MenuBuilder {
         submenu: [
           {
             label: '&Reload',
-            accelerator: 'Ctrl+R',
             click: () => {
               this.mainWindow.webContents.reload();
             },

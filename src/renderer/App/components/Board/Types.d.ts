@@ -4,6 +4,6 @@ export interface BoardType {
   id: string;
   label: string;
   browsers: BrowserProps[];
-  activeBrowser?: string;
+  activeBrowser?: string | null;
   isFullSize: boolean;
 }

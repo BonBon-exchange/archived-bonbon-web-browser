@@ -13,6 +13,7 @@ declare global {
           label: string;
           isFullSize: boolean;
         }) => void;
+        close: () => void;
       };
       browser: {
         select: (webContentsId: string) => void;

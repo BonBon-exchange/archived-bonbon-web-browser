@@ -29,7 +29,7 @@ export const useBrowserEvents = (browserId: string) => {
   const { browser } = useStoreHelpers();
 
   const ipcMessageListener = useCallback(
-    (e: Event) => {
+    (e: Event & { args: any }) => {
       const event = e as IpcMessageEvent;
       if (event.channel === 'clickOnPage') {
         bringBrowserToTheFront(document, container);
@@ -37,6 +37,9 @@ export const useBrowserEvents = (browserId: string) => {
       }
       if (event.channel === 'ctrl+t') {
         browser.add({});
+      }
+      if (event.channel === 'ctrl+w') {
+        browser.close(browserId);
       }
       if (event.channel === 'created-webcontents') {
         dispatch(

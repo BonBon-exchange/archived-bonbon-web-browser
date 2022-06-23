@@ -104,6 +104,14 @@ export const TopBar: React.FC = () => {
     [dispatch]
   );
 
+  const closeActiveTabListener = useCallback(() => {
+    const tabId = activeTab;
+    if (tabId) {
+      dispatch(removeTab(tabId));
+      window.titleBar.tabs.purge(tabId);
+    }
+  }, [dispatch, activeTab]);
+
   const renameTabListener = useCallback(
     (_e: any, args: { x: number; y: number }) => {
       const el = document.elementFromPoint(args.x, args.y);
@@ -177,6 +185,11 @@ export const TopBar: React.FC = () => {
     window.titleBar.listener.saveBoard(saveBoardListener);
     return () => window.titleBar.off.saveBoard();
   }, [saveBoardListener]);
+
+  useEffect(() => {
+    window.titleBar.listener.closeActiveTab(closeActiveTabListener);
+    return () => window.titleBar.off.closeActiveTab();
+  }, [closeActiveTabListener]);
 
   useEffect(() => {
     if (tabs.length === 0) pushTab({});

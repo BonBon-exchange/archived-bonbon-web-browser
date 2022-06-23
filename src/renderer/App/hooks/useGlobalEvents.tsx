@@ -9,18 +9,24 @@ import {
   removeAllBrowsers,
 } from 'renderer/App/store/reducers/Board';
 import { useAppDispatch } from 'renderer/App/store/hooks';
+import { useBoard } from './useBoard';
 
 export const useGlobalEvents = () => {
-  const { browser } = useStoreHelpers();
+  const { browser, board } = useStoreHelpers();
   const dispatch = useAppDispatch();
+  const boardState = useBoard();
 
   const keyDownListener = useCallback(
     (e: { ctrlKey: boolean; key: string }) => {
       if (e.ctrlKey && e.key === 't') {
         browser.add({});
       }
+      if (e.ctrlKey && e.key === 'w') {
+        if (boardState.activeBrowser) browser.close(boardState.activeBrowser);
+        else board.close();
+      }
     },
-    [browser]
+    [browser, boardState.activeBrowser, board]
   );
 
   const scrollListener = () => {

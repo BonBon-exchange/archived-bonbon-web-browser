@@ -60,6 +60,19 @@ export const boardSlice = createSlice({
   reducers: {
     setBoard: (state, action: PayloadAction<BoardType>) => {
       state.board = action.payload;
+      const finded = state.board.browsers.find(
+        (b) => b.id === state.board.activeBrowser
+      );
+      if (!state.board.activeBrowser || !finded) {
+        if (state.board.browsers.length > 0) {
+          state.board.activeBrowser =
+            state.board.browsers[state.board.browsers.length - 1].id;
+        }
+      }
+      const wcId = state.board.browsers.find(
+        (b) => b.id === state.board.activeBrowser
+      )?.webContentsId;
+      if (wcId) window.app.browser.select(wcId);
     },
     toggleBoardFullSize: (state) => {
       state.board.isFullSize = !state.board.isFullSize;
@@ -67,6 +80,7 @@ export const boardSlice = createSlice({
     },
     setActiveBrowser: (state, action: PayloadAction<string>) => {
       state.board.activeBrowser = action.payload;
+
       const wcId = state.board.browsers.find(
         (b) => b.id === action.payload
       )?.webContentsId;
@@ -74,6 +88,7 @@ export const boardSlice = createSlice({
     },
     addBrowser: (state, action: PayloadAction<BrowserProps>) => {
       state.board.browsers.push(action.payload);
+      state.board.activeBrowser = action.payload.id;
       window.app.analytics.event('add_browser');
     },
     updateBrowser: (state, action: PayloadAction<UpdateBrowserType>) => {
@@ -122,9 +137,25 @@ export const boardSlice = createSlice({
       const browserIndex = state.board.browsers.findIndex(
         (b) => b.id === action.payload
       );
+      // remove browser from state
       if (browserIndex > -1) {
         state.board.browsers.splice(browserIndex, 1);
       }
+
+      // clean activeBrowser
+      if (state.board.browsers.length > 0) {
+        state.board.activeBrowser =
+          state.board.browsers[state.board.browsers.length - 1].id;
+        const wcId = state.board.browsers.find(
+          (b) => b.id === state.board.activeBrowser
+        )?.webContentsId;
+        if (wcId) window.app.browser.select(wcId);
+      } else {
+        state.board.activeBrowser = null;
+        window.app.browser.selectBrowserView();
+      }
+
+      // send event
       window.app.analytics.event('close_browser');
     },
     removeAllBrowsers: (state) => {

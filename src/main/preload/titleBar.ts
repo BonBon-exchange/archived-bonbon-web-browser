@@ -494,6 +494,11 @@ contextBridge.exposeInMainWorld('titleBar', {
     saveBoard: (action: (event: IpcRendererEvent, ...args: any[]) => void) => {
       ipcRenderer.on('save-board', action);
     },
+    closeActiveTab: (
+      action: (event: IpcRendererEvent, ...args: any[]) => void
+    ) => {
+      ipcRenderer.on('close-active-tab', action);
+    },
   },
   off: {
     openTab: () => {
@@ -507,6 +512,9 @@ contextBridge.exposeInMainWorld('titleBar', {
     },
     saveBoard: () => {
       ipcRenderer.removeAllListeners('save-board');
+    },
+    closeActiveTab: () => {
+      ipcRenderer.removeAllListeners('close-active-tab');
     },
   },
   screens: {

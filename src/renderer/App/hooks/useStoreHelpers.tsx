@@ -7,7 +7,11 @@ import { v4 } from 'uuid';
 
 import { useAppDispatch } from 'renderer/App/store/hooks';
 
-import { addBrowser, setBoard } from 'renderer/App/store/reducers/Board';
+import {
+  addBrowser,
+  setBoard,
+  removeBrowser,
+} from 'renderer/App/store/reducers/Board';
 import {
   scrollToBrowser,
   getCoordinateWithNoCollision,
@@ -93,13 +97,26 @@ export const useStoreHelpers = (helpersParams?: { boardId?: string }) => {
     [createBoard, dispatch, board.id, helpersParams?.boardId]
   );
 
+  const closeBrowser = useCallback(
+    (browserId: string) => {
+      dispatch(removeBrowser(browserId));
+    },
+    [dispatch]
+  );
+
+  const closeBoard = useCallback(() => {
+    window.app.board.close();
+  }, []);
+
   return {
     browser: {
       add: makeAndAddBrowser,
+      close: closeBrowser,
     },
     board: {
       create: createBoard,
       load: loadBoard,
+      close: closeBoard,
     },
   };
 };

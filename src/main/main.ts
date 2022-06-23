@@ -181,6 +181,7 @@ const createWindow = async () => {
     );
     mainWindow?.setBrowserView(viewToShow);
     selectedView = viewToShow;
+    selectedView.webContents.focus();
   });
 
   ipcMain.on('open-board', (_event, args) => {
@@ -192,10 +193,14 @@ const createWindow = async () => {
     views[args.boardId] = viewToShow;
     viewToShow.webContents.on('dom-ready', () => {
       viewToShow.webContents.send('load-board', { boardId: args.id });
-      viewToShow.webContents.send('open-board', args);
     });
     mainWindow?.setBrowserView(viewToShow);
     selectedView = viewToShow;
+    selectedView.webContents.focus();
+  });
+
+  ipcMain.on('close-active-board', () => {
+    mainWindow?.webContents.send('close-active-tab');
   });
 
   ipcMain.on('show-library', () => {
@@ -210,6 +215,10 @@ const createWindow = async () => {
     const view = views[args.tabId];
     if (view) view.webContents.send('purge');
     delete views[args.tabId];
+    if (Object.keys(views).length === 0) {
+      event('close_app');
+      app.quit();
+    }
   });
 
   ipcMain.on('save-tab', (_event, args) => {
