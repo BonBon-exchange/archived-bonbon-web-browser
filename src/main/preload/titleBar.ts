@@ -499,6 +499,11 @@ contextBridge.exposeInMainWorld('titleBar', {
     ) => {
       ipcRenderer.on('close-active-tab', action);
     },
+    selectNextBoard: (
+      action: (event: IpcRendererEvent, ...args: any[]) => void
+    ) => {
+      ipcRenderer.on('select-next-board', action);
+    },
   },
   off: {
     openTab: () => {
@@ -515,6 +520,9 @@ contextBridge.exposeInMainWorld('titleBar', {
     },
     closeActiveTab: () => {
       ipcRenderer.removeAllListeners('close-active-tab');
+    },
+    selectNextBoard: () => {
+      ipcRenderer.removeAllListeners('select-next-board');
     },
   },
   screens: {

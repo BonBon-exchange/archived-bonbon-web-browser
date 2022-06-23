@@ -18,6 +18,9 @@ contextBridge.exposeInMainWorld('app', {
     close: () => {
       ipcRenderer.send('close-active-board');
     },
+    selectNext: () => {
+      ipcRenderer.send('select-next-board');
+    },
   },
   browser: {
     select: (webContentsId: string) => {

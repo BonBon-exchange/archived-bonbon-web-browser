@@ -47,6 +47,10 @@ export const useBrowserEvents = (browserId: string) => {
           focus(document, next());
           break;
 
+        case 'ctrl+shift+Tab':
+          window.app.board.selectNext();
+          break;
+
         case 'ctrl+t':
           browser.add({});
           break;

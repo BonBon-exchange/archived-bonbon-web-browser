@@ -247,6 +247,10 @@ const createWindow = async () => {
     extensions.selectTab(selectedView.webContents);
   });
 
+  ipcMain.on('select-next-board', () => {
+    mainWindow?.webContents.send('select-next-board');
+  });
+
   mainWindow.webContents.executeJavaScript(
     `localStorage.setItem("machineId", "${machineId}"); localStorage.setItem("appIsPackaged", "${app.isPackaged}");`,
     true

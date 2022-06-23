@@ -14,6 +14,7 @@ declare global {
           isFullSize: boolean;
         }) => void;
         close: () => void;
+        selectNext: () => void;
       };
       browser: {
         select: (webContentsId: string) => void;

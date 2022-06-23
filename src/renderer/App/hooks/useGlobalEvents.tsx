@@ -25,6 +25,9 @@ export const useGlobalEvents = () => {
           focus(document, next());
         }
       }
+      if (e.ctrlKey && e.shiftKey && e.key === 'Tab') {
+        window.app.board.selectNext();
+      }
       if (e.ctrlKey && !e.shiftKey && e.key === 't') {
         browser.add({});
       }

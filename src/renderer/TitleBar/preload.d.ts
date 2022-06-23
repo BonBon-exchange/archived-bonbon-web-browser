@@ -13,6 +13,7 @@ declare global {
         renameTab: (action: unknown) => void;
         saveBoard: (action: unknown) => void;
         closeActiveTab: (action: unknown) => void;
+        selectNextBoard: (action: unknown) => void;
       };
       off: {
         openTab: () => void;
@@ -20,6 +21,7 @@ declare global {
         renameTab: () => void;
         saveBoard: () => void;
         closeActiveTab: () => void;
+        selectNextBoard: () => void;
       };
       tabs: {
         select: (tabId: string) => void;

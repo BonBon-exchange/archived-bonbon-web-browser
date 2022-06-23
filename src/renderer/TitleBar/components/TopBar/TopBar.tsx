@@ -134,6 +134,14 @@ export const TopBar: React.FC = () => {
     []
   );
 
+  const selectNextBoardListener = useCallback(() => {
+    const activeTabIndex = tabs.findIndex((t) => t.id === activeTab);
+    const nextTabIndex =
+      activeTabIndex === tabs.length - 1 ? 0 : activeTabIndex + 1;
+    const nextTabId = tabs[nextTabIndex].id;
+    dispatch(setActiveTab(nextTabId));
+  }, [activeTab, dispatch, tabs]);
+
   useEffect(() => {
     // @ts-ignore
     window.document.querySelector('body').className = window.matchMedia(
@@ -190,6 +198,11 @@ export const TopBar: React.FC = () => {
     window.titleBar.listener.closeActiveTab(closeActiveTabListener);
     return () => window.titleBar.off.closeActiveTab();
   }, [closeActiveTabListener]);
+
+  useEffect(() => {
+    window.titleBar.listener.selectNextBoard(selectNextBoardListener);
+    return () => window.titleBar.off.selectNextBoard();
+  }, [selectNextBoardListener]);
 
   useEffect(() => {
     if (tabs.length === 0) pushTab({});
