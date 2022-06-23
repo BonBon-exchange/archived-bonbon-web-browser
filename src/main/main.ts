@@ -274,13 +274,12 @@ app.on('web-contents-created', (_event, contents) => {
     selectedView.webContents.send('new-window', { url });
   });
 
-  contents.on('will-attach-webview', (_wawevent, webPreferences, _params) => {
+  contents.on('will-attach-webview', (wawevent, _webPreferences, _params) => {
     const pathToPreloadScipt = app.isPackaged
       ? path.join(__dirname, '../../../assets/webview-preload.js')
       : path.join(__dirname, '../../assets/webview-preload.js');
     // @ts-ignore
-    webPreferences.preloadURL = `file://${pathToPreloadScipt}`;
-    webPreferences.nodeIntegration = false;
+    wawevent.sender.session.setPreloads([`${pathToPreloadScipt}`]);
   });
 
   contents.on('did-attach-webview', (_daw, webContents) => {

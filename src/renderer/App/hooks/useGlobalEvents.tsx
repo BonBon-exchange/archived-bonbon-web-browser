@@ -21,6 +21,16 @@ export const useGlobalEvents = () => {
       if (e.ctrlKey && !e.shiftKey && e.key === 't') {
         browser.add({});
       }
+      if (e.ctrlKey && !e.shiftKey && e.key === 'r') {
+        if (boardState.activeBrowser) {
+          const container = document.querySelector(
+            `#Browser__${boardState.activeBrowser}`
+          );
+          const webview: Electron.WebviewTag | undefined | null =
+            container?.querySelector('webview');
+          if (webview) webview.reload();
+        }
+      }
       if (e.ctrlKey && !e.shiftKey && e.key === 'w') {
         if (boardState.activeBrowser) browser.close(boardState.activeBrowser);
         else board.close();

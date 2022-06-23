@@ -23,7 +23,8 @@ export const useBrowserEvents = (browserId: string) => {
   const container = document.querySelector(
     `#Browser__${browserId}`
   ) as HTMLElement;
-  const webview = container?.querySelector('webview');
+  const webview: Electron.WebviewTag | undefined | null =
+    container?.querySelector('webview') as Electron.WebviewTag;
 
   const dispatch = useAppDispatch();
   const { browser, board } = useStoreHelpers();
@@ -37,6 +38,11 @@ export const useBrowserEvents = (browserId: string) => {
       }
       if (event.channel === 'ctrl+t') {
         browser.add({});
+      }
+      if (event.channel === 'ctrl+r') {
+        if (webview) {
+          webview.reload();
+        }
       }
       if (event.channel === 'ctrl+w') {
         browser.close(browserId);
@@ -53,7 +59,7 @@ export const useBrowserEvents = (browserId: string) => {
         );
       }
     },
-    [browserId, container, dispatch, browser, board]
+    [browserId, container, dispatch, browser, board, webview]
   );
 
   const loadCommitListener = useCallback(

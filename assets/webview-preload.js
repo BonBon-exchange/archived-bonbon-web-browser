@@ -5,6 +5,10 @@ const keyDownListener = (e) => {
     ipcRenderer.sendToHost('ctrl+t');
   }
 
+  if (e.ctrlKey && !e.shiftKey && e.key === 'r') {
+    ipcRenderer.sendToHost('ctrl+r');
+  }
+
   if (e.ctrlKey && !e.shiftKey && e.key === 'w') {
     ipcRenderer.sendToHost('ctrl+w');
   }
