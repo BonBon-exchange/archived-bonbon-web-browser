@@ -10,14 +10,21 @@ import {
 } from 'renderer/App/store/reducers/Board';
 import { useAppDispatch } from 'renderer/App/store/hooks';
 import { useBoard } from './useBoard';
+import { useBrowserMethods } from './useBrowserMethods';
 
 export const useGlobalEvents = () => {
   const { browser, board } = useStoreHelpers();
   const dispatch = useAppDispatch();
   const boardState = useBoard();
+  const { focus, next } = useBrowserMethods();
 
   const keyDownListener = useCallback(
     (e: { ctrlKey: boolean; shiftKey: boolean; key: string }) => {
+      if (e.ctrlKey && !e.shiftKey && e.key === 'Tab') {
+        if (boardState.browsers.length > 0) {
+          focus(document, next());
+        }
+      }
       if (e.ctrlKey && !e.shiftKey && e.key === 't') {
         browser.add({});
       }
@@ -39,7 +46,7 @@ export const useGlobalEvents = () => {
         board.close();
       }
     },
-    [browser, boardState.activeBrowser, board]
+    [browser, boardState.activeBrowser, board, boardState.browsers, focus, next]
   );
 
   const scrollListener = () => {

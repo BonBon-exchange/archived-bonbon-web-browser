@@ -18,6 +18,7 @@ import {
 } from 'renderer/App/store/reducers/Board';
 import { bringBrowserToTheFront } from 'renderer/App/helpers/d2';
 import { useStoreHelpers } from './useStoreHelpers';
+import { useBrowserMethods } from './useBrowserMethods';
 
 export const useBrowserEvents = (browserId: string) => {
   const container = document.querySelector(
@@ -28,38 +29,53 @@ export const useBrowserEvents = (browserId: string) => {
 
   const dispatch = useAppDispatch();
   const { browser, board } = useStoreHelpers();
+  const { focus, next } = useBrowserMethods();
 
   const ipcMessageListener = useCallback(
     (e: Event & { args: any }) => {
       const event = e as IpcMessageEvent;
-      if (event.channel === 'clickOnPage') {
-        bringBrowserToTheFront(document, container);
-        dispatch(setActiveBrowser(browserId));
-      }
-      if (event.channel === 'ctrl+t') {
-        browser.add({});
-      }
-      if (event.channel === 'ctrl+r') {
-        if (webview) {
-          webview.reload();
-        }
-      }
-      if (event.channel === 'ctrl+w') {
-        browser.close(browserId);
-      }
-      if (event.channel === 'ctrl+shift+W') {
-        board.close();
-      }
-      if (event.channel === 'created-webcontents') {
-        dispatch(
-          updateBrowser({
-            browserId,
-            params: { webContentsId: e.args[0].webContentsId },
-          })
-        );
+      switch (event.channel) {
+        default:
+          break;
+
+        case 'clickOnPage':
+          bringBrowserToTheFront(document, container);
+          dispatch(setActiveBrowser(browserId));
+          break;
+
+        case 'ctrl+Tab':
+          focus(document, next());
+          break;
+
+        case 'ctrl+t':
+          browser.add({});
+          break;
+
+        case 'ctrl+r':
+          if (webview) {
+            webview.reload();
+          }
+          break;
+
+        case 'ctrl+w':
+          browser.close(browserId);
+          break;
+
+        case 'ctrl+shift+W':
+          board.close();
+          break;
+
+        case 'created-webcontents':
+          dispatch(
+            updateBrowser({
+              browserId,
+              params: { webContentsId: e.args[0].webContentsId },
+            })
+          );
+          break;
       }
     },
-    [browserId, container, dispatch, browser, board, webview]
+    [browserId, container, dispatch, browser, board, webview, focus, next]
   );
 
   const loadCommitListener = useCallback(
