@@ -12,7 +12,7 @@ Instead, the browsing history is locally stored and encrypted.
 
 ## Try BonBon today
 
-Download BonBon for Windows: [BonBon Browser 0.16.0 for Windows](https://github.com/danielfebrero/bonbon-web-browser/releases/download/0.16.0/BonBon.Setup.0.16.0.exe)
+Download BonBon for Windows: [BonBon Browser 0.17.0 for Windows](https://github.com/danielfebrero/bonbon-web-browser/releases/download/0.17.0/BonBon.Setup.0.17.0.exe)
 
 Download BonBon for macOS: [BonBon Browser 0.13.0 for macOS](https://github.com/danielfebrero/bonbon-web-browser/releases/download/0.13.0/BonBon-0.13.0.dmg)
 
