@@ -16,6 +16,7 @@
  */
 import path from 'path';
 import Nucleus from 'nucleus-nodejs';
+import fs from 'fs';
 import {
   app,
   BrowserWindow,
@@ -395,13 +396,21 @@ app
         mainWindow?.webContents.openDevTools({ mode: 'detach' });
     });
 
-    const extensionPath = app.isPackaged
-      ? path.join(__dirname, '../../../assets/extensions/ublockorigin')
-      : path.join(__dirname, '../../assets/extensions/ublockorigin');
+    const extensionsPath = app.isPackaged
+      ? path.join(__dirname, '../../../assets/extensions')
+      : path.join(__dirname, '../../assets/extensions');
 
-    session
-      .fromPartition('persist:user-partition')
-      .loadExtension(extensionPath);
+    const extensionsInDir = fs
+      .readdirSync(extensionsPath, { withFileTypes: true })
+      .filter((item: any) => item.isDirectory())
+      .map((item: any) => item.name);
+
+    console.log(extensionsInDir);
+
+    extensionsInDir.forEach((dir) => {
+      const extPath = path.join(extensionsPath, dir);
+      session.fromPartition('persist:user-partition').loadExtension(extPath);
+    });
 
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
