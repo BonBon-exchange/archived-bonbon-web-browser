@@ -36,12 +36,14 @@ import { makeEvents } from './ipcMainEvents';
 import { event } from './analytics';
 
 const machineId = machineIdSync();
+const appVersion = app.getVersion();
 
 Nucleus.init('62aaf235a3310eb923a238e2');
 Nucleus.setUserId(machineId);
 Nucleus.setProps(
   {
-    version: app.getVersion(),
+    app_version: appVersion,
+    version: appVersion,
     app_is_packaged: app.isPackaged,
   },
   true
