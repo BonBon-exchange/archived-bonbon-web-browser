@@ -10,7 +10,7 @@ We don't collect any personal data or browsing history. We do send some events t
 
 Instead, the browsing history is locally stored and encrypted.
 
-To stay up to date with the project, please join:
+To stay up to date with the project, submit bugs, and submit features, please join:
 
 - Discord server (in progress)
 
@@ -52,6 +52,8 @@ Completed:
 
 - uBlockOrigin by default
 
+- keyboard shortcuts: ctrl (+ shift) +t, +r, +w | alt + scroll
+
 In progress:
 
 - incognito mode
@@ -75,6 +77,14 @@ In progress:
 - auto update
 
 - app signing
+
+- edge snap
+
+- tiling options
+
+- auto grid
+
+- minimap
 
 ### How to manually install a Chrome Extension (v0.16.0 and later)
 
