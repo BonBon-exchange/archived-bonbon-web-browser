@@ -31,6 +31,9 @@ export const useGlobalEvents = () => {
       if (e.ctrlKey && !e.shiftKey && e.key === 't') {
         browser.add({});
       }
+      if (e.ctrlKey && e.shiftKey && e.key === 'T') {
+        browser.reopenLastClosed();
+      }
       if (e.ctrlKey && !e.shiftKey && e.key === 'r') {
         if (boardState.activeBrowser) {
           const container = document.querySelector(

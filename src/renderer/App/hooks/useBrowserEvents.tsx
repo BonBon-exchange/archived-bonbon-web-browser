@@ -55,6 +55,10 @@ export const useBrowserEvents = (browserId: string) => {
           browser.add({});
           break;
 
+        case 'ctrl+shift+T':
+          browser.reopenLastClosed();
+          break;
+
         case 'ctrl+r':
           if (webview) {
             webview.reload();

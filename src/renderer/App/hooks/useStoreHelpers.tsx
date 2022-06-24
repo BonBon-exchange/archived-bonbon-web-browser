@@ -11,6 +11,7 @@ import {
   addBrowser,
   setBoard,
   removeBrowser,
+  removeLastCloseUrl,
 } from 'renderer/App/store/reducers/Board';
 import {
   scrollToBrowser,
@@ -61,6 +62,7 @@ export const useStoreHelpers = (helpersParams?: { boardId?: string }) => {
         id,
         label: `New board`,
         browsers: [newBrowser],
+        closedUrls: [],
         isFullSize: false,
       };
 
@@ -85,6 +87,7 @@ export const useStoreHelpers = (helpersParams?: { boardId?: string }) => {
               .then((res) => {
                 const boardToAdd = {
                   browsers: res,
+                  closedUrls: [],
                   ...bds[0],
                 };
                 dispatch(setBoard(boardToAdd));
@@ -108,10 +111,18 @@ export const useStoreHelpers = (helpersParams?: { boardId?: string }) => {
     window.app.board.close();
   }, []);
 
+  const reopenLastClosed = useCallback(() => {
+    if (board.closedUrls.length > 0) {
+      makeAndAddBrowser({ url: board.closedUrls[board.closedUrls.length - 1] });
+      dispatch(removeLastCloseUrl());
+    }
+  }, [board.closedUrls, dispatch, makeAndAddBrowser]);
+
   return {
     browser: {
       add: makeAndAddBrowser,
       close: closeBrowser,
+      reopenLastClosed,
     },
     board: {
       create: createBoard,

@@ -13,6 +13,10 @@ const keyDownListener = (e) => {
     ipcRenderer.sendToHost('ctrl+t');
   }
 
+  if (e.ctrlKey && e.shiftKey && e.key === 'T') {
+    ipcRenderer.sendToHost('ctrl+shift+T');
+  }
+
   if (e.ctrlKey && !e.shiftKey && e.key === 'r') {
     ipcRenderer.sendToHost('ctrl+r');
   }

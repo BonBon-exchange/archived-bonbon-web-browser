@@ -23,7 +23,7 @@ export class UserDB extends Dexie {
 
   constructor() {
     super('user');
-    this.version(4).stores({
+    this.version(5).stores({
       boards: 'id, label, isFullSize',
       browsers: 'id, boardId, url, width, height, top, left',
       settings: 'key, val',

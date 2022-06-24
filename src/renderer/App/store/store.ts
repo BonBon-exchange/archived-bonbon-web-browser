@@ -2,6 +2,7 @@ import { configureStore, Store } from '@reduxjs/toolkit';
 import {
   persistStore,
   persistReducer,
+  createMigrate,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -13,6 +14,7 @@ import {
 import storage from 'redux-persist/lib/storage';
 
 import boardReducer from './reducers/Board';
+import { migrations } from './migrations';
 
 export const store: Store = configureStore({
   reducer: {
@@ -29,8 +31,9 @@ export const getPersistedStoreAndPersistor = (
 ): { persistor: Persistor; store: Store } => {
   const persistConfig = {
     key: id,
-    version: 1,
+    version: 2,
     storage,
+    migrate: createMigrate(migrations, { debug: true }),
   };
   const persistedBoard = persistReducer(persistConfig, boardReducer);
   const persistedStore = configureStore({

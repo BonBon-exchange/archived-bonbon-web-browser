@@ -47,11 +47,19 @@ const newBoard = {
   label: 'New board',
   browsers: [newBrowser],
   activeBrowser: browserId,
+  closedUrls: [],
   isFullSize: false,
 };
 
 const initialState: BoardState = {
   board: newBoard,
+};
+
+const addCLosedUrl = (state, url: string) => {
+  if (state.board.closedUrls.length > 20) {
+    state.baord.closedUrls.splice(0, 1);
+  }
+  state.board.closedUrls.push(url);
 };
 
 export const boardSlice = createSlice({
@@ -139,6 +147,8 @@ export const boardSlice = createSlice({
       );
       // remove browser from state
       if (browserIndex > -1) {
+        if (!state.board.closedUrls) state.board.closedUrls = [];
+        addCLosedUrl(state, state.board.browsers[browserIndex].url);
         state.board.browsers.splice(browserIndex, 1);
       }
 
@@ -159,8 +169,13 @@ export const boardSlice = createSlice({
       window.app.analytics.event('close_browser');
     },
     removeAllBrowsers: (state) => {
+      if (!state.board.closedUrls) state.board.closedUrls = [];
+      state.board.browsers.forEach((b) => addCLosedUrl(state, b.url));
       state.board.browsers = [];
       window.app.analytics.event('close_all_browser');
+    },
+    removeLastCloseUrl: (state) => {
+      state.board.closedUrls.splice(state.board.closedUrls.length - 1, 1);
     },
   },
 });
@@ -177,6 +192,7 @@ export const {
   updateBrowserTitle,
   updateBrowser,
   toggleBoardFullSize,
+  removeLastCloseUrl,
 } = boardSlice.actions;
 
 export default boardSlice.reducer;
