@@ -197,6 +197,7 @@ const makeIpcMainEvents = (): void => {
       viewToShow.webContents.send('load-board', { boardId: args.tabId })
     );
     selectedView = viewToShow;
+    mainWindow?.setBrowserView(selectedView);
     selectedView.webContents.focus();
   });
 
@@ -211,6 +212,7 @@ const makeIpcMainEvents = (): void => {
       viewToShow.webContents.send('load-board', { boardId: args.id });
     });
     selectedView = viewToShow;
+    mainWindow?.setBrowserView(selectedView);
     selectedView.webContents.focus();
   });
 
