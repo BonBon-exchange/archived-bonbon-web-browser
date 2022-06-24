@@ -14,10 +14,6 @@ Instead, the browsing history is locally stored and encrypted.
 
 Download BonBon for Windows: [BonBon Browser 0.18.0 for Windows](https://github.com/danielfebrero/bonbon-web-browser/releases/download/0.18.0/BonBon.Setup.0.18.0.exe)
 
-Download BonBon for macOS: [BonBon Browser 0.18.0 for macOS](https://github.com/danielfebrero/bonbon-web-browser/releases/download/0.18.0/BonBon-0.18.0.dmg)
-
-Download BonBon for macOS M1: [BonBon Browser 0.18.0 for macOS ARM64](https://github.com/danielfebrero/bonbon-web-browser/releases/download/0.18.0/BonBon-0.18.0-arm64.dmg)
-
 ### Notes for Windows
 
 The application is not signed (there is no company yet behind it), and has been avaialble since June 10th, 2022. That's why Windows consider the app as dangerous.
@@ -25,6 +21,10 @@ The application is not signed (there is no company yet behind it), and has been 
 ### Notes for Linux
 
 While it has not been tested on Linux, it should work. Please refer to how to run locally or to make a release further in this Readme.
+
+### Notes for macOS
+
+It seems the application is not working correctly yet on mac. In best scenarios, you will have a white screen with a top bar. Fix in progress.
 
 ## Features
 

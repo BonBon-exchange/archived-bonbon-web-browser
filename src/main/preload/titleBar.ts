@@ -10,6 +10,12 @@ import {
 } from 'electron';
 import { EventEmitter } from 'events';
 
+declare global {
+  interface Window {
+    browserAction: any;
+  }
+}
+
 export const injectBrowserAction = () => {
   const actionMap = new Map<string, any>();
   const internalEmitter = new EventEmitter();
@@ -79,14 +85,17 @@ export const injectBrowserAction = () => {
     },
   };
 
+  ipcRenderer.removeAllListeners('browserAction.update');
+
   ipcRenderer.on('browserAction.update', () => {
-    for (const partition of observerCounts.keys()) {
+    const keys = Array.from(observerCounts.keys());
+    keys.forEach((partition) => {
       try {
         browserAction.getState(partition);
       } catch (e) {
         console.log(e);
       }
-    }
+    });
   });
 
   // Function body to run in the main world.
@@ -111,7 +120,7 @@ export const injectBrowserAction = () => {
 
       get tab(): number {
         const tabId = parseInt(this.getAttribute('tab') || '', 10);
-        return typeof tabId === 'number' && !isNaN(tabId) ? tabId : -1;
+        return typeof tabId === 'number' && !Number.isNaN(tabId) ? tabId : -1;
       }
 
       set tab(tab: number) {

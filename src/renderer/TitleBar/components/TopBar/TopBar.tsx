@@ -142,6 +142,13 @@ export const TopBar: React.FC = () => {
     dispatch(setActiveTab(nextTabId));
   }, [activeTab, dispatch, tabs]);
 
+  const colorSchemeChangeListener = (e) => {
+    const colorScheme = e.matches ? 'dark-theme' : 'light-theme';
+    setIsDarkMode(e.matches);
+    // @ts-ignore
+    window.document.querySelector('body').className = colorScheme;
+  };
+
   useEffect(() => {
     // @ts-ignore
     window.document.querySelector('body').className = window.matchMedia(
@@ -152,12 +159,12 @@ export const TopBar: React.FC = () => {
 
     window
       .matchMedia('(prefers-color-scheme: dark)')
-      .addEventListener('change', (e) => {
-        const colorScheme = e.matches ? 'dark-theme' : 'light-theme';
-        setIsDarkMode(e.matches);
-        // @ts-ignore
-        window.document.querySelector('body').className = colorScheme;
-      });
+      .addEventListener('change', colorSchemeChangeListener);
+
+    return () =>
+      window
+        .matchMedia('(prefers-color-scheme: dark)')
+        .removeEventListener('change', colorSchemeChangeListener);
   }, []);
 
   useEffect(() => {
