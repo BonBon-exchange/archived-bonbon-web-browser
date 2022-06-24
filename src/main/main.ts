@@ -94,6 +94,7 @@ const createBrowserView = (): BrowserView => {
     },
   });
 
+  mainWindow?.setBrowserView(view);
   view.setBounds({ x: 0, y: 30, width, height: height - 30 });
   view.setAutoResize({ width: true, height: true });
   view.webContents.loadURL(resolveHtmlPath('index.html'));
@@ -195,7 +196,6 @@ const makeIpcMainEvents = (): void => {
     viewToShow.webContents.on('dom-ready', () =>
       viewToShow.webContents.send('load-board', { boardId: args.tabId })
     );
-    mainWindow?.setBrowserView(viewToShow);
     selectedView = viewToShow;
     selectedView.webContents.focus();
   });
@@ -210,7 +210,6 @@ const makeIpcMainEvents = (): void => {
     viewToShow.webContents.on('dom-ready', () => {
       viewToShow.webContents.send('load-board', { boardId: args.id });
     });
-    mainWindow?.setBrowserView(viewToShow);
     selectedView = viewToShow;
     selectedView.webContents.focus();
   });
@@ -402,8 +401,8 @@ app
       },
     });
 
+    makeIpcMainEvents();
     createWindow().then(() => {
-      makeIpcMainEvents();
       session
         .fromPartition('persist:user-partition')
         .setPermissionRequestHandler((webContents, permission, callback) => {
