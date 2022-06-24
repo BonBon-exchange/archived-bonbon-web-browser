@@ -10,6 +10,14 @@ We don't collect any personal data or browsing history. We do send some events t
 
 Instead, the browsing history is locally stored and encrypted.
 
+To stay up to date with the project, please join:
+
+- Discord server (in progress)
+
+- Subreddit (in progress)
+
+- Telegram channel: [https://t.me/bonbonbrowser](https://t.me/bonbonbrowser)
+
 ## Try BonBon today
 
 Download BonBon for Windows: [BonBon Browser 0.18.0 for Windows](https://github.com/danielfebrero/bonbon-web-browser/releases/download/0.18.0/BonBon.Setup.0.18.0.exe)
