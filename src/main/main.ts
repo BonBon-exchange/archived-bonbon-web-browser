@@ -94,7 +94,7 @@ const createBrowserView = (): BrowserView => {
     },
   });
 
-  mainWindow?.setBrowserView(view);
+  mainWindow?.addBrowserView(view);
   view.setBounds({ x: 0, y: 30, width, height: height - 30 });
   view.setAutoResize({ width: true, height: true });
   view.webContents.loadURL(resolveHtmlPath('index.html'));
@@ -193,11 +193,11 @@ const makeIpcMainEvents = (): void => {
       ? views[args.tabId]
       : createBrowserView();
     views[args.tabId] = viewToShow;
+    mainWindow?.setTopBrowserView(viewToShow);
     viewToShow.webContents.on('dom-ready', () =>
       viewToShow.webContents.send('load-board', { boardId: args.tabId })
     );
     selectedView = viewToShow;
-    mainWindow?.setBrowserView(selectedView);
     selectedView.webContents.focus();
   });
 
@@ -208,11 +208,11 @@ const makeIpcMainEvents = (): void => {
       ? views[args.boardId]
       : createBrowserView();
     views[args.boardId] = viewToShow;
+    mainWindow?.setTopBrowserView(viewToShow);
     viewToShow.webContents.on('dom-ready', () => {
       viewToShow.webContents.send('load-board', { boardId: args.id });
     });
     selectedView = viewToShow;
-    mainWindow?.setBrowserView(selectedView);
     selectedView.webContents.focus();
   });
 
