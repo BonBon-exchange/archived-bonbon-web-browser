@@ -28,7 +28,7 @@ While it has not been tested on Linux, it should work. Please refer to how to ru
 
 ### Notes for macOS
 
-The app was not working before 24th June, 2022. I am sorry for the ones that tried to run it.
+The app was not working before June 24th, 2022. I am sorry for the ones that tried to run it.
 
 ## Features
 
