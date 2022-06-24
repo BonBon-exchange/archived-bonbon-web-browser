@@ -14,7 +14,9 @@ Instead, the browsing history is locally stored and encrypted.
 
 Download BonBon for Windows: [BonBon Browser 0.18.0 for Windows](https://github.com/danielfebrero/bonbon-web-browser/releases/download/0.18.0/BonBon.Setup.0.18.0.exe)
 
-Download BonBon for macOS: [BonBon Browser 0.13.0 for macOS](https://github.com/danielfebrero/bonbon-web-browser/releases/download/0.13.0/BonBon-0.13.0.dmg)
+Download BonBon for macOS: [BonBon Browser 0.18.0 for macOS](https://github.com/danielfebrero/bonbon-web-browser/releases/download/0.18.0/BonBon-0.18.0.dmg)
+
+Download BonBon for macOS M1: [BonBon Browser 0.18.0 for macOS ARM64](https://github.com/danielfebrero/bonbon-web-browser/releases/download/0.18.0/BonBon-0.18.0-arm64.dmg)
 
 ### Notes for Windows
 
