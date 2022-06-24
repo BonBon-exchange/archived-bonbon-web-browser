@@ -28,7 +28,7 @@ export const useBrowserMethods = () => {
     return focusId;
   }, [boardState.activeBrowser, boardState.browsers]);
 
-  const disablePointerEventsForOthers = () => {
+  const disablePointerEventsForAll = () => {
     const containers = document.querySelectorAll('.Browser__webview-container');
     containers.forEach((c) => {
       // @ts-ignore
@@ -47,7 +47,7 @@ export const useBrowserMethods = () => {
   return {
     focus,
     next,
-    disablePointerEventsForOthers,
+    disablePointerEventsForAll,
     enablePointerEventsForAll,
   };
 };

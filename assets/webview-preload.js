@@ -1,6 +1,15 @@
 const { ipcRenderer } = require('electron');
 
+const keyUpListener = (e) => {
+  if (e.key === 'Alt') {
+    ipcRenderer.sendToHost('AltUp');
+  }
+};
+
 const keyDownListener = (e) => {
+  if (e.key === 'Alt') {
+    ipcRenderer.sendToHost('AltDown');
+  }
   if (e.ctrlKey && !e.shiftKey && e.key === 'Tab') {
     ipcRenderer.sendToHost('ctrl+Tab');
   }
@@ -40,7 +49,9 @@ document.addEventListener(
     window.addEventListener('click', () => {
       ipcRenderer.sendToHost('clickOnPage');
     });
+
     window.addEventListener('keydown', keyDownListener, false);
+    window.addEventListener('keyup', keyUpListener, false);
   },
   false
 );

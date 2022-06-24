@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable import/prefer-default-export */
@@ -36,6 +37,16 @@ export const useBrowserEvents = (browserId: string) => {
       const event = e as IpcMessageEvent;
       switch (event.channel) {
         default:
+          break;
+
+        case 'AltDown':
+          const altDownEvent = new KeyboardEvent('keydown', { key: 'Alt' });
+          window.dispatchEvent(altDownEvent);
+          break;
+
+        case 'AltUp':
+          const altUpEvent = new KeyboardEvent('keyup', { key: 'Alt' });
+          window.dispatchEvent(altUpEvent);
           break;
 
         case 'clickOnPage':

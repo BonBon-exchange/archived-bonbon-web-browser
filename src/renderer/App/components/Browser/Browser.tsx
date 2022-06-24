@@ -38,7 +38,7 @@ export const Browser: React.FC<BrowserProps> = ({
 }) => {
   useBrowserEvents(id);
   const dispatch = useAppDispatch();
-  const { enablePointerEventsForAll, disablePointerEventsForOthers, focus } =
+  const { enablePointerEventsForAll, disablePointerEventsForAll, focus } =
     useBrowserMethods();
   const { browser } = useStoreHelpers();
   const board = useBoard();
@@ -62,7 +62,7 @@ export const Browser: React.FC<BrowserProps> = ({
   };
 
   const onDragStart = () => {
-    disablePointerEventsForOthers();
+    disablePointerEventsForAll();
   };
 
   const onDragStop = (e: any) => {
@@ -90,7 +90,7 @@ export const Browser: React.FC<BrowserProps> = ({
   };
 
   const onResizeStart = () => {
-    disablePointerEventsForOthers();
+    disablePointerEventsForAll();
   };
 
   const toggleFullsizeBrowser = () => {

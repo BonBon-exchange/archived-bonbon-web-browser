@@ -1,7 +1,7 @@
 /* eslint-disable spaced-comment */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable import/prefer-default-export */
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { useStoreHelpers } from 'renderer/App/hooks/useStoreHelpers';
 import {
@@ -16,10 +16,29 @@ export const useGlobalEvents = () => {
   const { browser, board } = useStoreHelpers();
   const dispatch = useAppDispatch();
   const boardState = useBoard();
-  const { focus, next } = useBrowserMethods();
+  const { focus, next, disablePointerEventsForAll, enablePointerEventsForAll } =
+    useBrowserMethods();
+  const [isPointerEventDisabled, setIsPointerEventDisabled] =
+    useState<boolean>(false);
+
+  const keyUpListener = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'Alt') {
+        enablePointerEventsForAll();
+        setIsPointerEventDisabled(false);
+      }
+    },
+    [enablePointerEventsForAll]
+  );
 
   const keyDownListener = useCallback(
-    (e: { ctrlKey: boolean; shiftKey: boolean; key: string }) => {
+    (e: KeyboardEvent) => {
+      if (e.key === 'Alt') {
+        if (!isPointerEventDisabled) {
+          disablePointerEventsForAll();
+          setIsPointerEventDisabled(true);
+        }
+      }
       if (e.ctrlKey && !e.shiftKey && e.key === 'Tab') {
         if (boardState.browsers.length > 0) {
           focus(document, next());
@@ -52,10 +71,19 @@ export const useGlobalEvents = () => {
         board.close();
       }
     },
-    [browser, boardState.activeBrowser, board, boardState.browsers, focus, next]
+    [
+      browser,
+      boardState.activeBrowser,
+      board,
+      boardState.browsers,
+      focus,
+      next,
+      disablePointerEventsForAll,
+      isPointerEventDisabled,
+    ]
   );
 
-  const scrollListener = () => {
+  const scrollListener = useCallback(() => {
     const containerHeight =
       document.querySelector('.Board__container')?.clientHeight;
     const heightDistance =
@@ -68,7 +96,7 @@ export const useGlobalEvents = () => {
         Number(containerHeight) + 100
       }px`;
     }
-  };
+  }, []);
 
   const newWindowAction = useCallback(
     (_e: any, args: { url: string }) => browser.add(args),
@@ -120,9 +148,14 @@ export const useGlobalEvents = () => {
   }, [keyDownListener]);
 
   useEffect(() => {
+    window.addEventListener('keyup', keyUpListener, false);
+    return () => window.removeEventListener('keyup', keyUpListener);
+  }, [keyUpListener]);
+
+  useEffect(() => {
     window.addEventListener('scroll', scrollListener);
     return () => window.removeEventListener('scroll', scrollListener);
-  }, []);
+  }, [scrollListener]);
 
   useEffect(() => {
     //@ts-ignore
