@@ -12,14 +12,14 @@ import { BrowserTopBar } from 'renderer/App/components/BrowserTopBar';
 import { useAppDispatch } from 'renderer/App/store/hooks';
 import {
   updateBrowserUrl,
-  removeBrowser,
   updateBrowser,
   toggleBoardFullSize,
-  setActiveBrowser,
 } from 'renderer/App/store/reducers/Board';
 import { bringBrowserToTheFront } from 'renderer/App/helpers/d2';
 import { dataDb } from 'renderer/App/db/dataDb';
 import { useBoard } from 'renderer/App/hooks/useBoard';
+import { useBrowserMethods } from 'renderer/App/hooks/useBrowserMethods';
+import { useStoreHelpers } from 'renderer/App/hooks/useStoreHelpers';
 
 import { BrowserProps } from './Types';
 
@@ -38,6 +38,9 @@ export const Browser: React.FC<BrowserProps> = ({
 }) => {
   useBrowserEvents(id);
   const dispatch = useAppDispatch();
+  const { enablePointerEventsForAll, disablePointerEventsForOthers, focus } =
+    useBrowserMethods();
+  const { browser } = useStoreHelpers();
   const board = useBoard();
   const [firstRenderingState, setFirstRenderingState] = useState<boolean>(
     firstRendering || true
@@ -49,22 +52,6 @@ export const Browser: React.FC<BrowserProps> = ({
   const webview = container.current?.querySelector(
     'webview'
   ) as Electron.WebviewTag;
-
-  const disablePointerEventsForOthers = () => {
-    const containers = document.querySelectorAll('.Browser__webview-container');
-    containers.forEach((c) => {
-      // @ts-ignore
-      c.style['pointer-events'] = 'none';
-    });
-  };
-
-  const enablePointerEventsForAll = () => {
-    const containers = document.querySelectorAll('.Browser__webview-container');
-    containers.forEach((c) => {
-      // @ts-ignore
-      c.style['pointer-events'] = 'auto';
-    });
-  };
 
   const getOffset = (el: Element) => {
     const rect = el.getBoundingClientRect();
@@ -106,18 +93,8 @@ export const Browser: React.FC<BrowserProps> = ({
     disablePointerEventsForOthers();
   };
 
-  const closeBrowser = () => {
-    window.app.browser.selectBrowserView();
-    dispatch(removeBrowser(id));
-  };
-
   const toggleFullsizeBrowser = () => {
     dispatch(toggleBoardFullSize());
-  };
-
-  const givePriorityToBrowser = () => {
-    bringBrowserToTheFront(document, document.querySelector(`#Browser__${id}`));
-    dispatch(setActiveBrowser(id));
   };
 
   const goBack = () => {
@@ -199,9 +176,9 @@ export const Browser: React.FC<BrowserProps> = ({
     >
       <div className="Browser__container" ref={container}>
         <BrowserTopBar
-          closeBrowser={closeBrowser}
+          closeBrowser={() => browser.close(id)}
           toggleFullsizeBrowser={toggleFullsizeBrowser}
-          onClick={givePriorityToBrowser}
+          onClick={() => focus(document, id)}
           title={title}
           favicon={favicon}
         />

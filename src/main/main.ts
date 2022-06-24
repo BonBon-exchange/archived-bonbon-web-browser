@@ -30,9 +30,7 @@ import { machineIdSync } from 'node-machine-id';
 import contextMenu from 'electron-context-menu';
 import { ElectronChromeExtensions } from 'electron-chrome-extensions';
 
-import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-import { makeEvents } from './ipcMainEvents';
 import { event } from './analytics';
 
 const machineId = machineIdSync();
@@ -50,6 +48,10 @@ Nucleus.setProps(
 );
 
 let mainWindow: BrowserWindow | null = null;
+const views: Record<string, BrowserView> = {};
+let selectedView: BrowserView;
+let extensions: ElectronChromeExtensions;
+const browsers: Record<string, WebContents> = {};
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -63,25 +65,20 @@ if (isDebug) {
   require('electron-debug')();
 }
 
-const installExtensions = async () => {
+const installExtensions = async (): Promise<void> => {
   const installer = require('electron-devtools-installer');
   const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-  const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
+  const extensionsToInstall = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
 
   return installer
     .default(
-      extensions.map((name) => installer[name]),
+      extensionsToInstall.map((name) => installer[name]),
       forceDownload
     )
     .catch(console.log);
 };
 
-const views: Record<string, BrowserView> = {};
-let selectedView: BrowserView;
-let extensions: ElectronChromeExtensions;
-const browsers: Record<string, WebContents> = {};
-
-const createBrowserView = () => {
+const createBrowserView = (): BrowserView => {
   const sizes = mainWindow?.getSize();
   const width = sizes && sizes[0] ? sizes[0] : 0;
   const height = sizes && sizes[1] ? sizes[1] : 0;
@@ -107,7 +104,7 @@ const createBrowserView = () => {
   return view;
 };
 
-const createWindow = async () => {
+const createWindow = async (): Promise<void> => {
   if (isDebug) {
     await installExtensions();
   }
@@ -136,20 +133,9 @@ const createWindow = async () => {
     },
   });
 
+  mainWindow.setMenu(null);
+
   mainWindow.loadURL(resolveHtmlPath('titleBar.html'));
-
-  ipcMain.handle('dark-mode:toggle', () => {
-    if (nativeTheme.shouldUseDarkColors) {
-      nativeTheme.themeSource = 'light';
-    } else {
-      nativeTheme.themeSource = 'dark';
-    }
-    return nativeTheme.shouldUseDarkColors;
-  });
-
-  ipcMain.handle('dark-mode:system', () => {
-    nativeTheme.themeSource = 'system';
-  });
 
   mainWindow.on('ready-to-show', () => {
     if (!mainWindow) {
@@ -171,10 +157,35 @@ const createWindow = async () => {
     if (selectedView) selectedView.webContents.focus();
   });
 
-  const menuBuilder = new MenuBuilder(mainWindow);
-  menuBuilder.buildMenu();
+  mainWindow.webContents.executeJavaScript(
+    `localStorage.setItem("machineId", "${machineId}"); localStorage.setItem("appIsPackaged", "${app.isPackaged}");`,
+    true
+  );
 
-  makeEvents();
+  event('open_app');
+};
+
+const makeIpcMainEvents = (): void => {
+  ipcMain.handle('dark-mode:toggle', () => {
+    if (nativeTheme.shouldUseDarkColors) {
+      nativeTheme.themeSource = 'light';
+    } else {
+      nativeTheme.themeSource = 'dark';
+    }
+    return nativeTheme.shouldUseDarkColors;
+  });
+
+  ipcMain.handle('dark-mode:system', () => {
+    nativeTheme.themeSource = 'system';
+  });
+
+  ipcMain.on('inspectElement', (e, args) => {
+    e.sender.inspectElement(args.x, args.y);
+  });
+
+  ipcMain.on('analytics', (_event, args) => {
+    event(args.eventName, args.params);
+  });
 
   ipcMain.on('tab-select', (_event, args) => {
     const viewToShow: BrowserView = views[args.tabId]
@@ -250,17 +261,10 @@ const createWindow = async () => {
   ipcMain.on('select-next-board', () => {
     mainWindow?.webContents.send('select-next-board');
   });
-
-  mainWindow.webContents.executeJavaScript(
-    `localStorage.setItem("machineId", "${machineId}"); localStorage.setItem("appIsPackaged", "${app.isPackaged}");`,
-    true
-  );
-
-  event('open_app');
 };
 
 /**
- * Add event listeners...
+ * Add app event listeners...
  */
 
 app.on('window-all-closed', () => {
@@ -399,6 +403,7 @@ app
     });
 
     createWindow().then(() => {
+      makeIpcMainEvents();
       session
         .fromPartition('persist:user-partition')
         .setPermissionRequestHandler((webContents, permission, callback) => {

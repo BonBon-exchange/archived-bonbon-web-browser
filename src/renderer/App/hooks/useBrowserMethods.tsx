@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable import/prefer-default-export */
 import { useCallback } from 'react';
 import { scrollToBrowser } from 'renderer/App/helpers/d2';
@@ -27,5 +28,26 @@ export const useBrowserMethods = () => {
     return focusId;
   }, [boardState.activeBrowser, boardState.browsers]);
 
-  return { focus, next };
+  const disablePointerEventsForOthers = () => {
+    const containers = document.querySelectorAll('.Browser__webview-container');
+    containers.forEach((c) => {
+      // @ts-ignore
+      c.style['pointer-events'] = 'none';
+    });
+  };
+
+  const enablePointerEventsForAll = () => {
+    const containers = document.querySelectorAll('.Browser__webview-container');
+    containers.forEach((c) => {
+      // @ts-ignore
+      c.style['pointer-events'] = 'auto';
+    });
+  };
+
+  return {
+    focus,
+    next,
+    disablePointerEventsForOthers,
+    enablePointerEventsForAll,
+  };
 };
