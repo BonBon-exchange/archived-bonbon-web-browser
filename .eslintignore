@@ -33,3 +33,5 @@ npm-debug.log.*
 !.erb
 
 *.d.ts
+
+assets
