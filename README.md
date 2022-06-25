@@ -34,7 +34,7 @@ The application is not signed (there is no company yet behind it), and has been 
 
 ### Notes for Linux
 
-While it has not been tested on Linux, it should work. Please refer to how to run locally or to make a release further in this Readme.
+The app is not working yet on Linux.
 
 ### Notes for macOS
 

@@ -24,24 +24,32 @@ export const useStoreHelpers = (helpersParams?: { boardId?: string }) => {
   const dispatch = useAppDispatch();
   const board = useBoard();
 
-  const makeAndAddBrowser = (params: { url?: string }): void => {
-    if (board) {
-      const browserId = v4();
-      const { x, y } = getCoordinateWithNoCollision(document, board, 800, 600);
-      const newBrowser = {
-        id: browserId,
-        url: params.url || 'https://www.google.com',
-        top: y,
-        left: x,
-        height: 800,
-        width: 600,
-        firstRendering: true,
-        favicon: '',
-      };
-      dispatch(addBrowser(newBrowser));
-      setTimeout(() => scrollToBrowser(document, browserId), 300);
-    }
-  };
+  const makeAndAddBrowser = useCallback(
+    (params: { url?: string }): void => {
+      if (board) {
+        const browserId = v4();
+        const { x, y } = getCoordinateWithNoCollision(
+          document,
+          board,
+          800,
+          600
+        );
+        const newBrowser = {
+          id: browserId,
+          url: params.url || 'https://www.google.com',
+          top: y,
+          left: x,
+          height: 800,
+          width: 600,
+          firstRendering: true,
+          favicon: '',
+        };
+        dispatch(addBrowser(newBrowser));
+        setTimeout(() => scrollToBrowser(document, browserId), 300);
+      }
+    },
+    [board, dispatch]
+  );
 
   const createBoard = useCallback(
     (params: { id?: string }) => {
