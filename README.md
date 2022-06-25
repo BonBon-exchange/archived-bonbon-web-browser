@@ -34,7 +34,7 @@ The application is not signed (there is no company yet behind it), and has been 
 
 ### Notes for Linux
 
-The app is not working yet on Linux.
+The app was not working before June 25th, 2022. I am sorry for the ones that tried to run it.
 
 ### Notes for macOS
 
