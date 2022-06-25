@@ -3,6 +3,7 @@ import { v4 } from 'uuid';
 
 import { BrowserProps } from 'renderer/App/components/Browser/Types';
 import { BoardType } from 'renderer/App/components/Board/Types';
+import { WritableDraft } from 'immer/dist/internal';
 
 type UpdateBrowserType = {
   browserId: string;
@@ -55,9 +56,9 @@ const initialState: BoardState = {
   board: newBoard,
 };
 
-const addCLosedUrl = (state, url: string) => {
+const addCLosedUrl = (state: WritableDraft<BoardState>, url: string) => {
   if (state.board.closedUrls.length > 20) {
-    state.baord.closedUrls.splice(0, 1);
+    state.board.closedUrls.splice(0, 1);
   }
   state.board.closedUrls.push(url);
 };
