@@ -18,8 +18,6 @@ import {
   updateBrowser,
 } from 'renderer/App/store/reducers/Board';
 import { bringBrowserToTheFront } from 'renderer/App/helpers/d2';
-import { useStoreHelpers } from './useStoreHelpers';
-import { useBrowserMethods } from './useBrowserMethods';
 
 export const useBrowserEvents = (browserId: string) => {
   const container = document.querySelector(
@@ -29,8 +27,6 @@ export const useBrowserEvents = (browserId: string) => {
     container?.querySelector('webview') as Electron.WebviewTag;
 
   const dispatch = useAppDispatch();
-  const { browser, board } = useStoreHelpers();
-  const { focus, next } = useBrowserMethods();
 
   const ipcMessageListener = useCallback(
     (e: Event & { args: any }) => {
@@ -55,33 +51,66 @@ export const useBrowserEvents = (browserId: string) => {
           break;
 
         case 'ctrl+Tab':
-          focus(document, next());
+          const ctrlTabEvent = new KeyboardEvent('keydown', {
+            key: 'Tab',
+            ctrlKey: true,
+            shiftKey: false,
+          });
+          window.dispatchEvent(ctrlTabEvent);
           break;
 
         case 'ctrl+shift+Tab':
-          window.app.board.selectNext();
+          const ctrlShiftTabEvent = new KeyboardEvent('keydown', {
+            key: 'Tab',
+            ctrlKey: true,
+            shiftKey: true,
+          });
+          window.dispatchEvent(ctrlShiftTabEvent);
           break;
 
         case 'ctrl+t':
-          browser.add({});
+          const ctrlTEvent = new KeyboardEvent('keydown', {
+            key: 't',
+            ctrlKey: true,
+            shiftKey: false,
+          });
+          window.dispatchEvent(ctrlTEvent);
           break;
 
         case 'ctrl+shift+T':
-          browser.reopenLastClosed();
+          const ctrlShiftTEvent = new KeyboardEvent('keydown', {
+            key: 'T',
+            ctrlKey: true,
+            shiftKey: true,
+          });
+          window.dispatchEvent(ctrlShiftTEvent);
           break;
 
         case 'ctrl+r':
-          if (webview) {
-            webview.reload();
-          }
+          const ctrlREvent = new KeyboardEvent('keydown', {
+            key: 'r',
+            ctrlKey: true,
+            shiftKey: false,
+          });
+          window.dispatchEvent(ctrlREvent);
           break;
 
         case 'ctrl+w':
-          browser.close(browserId);
+          const ctrlWEvent = new KeyboardEvent('keydown', {
+            key: 'w',
+            ctrlKey: true,
+            shiftKey: false,
+          });
+          window.dispatchEvent(ctrlWEvent);
           break;
 
         case 'ctrl+shift+W':
-          board.close();
+          const ctrlShiftWEvent = new KeyboardEvent('keydown', {
+            key: 'W',
+            ctrlKey: true,
+            shiftKey: true,
+          });
+          window.dispatchEvent(ctrlShiftWEvent);
           break;
 
         case 'created-webcontents':
@@ -94,7 +123,7 @@ export const useBrowserEvents = (browserId: string) => {
           break;
       }
     },
-    [browserId, container, dispatch, browser, board, webview, focus, next]
+    [browserId, container, dispatch]
   );
 
   const loadCommitListener = useCallback(
