@@ -1,3 +1,4 @@
+/* eslint-disable no-multi-assign */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable import/prefer-default-export */
@@ -273,7 +274,7 @@ export const injectBrowserAction = () => {
 
       get tab(): number | null {
         const tabId = parseInt(this.getAttribute('tab') || '', 10);
-        return typeof tabId === 'number' && !isNaN(tabId) ? tabId : null;
+        return typeof tabId === 'number' && !Number.isNaN(tabId) ? tabId : null;
       }
 
       set tab(tab: number | null) {
