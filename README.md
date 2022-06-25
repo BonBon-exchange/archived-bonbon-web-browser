@@ -18,6 +18,8 @@ To stay up to date with the project, submit bugs, and submit features, please jo
 
 - Telegram channel: [https://t.me/bonbonbrowser](https://t.me/bonbonbrowser)
 
+- Telegram chat: [https://t.me/bonbonbrowserchat](https://t.me/bonbonbrowserchat)
+
 ## Try BonBon today
 
 Download BonBon for Windows: [BonBon Browser 0.18.0 for Windows](https://github.com/danielfebrero/bonbon-web-browser/releases/download/0.18.0/BonBon.Setup.0.18.0.exe)
