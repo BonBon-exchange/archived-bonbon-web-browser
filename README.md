@@ -14,7 +14,7 @@ To stay up to date with the project, submit bugs, and submit features, please jo
 
 - Discord server (in progress)
 
-- Subreddit (in progress)
+- Subreddit: [https://www.reddit.com/r/bonbonbrowser](https://www.reddit.com/r/bonbonbrowser)
 
 - Telegram channel: [https://t.me/bonbonbrowser](https://t.me/bonbonbrowser)
 
