@@ -10,7 +10,7 @@ import { Board } from 'renderer/App/components/Board';
 import { LeftBar } from 'renderer/App/components/LeftBar';
 import { Library } from 'renderer/App/components/Library';
 import { Settings } from 'renderer/App/components/Settings';
-import { PopUp } from 'renderer/App/components/PopUp';
+import { Popup } from 'renderer/App/components/Popup';
 import { useStoreHelpers } from 'renderer/App/hooks/useStoreHelpers';
 import { useBoard } from 'renderer/App/hooks/useBoard';
 import { userDb } from 'renderer/App/db/userDb';
