@@ -12,7 +12,7 @@ Instead, the browsing history is locally stored and encrypted.
 
 To stay up to date with the project, submit bugs, and submit features, please join:
 
-- Discord server (in progress)
+- Discord server: [https://discord.gg/hrpp8G9Fqs](https://discord.gg/hrpp8G9Fqs)
 
 - Subreddit: [https://www.reddit.com/r/bonbonbrowser](https://www.reddit.com/r/bonbonbrowser)
 
