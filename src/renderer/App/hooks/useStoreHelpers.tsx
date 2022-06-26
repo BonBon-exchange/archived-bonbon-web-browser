@@ -17,7 +17,6 @@ import {
   scrollToBrowser,
   getCoordinateWithNoCollision,
 } from 'renderer/App/helpers/d2';
-import { userDb } from 'renderer/App/db/userDb';
 import { useBoard } from './useBoard';
 
 export const useStoreHelpers = (helpersParams?: { boardId?: string }) => {
@@ -84,28 +83,9 @@ export const useStoreHelpers = (helpersParams?: { boardId?: string }) => {
     (params: { id: string }) => {
       window.app.analytics.event('load_board');
       if (board.id === helpersParams?.boardId) return;
-      userDb.boards
-        .where(params)
-        .toArray()
-        .then((bds) => {
-          if (bds.length > 0) {
-            userDb.browsers
-              .where({ boardId: params.id })
-              .toArray()
-              .then((res) => {
-                const boardToAdd = {
-                  browsers: res,
-                  closedUrls: [],
-                  ...bds[0],
-                };
-                dispatch(setBoard(boardToAdd));
-              });
-          } else {
-            createBoard(params);
-          }
-        });
+      createBoard(params);
     },
-    [createBoard, dispatch, board.id, helpersParams?.boardId]
+    [createBoard, board.id, helpersParams?.boardId]
   );
 
   const closeBrowser = useCallback(
