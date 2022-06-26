@@ -24,11 +24,11 @@ const makeAppEvents = () => {
   });
 
   app.on('web-contents-created', (_event, contents) => {
-    const selectedView = getSelectedView();
     const extensions = getExtensionsObject();
 
     contents.on('new-window', (e, url) => {
       e.preventDefault();
+      const selectedView = getSelectedView();
       selectedView.webContents.send('new-window', { url });
     });
 
@@ -59,6 +59,7 @@ const makeAppEvents = () => {
           label: 'Close',
           visible: params.y > 30 && params.x < 50,
           click: () => {
+            const selectedView = getSelectedView();
             selectedView?.webContents.send('close-webview', {
               x: params.x,
               y: params.y,
@@ -69,6 +70,7 @@ const makeAppEvents = () => {
           label: 'Close all',
           visible: params.y > 30 && params.x < 50,
           click: () => {
+            const selectedView = getSelectedView();
             selectedView?.webContents.send('close-all-webview');
           },
         },
