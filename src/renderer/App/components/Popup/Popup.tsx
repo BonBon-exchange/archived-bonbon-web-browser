@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable promise/always-return */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -6,15 +5,15 @@
 /* eslint-disable import/prefer-default-export */
 import CloseIcon from '@mui/icons-material/Close';
 
-import { PopUpProps } from './Types';
+import { PopupProps } from './Types';
 
 import './style.scss';
 
-export const Popup: React.FC<PopUpProps> = ({
+export const Popup: React.FC<PopupProps> = ({
   children,
   closePopup,
   title,
-}) => {
+}: PopupProps) => {
   return (
     <div id="Popup__container">
       <div id="Popup__close-icon" onClick={closePopup}>
