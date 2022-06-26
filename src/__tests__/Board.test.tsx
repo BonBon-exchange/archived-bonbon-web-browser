@@ -4,35 +4,25 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { Middleware } from '@reduxjs/toolkit';
 
+import { Board } from '../renderer/App/components/Board';
 import { mockWindow } from './beforeAll';
-import { Addaps } from '../renderer/App/components/Addaps';
 import { initialState } from '../renderer/App/store/reducers/Board';
 
 let store: any;
 const middlewares: Middleware[] = [];
 
-describe('Addaps', () => {
+describe('Board', () => {
   beforeAll(() => {
     mockWindow();
     const mockStore = configureStore(middlewares);
     store = mockStore({ board: initialState });
   });
 
-  it('should render with no boardId', () => {
+  it('should render', () => {
     expect(
       render(
         <Provider store={store}>
-          <Addaps />
-        </Provider>
-      )
-    ).toBeTruthy();
-  });
-
-  it('should render with boardId', () => {
-    expect(
-      render(
-        <Provider store={store}>
-          <Addaps boardId="someboardid" />
+          <Board />
         </Provider>
       )
     ).toBeTruthy();
