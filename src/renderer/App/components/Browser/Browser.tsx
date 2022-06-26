@@ -4,7 +4,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Rnd } from 'react-rnd';
 import clsx from 'clsx';
-import CryptoJS from 'crypto-js';
 
 import { useBrowserEvents } from 'renderer/App/hooks/useBrowserEvents';
 import { BrowserControlBar } from 'renderer/App/components/BrowserControlBar';
@@ -16,7 +15,6 @@ import {
   toggleBoardFullSize,
 } from 'renderer/App/store/reducers/Board';
 import { bringBrowserToTheFront } from 'renderer/App/helpers/d2';
-import { dataDb } from 'renderer/App/db/dataDb';
 import { useBoard } from 'renderer/App/hooks/useBoard';
 import { useBrowserMethods } from 'renderer/App/hooks/useBrowserMethods';
 import { useStoreHelpers } from 'renderer/App/hooks/useStoreHelpers';
@@ -135,11 +133,6 @@ export const Browser: React.FC<BrowserProps> = ({
 
   useEffect(() => {
     window.app.analytics.event('browser_navigate');
-    const encrypted = CryptoJS.AES.encrypt(
-      url,
-      localStorage.getItem('machineId') || 'bonb'
-    );
-    dataDb.navigate.add({ url: encrypted.toString(), date: new Date() });
   }, [url]);
 
   // Bug fix for Rnd renderer

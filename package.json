@@ -108,7 +108,6 @@
     "@reduxjs/toolkit": "^1.8.2",
     "clsx": "^1.1.1",
     "crypto-js": "^4.1.1",
-    "dexie": "^3.2.2",
     "electron-chrome-extensions": "^3.9.0",
     "electron-context-menu": "^3.2.0",
     "electron-debug": "^3.2.0",
