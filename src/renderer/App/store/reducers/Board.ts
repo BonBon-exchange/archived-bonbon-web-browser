@@ -52,7 +52,7 @@ const newBoard = {
   isFullSize: false,
 };
 
-const initialState: BoardState = {
+export const initialState: BoardState = {
   board: newBoard,
 };
 
