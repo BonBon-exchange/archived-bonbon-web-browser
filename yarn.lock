@@ -2538,6 +2538,14 @@ builder-util-runtime@9.0.0:
     debug "^4.3.2"
     sax "^1.2.4"
 
+builder-util-runtime@9.0.2:
+  version "9.0.2"
+  resolved "https://registry.yarnpkg.com/builder-util-runtime/-/builder-util-runtime-9.0.2.tgz#dc54f8581bbcf1e0428da4483fa46d09524be857"
+  integrity sha512-xF55W/8mgfT6+sMbX0TeiJkTusA5GMOzckM4rajN4KirFcUIuLTH8oEaTYmM86YwVCZaTwa/7GyFhauXaEICwA==
+  dependencies:
+    debug "^4.3.4"
+    sax "^1.2.4"
+
 builder-util@23.0.2:
   version "23.0.2"
   resolved "https://registry.npmjs.org/builder-util/-/builder-util-23.0.2.tgz"
@@ -3817,19 +3825,20 @@ electron-to-chromium@^1.4.147:
   resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.152.tgz"
   integrity sha512-jk4Ju5SGZAQQJ1iI4Rgru7dDlvkQPLpNPWH9gIZmwCD4YteA5Bbk1xPcPDUf5jUYs3e1e80RXdi8XgKQZaigeg==
 
-electron-updater@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.npmjs.org/electron-updater/-/electron-updater-5.0.1.tgz"
-  integrity sha512-dNnXPCqYmergXy3jgg4UICuD50Orug9GQe/5xfHy+BE2Fy0icB0QE+y6iQWdCDf7yeONxwMBf4HgIkGG5pIaVg==
+electron-updater@^5.0.5:
+  version "5.0.5"
+  resolved "https://registry.yarnpkg.com/electron-updater/-/electron-updater-5.0.5.tgz#efc025a1777fc0a9c6f9f20ef70037b727e989fb"
+  integrity sha512-YcKEI9zpU+c0sNXTpjw3UpzP8Pfuuwo70T42oLYm0hHc0dy41ih51oENlhxgooa2+uzzpXhoCOyrpG+w6CB0Pw==
   dependencies:
     "@types/semver" "^7.3.6"
-    builder-util-runtime "9.0.0"
+    builder-util-runtime "9.0.2"
     fs-extra "^10.0.0"
     js-yaml "^4.1.0"
     lazy-val "^1.0.5"
     lodash.escaperegexp "^4.1.2"
     lodash.isequal "^4.5.0"
     semver "^7.3.5"
+    typed-emitter "^2.1.0"
 
 electron@^19.0.6:
   version "19.0.6"
@@ -8256,7 +8265,7 @@ rxjs@^6.6.3:
   dependencies:
     tslib "^1.9.0"
 
-rxjs@^7.5.5:
+rxjs@^7.5.2, rxjs@^7.5.5:
   version "7.5.5"
   resolved "https://registry.npmjs.org/rxjs/-/rxjs-7.5.5.tgz"
   integrity sha512-sy+H0pQofO95VDmFLzyaw9xNJU4KTRSwQIGM6+iG3SypAtCiLDzpeG8sJrNCWn2Up9km+KhkvTdbkrdy+yzZdw==
@@ -9203,6 +9212,13 @@ type-is@~1.6.18:
   dependencies:
     media-typer "0.3.0"
     mime-types "~2.1.24"
+
+typed-emitter@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/typed-emitter/-/typed-emitter-2.1.0.tgz#ca78e3d8ef1476f228f548d62e04e3d4d3fd77fb"
+  integrity sha512-g/KzbYKbH5C2vPkaXGu8DJlHrGKHLsM25Zg9WuC9pMGfuvT+X25tZQWo5fK1BjBm8+UrVE9LDCvaY0CQk+fXDA==
+  optionalDependencies:
+    rxjs "^7.5.2"
 
 typedarray-to-buffer@^3.1.5:
   version "3.1.5"

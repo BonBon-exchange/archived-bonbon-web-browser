@@ -112,7 +112,7 @@
     "electron-context-menu": "^3.2.0",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.7",
-    "electron-updater": "^5.0.1",
+    "electron-updater": "^5.0.5",
     "node-machine-id": "^1.1.12",
     "nucleus-nodejs": "^3.0.9",
     "react": "^18.1.0",
