@@ -142,7 +142,7 @@ export const TopBar: React.FC = () => {
     dispatch(setActiveTab(nextTabId));
   }, [activeTab, dispatch, tabs]);
 
-  const colorSchemeChangeListener = (e) => {
+  const colorSchemeChangeListener = (e: MediaQueryListEvent) => {
     const colorScheme = e.matches ? 'dark-theme' : 'light-theme';
     setIsDarkMode(e.matches);
     // @ts-ignore

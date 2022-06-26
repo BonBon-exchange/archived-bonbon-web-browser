@@ -373,7 +373,7 @@ export const injectBrowserAction = () => {
         this.stopObserving();
       }
 
-      attributeChangedCallback(name: string, oldValue: any, newValue: any) {
+      attributeChangedCallback(_name: string, oldValue: any, newValue: any) {
         if (oldValue === newValue) return;
 
         if (this.isConnected) {

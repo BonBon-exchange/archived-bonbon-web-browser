@@ -5,6 +5,7 @@ import path from 'path';
 import { app, session } from 'electron';
 import { ElectronChromeExtensions } from 'electron-chrome-extensions';
 
+// eslint-disable-next-line import/no-cycle
 import { getMainWindow, getSelectedView } from './browser';
 
 let extensions: ElectronChromeExtensions;
@@ -59,21 +60,21 @@ export const makeChromeExtensionSupport = () => {
         else reject(new Error('mainWindow is null'));
       });
     },
-    removeTab(tab, browserWindow) {
+    removeTab(_tab, _browserWindow) {
       // Optionally implemented for chrome.tabs.remove support
       // console.log('remove tab', tab, browserWindow);
       return new Error('removeTab is not implemented yet.');
     },
-    createWindow(details) {
-      return new Promise((resolve, reject) => {
+    createWindow(_details) {
+      return new Promise((_resolve, reject) => {
         reject(new Error('createWindow es not implemented yet.'));
       });
     },
-    removeWindow(details) {
+    removeWindow(_details) {
       // console.log('remove window', details);
       return new Error('removeWindow is not implemented yet.');
     },
-    assignTabDetails(details, tab) {
+    assignTabDetails(_details, _tab) {
       // console.log('assign details', details, tab);
       return new Error('assignTabDetails is not implemented yet.');
     },
