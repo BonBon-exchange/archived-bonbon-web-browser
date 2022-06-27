@@ -122,10 +122,18 @@ npm run package
 
 Then find the release in bonbon-web-browser/release/build
 
-## Screenshots
+## Team
+
+- Dani ([@danielfebrero](https://github.com/danielfebrero))
+- Antho
+- Braian ([@braiandickson](https://github.com/braiandickson))
+- 0xCUBE ([@0xCUB3](https://github.com/0xCUB3))
+- Alberto
+- Nuklusone
+- Aitor ([@dragonDScript](https://github.com/dragonDScript))
+
+## Videos
 
 ![Desktop](https://media.giphy.com/media/gbSdr8VkxappmBCoJq/giphy.gif)
 
-![Desktop](https://github.com/danielfebrero/bonbon-web-browser/blob/master/images/desktop3.PNG)
-
-![Desktop2](https://github.com/danielfebrero/bonbon-web-browser/blob/master/images/desktop4.PNG)
+[https://www.youtube.com/watch?v=QqT-lGfy9Vk](https://www.youtube.com/watch?v=QqT-lGfy9Vk)
