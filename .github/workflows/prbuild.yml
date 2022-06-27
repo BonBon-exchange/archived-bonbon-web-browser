@@ -1,6 +1,6 @@
 name: PR check
 
-on: push
+on: [push]
 
 jobs:
   publish:
