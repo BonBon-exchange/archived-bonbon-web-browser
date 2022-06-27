@@ -1,4 +1,5 @@
-[![Github All Releases](https://img.shields.io/github/downloads/danielfebrero/bonbon-web-browser/total.svg)]()
+![Github All Releases](https://img.shields.io/github/downloads/danielfebrero/bonbon-web-browser/total.svg)
+![Visits Badge](https://badges.pufler.dev/visits/danielfebrero/bonbon-web-browser)
 
 # BonBon Web Browser
 
