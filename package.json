@@ -15,12 +15,34 @@
     "type": "git",
     "url": "git+https://github.com/BonBon-exchange/bonbon-web-browser.git"
   },
-  "license": "MIT",
+  "license": "GPL-3.0",
   "author": {
     "name": "Daniel Febrero",
     "email": "febrero@me.com"
   },
-  "contributors": [],
+  "contributors": [
+    {
+      "name": "Daniel Febrero"
+    },
+    {
+      "name": "Anthony Cettour"
+    },
+    {
+      "name": "Braian Eric Dickson"
+    },
+    {
+      "name": "0xCUBE"
+    },
+    {
+      "name": "Alberto"
+    },
+    {
+      "name": "Nuklusone"
+    },
+    {
+      "name": "Aitor"
+    }
+  ],
   "main": "./src/main/main.ts",
   "scripts": {
     "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
