@@ -111,13 +111,13 @@ npm install
 
 To run it in dev mode:
 
-```
+```bash
 npm start
 ```
 
 To make a release:
 
-```
+```bash
 npm run package
 ```
 
