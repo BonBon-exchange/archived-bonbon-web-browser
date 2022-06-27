@@ -91,7 +91,8 @@
       "url": "http://localhost/"
     },
     "testPathIgnorePatterns": [
-      "release/app/dist"
+      "release/app/dist",
+      "__tests__/beforeAll.tsx"
     ],
     "transform": {
       "\\.(ts|tsx|js|jsx)$": "ts-jest"
@@ -135,6 +136,7 @@
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.4",
     "@types/react-test-renderer": "^18.0.0",
+    "@types/redux-mock-store": "^1.0.3",
     "@types/terser-webpack-plugin": "^5.0.4",
     "@types/uuid": "^8.3.4",
     "@types/webpack-bundle-analyzer": "^4.4.1",
@@ -177,6 +179,7 @@
     "prettier": "^2.6.2",
     "react-refresh": "^0.13.0",
     "react-test-renderer": "^18.1.0",
+    "redux-mock-store": "^1.5.4",
     "rimraf": "^3.0.2",
     "sass": "^1.51.0",
     "sass-loader": "^12.6.0",
