@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 export const mockWindow = () => {
   Object.defineProperty(window, 'app', {
     value: {
