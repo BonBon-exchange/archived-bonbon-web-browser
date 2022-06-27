@@ -1,4 +1,4 @@
-![Github All Releases](https://img.shields.io/github/downloads/danielfebrero/bonbon-web-browser/total.svg)
+![Github All Releases](https://img.shields.io/github/downloads/BonBon-exchange/bonbon-web-browser/total.svg)
 ![Visits Badge](https://badges.pufler.dev/visits/BonBon-exchange/bonbon-web-browser)
 
 # BonBon Web Browser
@@ -23,13 +23,13 @@ To stay up to date with the project, submit bugs, and submit features, please jo
 
 ## Try BonBon today
 
-Download BonBon for Windows: [BonBon Browser 0.19.0 for Windows](https://github.com/danielfebrero/bonbon-web-browser/releases/download/v0.19.0-rc1/BonBon.Setup.0.19.0.exe)
+Download BonBon for Windows: [BonBon Browser 0.19.0 for Windows](https://github.com/BonBon-exchange/bonbon-web-browser/releases/download/v0.19.0-rc1/BonBon.Setup.0.19.0.exe)
 
-Download BonBon for macOS arm64: [BonBon Browser 0.19.0 for macOS](https://github.com/danielfebrero/bonbon-web-browser/releases/download/v0.19.0-rc1/BonBon-0.19.0-arm64.dmg)
+Download BonBon for macOS arm64: [BonBon Browser 0.19.0 for macOS](https://github.com/BonBon-exchange/bonbon-web-browser/releases/download/v0.19.0-rc1/BonBon-0.19.0-arm64.dmg)
 
-Download BonBon for macOS: [BonBon Browser 0.19.0 for macOS](https://github.com/danielfebrero/bonbon-web-browser/releases/download/v0.19.0-rc1/BonBon-0.19.0.dmg)
+Download BonBon for macOS: [BonBon Browser 0.19.0 for macOS](https://github.com/BonBon-exchange/bonbon-web-browser/releases/download/v0.19.0-rc1/BonBon-0.19.0.dmg)
 
-Download BonBon for Linux: [BonBon Browser 0.19.0 for Linux (AppImage)](https://github.com/danielfebrero/bonbon-web-browser/releases/download/v0.19.0-rc1/BonBon-0.19.0.AppImage)
+Download BonBon for Linux: [BonBon Browser 0.19.0 for Linux (AppImage)](https://github.com/BonBon-exchange/bonbon-web-browser/releases/download/v0.19.0-rc1/BonBon-0.19.0.AppImage)
 
 ### Notes for Windows
 
@@ -104,7 +104,7 @@ In progress:
 ## Run locally or make a release
 
 ```bash
-git clone https://github.com/danielfebrero/bonbon-web-browser.git
+git clone https://github.com/BonBon-exchange/bonbon-web-browser.git
 cd bonbon-web-browser
 npm install
 ```

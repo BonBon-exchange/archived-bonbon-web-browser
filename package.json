@@ -7,13 +7,13 @@
     "react"
   ],
   "version": "0.20.0",
-  "homepage": "https://github.com/danielfebrero/bonbon-web-browser#readme",
+  "homepage": "https://github.com/BonBon-exchange/bonbon-web-browser#readme",
   "bugs": {
-    "url": "https://github.com/danielfebrero/bonbon-web-browser/issues"
+    "url": "https://github.com/BonBon-exchange/bonbon-web-browser/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/danielfebrero/bonbon-web-browser.git"
+    "url": "git+https://github.com/BonBon-exchange/bonbon-web-browser.git"
   },
   "license": "MIT",
   "author": {
@@ -254,7 +254,7 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "danielfebrero",
+      "owner": "BonBon-exchange",
       "repo": "bonbon-web-browser"
     }
   },
