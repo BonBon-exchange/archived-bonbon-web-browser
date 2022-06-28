@@ -38,7 +38,7 @@ jobs:
         run: npm run test
 
       - name: Package
-        run: npm exec electron-builder --publish never
+        run: npm exec electron-builder build --publish=never
 
       - if: matrix.os == 'ubuntu-latest'
         name: Ubuntu release
