@@ -30,16 +30,12 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
-      - name: Compile main process
+      - name: Compile
         run:
-          npm run build:main
+          npm run build
 
       - name: Check tests
         run: npm run test
-
-      - name: Compile renderer process
-        run:
-          npm run build:renderer
 
       - if: matrix.os == 'ubuntu-latest'
         name: Ubuntu release
