@@ -59,4 +59,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Windows exe
-          path: release/build/BonBon-*.*.*.exe
+          path: release/build/BonBon Setup *.*.*.exe
