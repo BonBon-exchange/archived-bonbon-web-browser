@@ -3,7 +3,8 @@ name: PR check
 on: [push]
 
 jobs:
-  publish:
+  pr:
+    needs: deps
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -11,19 +12,6 @@ jobs:
         os: [macos-latest, windows-latest, ubuntu-latest]
 
     steps:
-      - name: Checkout git repo
-        uses: actions/checkout@v1
-
-      - name: Install Node and NPM
-        uses: actions/setup-node@v1
-        with:
-          node-version: 16
-          cache: npm
-
-      - name: Install dependencies
-        run: |
-          npm ci
-
       - name: Compile
         run:
           npm run build

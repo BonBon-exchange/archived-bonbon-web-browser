@@ -1,4 +1,4 @@
-name: Publish
+name: Build & publish
 
 on:
   push:
@@ -6,7 +6,13 @@ on:
       - main
 
 jobs:
+  renderer:
+    needs: deps
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm run build:renderer
   publish:
+    needs: renderer
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -14,19 +20,6 @@ jobs:
         os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
-      - name: Checkout git repo
-        uses: actions/checkout@v1
-
-      - name: Install Node and NPM
-        uses: actions/setup-node@v1
-        with:
-          node-version: 16
-          cache: npm
-
-      - name: Install dependencies
-        run: |
-          npm ci
-
       - name: Publish releases
         env:
           # These values are used for auto updates signing
@@ -40,4 +33,4 @@ jobs:
         run: |
           npm run postinstall
           npm run build
-          npm exec electron-builder -- --publish always --win --mac --linux
+          npm exec electron-builder --publish always

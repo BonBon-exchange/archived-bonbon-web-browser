@@ -1,14 +1,15 @@
-name: Test
+name: Check types
 
 on: [push, pull_request]
 
 jobs:
-  test:
+  typecheck:
+    name: Check types
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check tests
+      - name: Check types
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npm test
+          npm exec tsc
