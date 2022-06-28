@@ -1,0 +1,85 @@
+name: CI
+
+on: push
+
+jobs:
+  deps:
+    name: Setup and get deps
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+
+      - name: Install Node.js and NPM
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: npm
+
+
+  test:
+    needs: deps
+    name: Check tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check tests
+      run: npm run test
+
+
+  type:
+    needs: deps
+    name: Check types
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check types
+      run: npm exec tsc
+
+
+  lint:
+    needs: deps
+    name: Check style
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Run ESLint
+      run: npm run lint
+
+
+  pr:
+    needs: [deps, test, type, lint]
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+
+    steps:
+      - name: Compile
+        run:
+          npm run build
+
+      - if: matrix.os == 'ubuntu-latest'
+        name: Ubuntu release
+        uses: actions/upload-artifact@v3
+        with:
+          name: Linux AppImage
+          path: release/build/BonBon-*-.AppImage
+      - if: matrix.os == 'macos-latest'
+        name: MacOS release
+        uses: actions/upload-artifact@v3
+        with:
+          name: Linux AppImage
+          path: release/build/
+      - if: matrix.os == 'windows-latest'
+        name: MacOS release
+        uses: actions/upload-artifact@v3
+        with:
+          name: Linux AppImage
+          path: release/build/BonBon-*.exe
