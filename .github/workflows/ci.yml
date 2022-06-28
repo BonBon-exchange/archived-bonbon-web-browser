@@ -47,7 +47,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Linux AppImage
-          path: release/build/BonBon-*-.AppImage
+          path: release/build/BonBon-*.*.*.AppImage
       - if: matrix.os == 'macos-latest'
         name: MacOS release
         uses: actions/upload-artifact@v3
@@ -59,4 +59,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Windows exe
-          path: release/build/BonBon-*.exe
+          path: release/build/BonBon-*.*.*.exe
