@@ -9,8 +9,6 @@ Built with Electron, React, TypeScript, Redux. The browser is faster than it sou
 
 We don't collect any personal data or browsing history. We do send some events to Nucleus.sh in order to understand how users are using BonBon Browser. Those events are no more than "open_app", "add_browser", "switch_board"... and will be removed when I will be more confident that the UX is good.
 
-Instead, the browsing history is locally stored and encrypted.
-
 To stay up to date with the project, submit bugs, and submit features, please join:
 
 - Discord server: [https://discord.gg/hrpp8G9Fqs](https://discord.gg/hrpp8G9Fqs)
@@ -49,9 +47,7 @@ The app was not working before June 24th, 2022. I am sorry for the ones that tri
 
 Completed:
 
-- boards: create a composition of webviews, save it, reuse it, present it
-
-- encrypted browsing history
+- boards: create a composition of webviews
 
 - darkmode
 
