@@ -38,6 +38,8 @@ jobs:
         run: npm run test
 
       - name: Package
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm exec electron-builder build --publish=never
 
       - if: matrix.os == 'ubuntu-latest'
