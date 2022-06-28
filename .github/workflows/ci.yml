@@ -24,15 +24,19 @@ jobs:
       - name: Check tests
         run: npm run test
 
-      - name: Check types
-        run: npm exec tsc
-
       - name: Run ESLint
         run: npm run lint
 
-      - name: Compile
+      - name: Compile main process
         run:
-          npm run build
+          npm run build:main
+
+      - name: Check types
+        run: npm exec tsc
+
+      - name: Compile renderer process
+        run:
+          npm run build:renderer
 
       - if: matrix.os == 'ubuntu-latest'
         name: Ubuntu release
