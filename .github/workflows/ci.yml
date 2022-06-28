@@ -55,7 +55,7 @@ jobs:
           name: MacOS build
           path: release/build/
       - if: matrix.os == 'windows-latest'
-        name: MacOS release
+        name: Windows release
         uses: actions/upload-artifact@v3
         with:
           name: Windows exe
