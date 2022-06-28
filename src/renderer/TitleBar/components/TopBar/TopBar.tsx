@@ -256,12 +256,6 @@ export const TopBar: React.FC = () => {
             <Brightness4Icon onClick={() => window.darkMode.toggle()} />
           )}
         </div>
-        <div className="TopBar__menu-item">
-          <BookmarksIcon onClick={showLibrary} />
-        </div>
-        <div className="TopBar__menu-item">
-          <SettingsIcon onClick={showSettings} />
-        </div>
       </div>
     </div>
   );
