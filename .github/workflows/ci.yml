@@ -53,9 +53,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: MacOS build
-          path: |
-            BonBon-*.*.*-arm64.dmg
-            BonBon-*.*.*.dmg
+          path: BonBon-*.*.**.dmg
       - if: matrix.os == 'windows-latest'
         name: Windows release
         uses: actions/upload-artifact@v3
