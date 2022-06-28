@@ -8,8 +8,6 @@ import { v4 } from 'uuid';
 import TextField from '@mui/material/TextField';
 import AddIcon from '@mui/icons-material/Add';
 import clsx from 'clsx';
-import SettingsIcon from '@mui/icons-material/Settings';
-import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 
@@ -72,14 +70,6 @@ export const TopBar: React.FC = () => {
     (tab: Element) => dispatch(setIsRenaming(tab.getAttribute('data-tabid'))),
     [dispatch]
   );
-
-  const showLibrary = () => {
-    window.titleBar.screens.library();
-  };
-
-  const showSettings = () => {
-    window.titleBar.screens.settings();
-  };
 
   const openTabListener = useCallback(
     (_e: any, args: { id?: string; label?: string }) => {

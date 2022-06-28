@@ -218,9 +218,6 @@
     "webpack-dev-server": "^4.9.0",
     "webpack-merge": "^5.8.0"
   },
-  "overrides": {
-    "got": "^12.1.0"
-  },
   "build": {
     "productName": "BonBon",
     "appId": "org.erb.BonBon",
