@@ -20,47 +20,16 @@ jobs:
         with:
           node-version: 16
           cache: npm
+  
+      - name: Check tests
+        run: npm run test
 
+      - name: Check types
+        run: npm exec tsc
 
-  test:
-    needs: deps
-    name: Check tests
-    runs-on: ubuntu-latest
+      - name: Run ESLint
+        run: npm run lint
 
-    steps:
-    - name: Check tests
-      run: npm run test
-
-
-  type:
-    needs: deps
-    name: Check types
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Check types
-      run: npm exec tsc
-
-
-  lint:
-    needs: deps
-    name: Check style
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Run ESLint
-      run: npm run lint
-
-
-  pr:
-    needs: [deps, test, type, lint]
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
-
-    steps:
       - name: Compile
         run:
           npm run build
