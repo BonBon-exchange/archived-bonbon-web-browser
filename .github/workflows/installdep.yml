@@ -1,6 +1,6 @@
 name: Install deps
 
-on: [push, pull_request]
+on: push
 
 jobs:
   deps:
