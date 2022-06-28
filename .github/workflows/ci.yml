@@ -37,6 +37,9 @@ jobs:
       - name: Check tests
         run: npm run test
 
+      - name: Package
+        run: npm exec electron-builder build --publish never
+
       - if: matrix.os == 'ubuntu-latest'
         name: Ubuntu release
         uses: actions/upload-artifact@v3
