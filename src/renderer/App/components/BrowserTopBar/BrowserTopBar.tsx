@@ -34,12 +34,17 @@ export const BrowserTopBar: React.FC<BrowserTopBarProps> = ({
       )}
       <div className="BrowserTopBar__title">{title || ''}</div>
       <div className="BrowserTopBar__controls">
-        <div className="BrowserTopBar__control-button" onClick={closeBrowser}>
+        <div
+          className="BrowserTopBar__control-button"
+          onClick={closeBrowser}
+          data-testid="close-browser"
+        >
           <CloseIcon />
         </div>
         <div
           className="BrowserTopBar__control-button"
           onClick={toggleFullsizeBrowser}
+          data-testid="toggle-enlarge-browser"
         >
           <CropSquareIcon />
         </div>

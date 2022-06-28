@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 
 import { Board } from '../renderer/App/components/Board';
@@ -72,5 +72,19 @@ describe('Board', () => {
     expect(
       container.getElementsByClassName('Browser__draggable-container').length
     ).toBe(1);
+  });
+
+  it('should have 1 browser in board after adding and clicking on close', () => {
+    store.dispatch(addBrowser(addBrowserAction));
+
+    render(
+      <Provider store={store}>
+        <Board />
+      </Provider>
+    );
+
+    fireEvent.click(screen.getAllByTestId('close-browser')[0]);
+
+    expect(screen.getAllByTestId('browser-window').length).toBe(1);
   });
 });

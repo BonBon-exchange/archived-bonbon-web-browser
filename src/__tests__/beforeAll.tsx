@@ -62,4 +62,7 @@ export const mockWindow = () => {
       dispatchEvent: jest.fn(),
     })),
   });
+
+  window.HTMLElement.prototype.scrollIntoView = jest.fn();
+  window.scrollBy = jest.fn();
 };

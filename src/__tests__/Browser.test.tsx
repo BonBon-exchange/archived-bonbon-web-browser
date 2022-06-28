@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 
 import { Browser } from '../renderer/App/components/Browser';
@@ -43,5 +43,21 @@ describe('Browser', () => {
 
     const browser = container.getElementsByClassName('Browser__is-full-size');
     expect(browser.length).toBe(1);
+  });
+
+  it('should toggle fullsize', () => {
+    render(
+      <Provider store={store}>
+        <Browser {...browserProps} />
+      </Provider>
+    );
+
+    fireEvent.click(screen.getByTestId('toggle-enlarge-browser'));
+
+    expect(
+      screen
+        .getByTestId('browser-window')
+        .className.includes('Browser__is-full-size')
+    ).toBeFalsy();
   });
 });
