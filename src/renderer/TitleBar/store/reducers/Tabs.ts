@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 type TabProps = {
   id: string;
   label: string;
+  windowsCount: number;
 };
 
 type TabsState = {
@@ -14,6 +15,11 @@ type TabsState = {
 type RenameTabType = {
   id: string;
   label: string;
+};
+
+type SetWindowsCountType = {
+  id: string;
+  count: number;
 };
 
 const initialState: TabsState = {
@@ -46,10 +52,22 @@ export const tabsSlice = createSlice({
       if (state.activeTab === action.payload && state.tabs.length > 0)
         state.activeTab = state.tabs[0].id;
     },
+    setWindowsCount: (state, action: PayloadAction<SetWindowsCountType>) => {
+      const tabIndex = state.tabs.findIndex((t) => t.id === action.payload.id);
+      if (tabIndex > -1) {
+        state.tabs[tabIndex].windowsCount = action.payload.count;
+      }
+    },
   },
 });
 
-export const { addTab, setActiveTab, setIsRenaming, renameTab, removeTab } =
-  tabsSlice.actions;
+export const {
+  addTab,
+  setActiveTab,
+  setIsRenaming,
+  renameTab,
+  removeTab,
+  setWindowsCount,
+} = tabsSlice.actions;
 
 export default tabsSlice.reducer;
