@@ -99,17 +99,6 @@ const makeAppEvents = () => {
           },
         },
         {
-          label: 'Save',
-          visible: params.y <= 30,
-          click: () => {
-            const mainWindow = getMainWindow();
-            mainWindow?.webContents.send('save-board', {
-              x: params.x,
-              y: params.y,
-            });
-          },
-        },
-        {
           type: 'separator',
         },
       ],
