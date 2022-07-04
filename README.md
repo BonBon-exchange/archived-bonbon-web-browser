@@ -1,5 +1,4 @@
-![Github All Releases](https://img.shields.io/github/downloads/BonBon-exchange/bonbon-web-browser/total.svg)
-![Visits Badge](https://badges.pufler.dev/visits/BonBon-exchange/bonbon-web-browser)
+# Migrated to [https://github.com/BonBon-exchange/bonbon-web-browser](https://github.com/BonBon-exchange/bonbon-web-browser)
 
 # BonBon Web Browser
 
